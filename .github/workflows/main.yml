@@ -16,3 +16,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           environment: 'production'
+          secrets: |
+            REFRESH_TOKEN
+            CLIENT_SECRET

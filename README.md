@@ -2,6 +2,12 @@
 
 > Yet Another OneDrive Index. Powered by Cloudflare Workers. Inspired and originated greatly from [heymind/OneDrive-Index-Cloudflare-Worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker).
 
+## Demo
+
+![](https://cdn.spencer.felinae98.cn/blog/2020/08/200806_023252.png)
+
+Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
+
 ## Deployment
 
 See: [How to use | OneDrive-Index-Cloudflare-Worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker#%E5%92%8B%E7%94%A8) (for now).

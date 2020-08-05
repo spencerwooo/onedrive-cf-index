@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Lato, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, pingfang sc, source han sans sc,
+    noto sans cjk sc, sarasa gothic sc, microsoft yahei, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  -webkit-font-smoothing: antialiased;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: column nowrap;
+  height: 100vh;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.8rem;
+  background: #ffffff;
+  color: #000000;
+  font-size: 1.4rem;
+  box-shadow: inset 0 -1px #eaeaea;
+  margin-bottom: 2rem;
+  width: calc(100% - 40px);
+}
+
+a.brand {
+  font-weight: bold;
+}
+
+.container {
+  width: calc(100% - 40px);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.items {
+  overflow-x: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  background: white;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+}
+
+a.item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #000000;
+  padding: 0.8rem 1rem;
+  transition: 0.2s all ease-in-out;
+}
+
+a.item i {
+  margin-right: 0.5rem;
+}
+
+footer {
+  font-size: 0.8rem;
+  color: #666;
+  width: calc(100% - 40px);
+  padding: 0.8rem;
+  text-align: center;
+}
+
+footer a,
+.intro a,
+.readme a {
+  transition: 0.2s all ease-in-out;
+  color: #0070f3;
+}
+
+footer a:hover,
+.intro a:hover,
+.readme a:hover,
+a.item:hover {
+  opacity: 0.6;
+}
+
+.readme ul {
+  list-style-type: disc;
+  padding-left: 1.25em;
+  line-height: 1.8;
+}
+
+.readme table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  margin-bottom: 1.25em;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.readme table tr {
+  border-top: 1px solid #c6cbd1;
+}
+
+.readme table td,
+.readme table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.readme table th {
+  font-weight: 600;
+  background-color: #f1f3f4;
+}

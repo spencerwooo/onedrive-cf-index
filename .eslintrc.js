@@ -12,6 +12,8 @@ module.exports = {
     'space-before-function-paren': ['error', 'never']
   },
   globals: {
-    TransformStream: true
+    TransformStream: true,
+    REFRESH_TOKEN: true,
+    CLIENT_SECRET: true
   }
 }

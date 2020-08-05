@@ -60,6 +60,10 @@ a.item i {
   margin-right: 0.5rem;
 }
 
+a.item .size {
+  opacity: 0.6;
+}
+
 footer {
   font-size: 0.8rem;
   color: #666;

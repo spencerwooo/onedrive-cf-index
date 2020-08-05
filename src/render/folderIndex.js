@@ -38,7 +38,7 @@ export function renderFolderIndex(items, isIndex) {
               if ('folder' in i) {
                 return item('fa-folder', i.name, i.size)
               } else if ('file' in i) {
-                console.log(i.file.mimeType, getClassNameForMimeType(i.file.mimeType))
+                // console.log(i.file.mimeType, getClassNameForMimeType(i.file.mimeType))
                 return item(getClassNameForMimeType(i.file.mimeType), i.name, i.size)
               } else console.log(`unknown item type ${i}`)
             })

@@ -15,7 +15,3 @@ jobs:
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          environment: 'production'
-          secrets: |
-            REFRESH_TOKEN
-            CLIENT_SECRET

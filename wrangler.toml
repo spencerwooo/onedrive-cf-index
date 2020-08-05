@@ -1,4 +1,4 @@
-name = "onedrive-cf-index"
+name = "drive"
 type = "webpack"
 account_id = "b87997a496f985b46b927b3f24c61de1"
 workers_dev = true

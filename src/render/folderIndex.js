@@ -1,4 +1,4 @@
-import { getClassNameForMimeType } from 'font-awesome-filetypes'
+import { getClassNameForMimeType, getClassNameForFilename } from 'font-awesome-filetypes'
 import { renderHTML } from './html'
 
 /**
@@ -32,14 +32,18 @@ export function renderFolderIndex(items, isIndex) {
         el(
           'div',
           ['style="min-width: 600px"'],
-          (!isIndex ? item('folder', '..') : '') +
+          (!isIndex ? item('fa-folder', '..') : '') +
           items
             .map(i => {
               if ('folder' in i) {
                 return item('fa-folder', i.name, i.size)
               } else if ('file' in i) {
                 // console.log(i.file.mimeType, getClassNameForMimeType(i.file.mimeType))
-                return item(getClassNameForMimeType(i.file.mimeType), i.name, i.size)
+                let fileIcon = getClassNameForMimeType(i.file.mimeType)
+                if (fileIcon === 'fa-file') {
+                  fileIcon = getClassNameForFilename(i.name)
+                }
+                return item(fileIcon, i.name, i.size)
               } else console.log(`unknown item type ${i}`)
             })
             .join('')

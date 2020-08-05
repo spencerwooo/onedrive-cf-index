@@ -1,15 +1,30 @@
-# 👷 `worker-template` Hello World
+# 📁 `onedrive-cf-index`
 
-A template for kick starting a Cloudflare worker project.
+> Yet Another OneDrive Index. Powered by Cloudflare Workers. Inspired and originated greatly from [heymind/OneDrive-Index-Cloudflare-Worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker).
 
-[`index.js`](https://github.com/cloudflare/worker-template/blob/master/index.js) is the content of the Workers script.
+## Deployment
 
-#### Wrangler
+See: [How to use | OneDrive-Index-Cloudflare-Worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker#%E5%92%8B%E7%94%A8) (for now).
 
-To generate using [wrangler](https://github.com/cloudflare/wrangler)
+## Features
 
-```
-wrangler generate projectname https://github.com/cloudflare/worker-template
-```
+### Improvements
 
-Further documentation for Wrangler can be found [here](https://developers.cloudflare.com/workers/tooling/wrangler).
+- New design: [`spencer.css`](themes/spencer.css).
+- File icon rendered according to file type.
+
+### All other features
+
+See: [New features | OneDrive-Index-Cloudflare-Worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker#-%E6%96%B0%E7%89%B9%E6%80%A7-v11) (for now).
+
+## Notes
+
+Currently work in progress. Not recommended to use in production.
+
+---
+
+📁 **`onedrive-cf-index`** ©Spencer Woo. Released under the MIT License.
+
+Authored and maintained by Spencer Woo.
+
+[@Portfolio](https://spencerwoo.com/) · [@Blog](https://blog.spencerwoo.com/) · [@GitHub](https://github.com/spencerwooo)

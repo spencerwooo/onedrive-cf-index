@@ -41,7 +41,7 @@ a {
   color: #0070f3;
 }
 
-a.brand {
+.brand {
   font-weight: bold;
 }
 
@@ -53,10 +53,13 @@ a.brand {
 
 .path {
   margin-bottom: 1.5rem;
+  font-size: 0.88rem;
+  color: #999;
 }
 
 .path a {
   text-decoration: none;
+  color: #333;
 }
 
 .items {

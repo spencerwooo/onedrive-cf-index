@@ -104,12 +104,12 @@ a.item:hover {
 
 .loading-label,
 .markdown-body {
-  margin-top: 1.5rem;
   font-family: var(--base-font-family) !important;
 }
 
 .loading-label {
   text-align: center;
+  margin-top: 1.5rem;
   opacity: 0.6;
 }
 

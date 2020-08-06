@@ -2,11 +2,49 @@ import { getClassNameForMimeType, getClassNameForFilename } from 'font-awesome-f
 import { renderHTML } from './html'
 
 /**
+ * Return absolute path of current working directory
+ *
+ * @param {array} pathItems List of current directory items
+ * @param {number} idx Current depth inside home
+ */
+function getPathLink(pathItems, idx) {
+  const pathList = pathItems.slice(0, idx + 1)
+
+  if (pathList.length === 1) {
+    return '/'
+  }
+
+  pathList[0] = ''
+  return pathList.join('/')
+}
+
+/**
+ * Render directory breadcrumb
+ *
+ * @param {string} path current working directory, for instance: /🥑 Course PPT for CS (BIT)/2018 - 大三上 - 操作系统/
+ */
+function renderPath(path) {
+  const pathItems = path.split('/')
+  pathItems[0] = '/'
+  pathItems.pop()
+
+  const link = (href, content) => `<a href="${href}">${content}</a>`
+  const breadcrumb = []
+  pathItems.forEach((item, idx) => {
+    breadcrumb.push(link(getPathLink(pathItems, idx), idx === 0 ? '🚩 Home' : decodeURIComponent(item)))
+  })
+  console.log(breadcrumb.join(' / '))
+
+  return breadcrumb.join(' / ')
+}
+
+/**
  * Render Folder Index
+ *
  * @param {*} items
  * @param {*} isIndex don't show ".." on index page.
  */
-export function renderFolderIndex(items, isIndex) {
+export function renderFolderIndex(items, isIndex, path) {
   const nav = '<nav><a class="brand">📁 Spencer\'s OneDrive Index</a></nav>'
   const el = (tag, attrs, content) => `<${tag} ${attrs.join(' ')}>${content}</${tag}>`
   const div = (className, content) => el('div', [`class=${className}`], content)
@@ -27,6 +65,7 @@ export function renderFolderIndex(items, isIndex) {
     nav +
     div(
       'container',
+      div('path', renderPath(path)) +
       div(
         'items',
         el(
@@ -48,7 +87,8 @@ export function renderFolderIndex(items, isIndex) {
             })
             .join('')
         )
-      ) + (isIndex ? intro : '')
+      ) +
+      (isIndex ? intro : '')
     )
   )
 }

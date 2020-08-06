@@ -109,10 +109,14 @@ a.item:hover {
   transition: 0.2s all ease-in-out;
 }
 
+.markdown-body {
+  opacity: 0;
+}
+
 .loading-label {
   text-align: center;
   opacity: 1;
-  animation: flicker 1s infinite;
+  animation: flicker 1.5s infinite ease-in-out;
 }
 
 @keyframes flicker {
@@ -120,7 +124,7 @@ a.item:hover {
     opacity: 1;
   }
   50% {
-    opacity: 0;
+    opacity: 0.6;
   }
   100% {
     opacity: 1;

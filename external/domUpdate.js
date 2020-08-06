@@ -18,7 +18,7 @@ async function renderReadme() {
         .querySelector('.container')
         .insertAdjacentHTML(
           'beforeend',
-          '<div class="markdown-body" style="opacity: 0;">' + window.marked(res) + '</div>'
+          '<div class="markdown-body">' + window.marked(res) + '</div>'
         )
       document
         .querySelector('.loading-label')

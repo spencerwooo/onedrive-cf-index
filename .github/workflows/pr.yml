@@ -1,0 +1,18 @@
+name: Staging
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Preview on Cloudflare Workers
+    steps:
+      - uses: actions/checkout@master
+      - name: Publish env staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          environment: staging

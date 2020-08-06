@@ -102,32 +102,7 @@ a.item:hover {
   opacity: 0.6;
 }
 
-.readme ul {
-  list-style-type: disc;
-  padding-left: 1.25em;
-  line-height: 1.8;
-}
-
-.readme table {
-  display: block;
-  width: 100%;
-  overflow: auto;
-  margin-bottom: 1.25em;
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-.readme table tr {
-  border-top: 1px solid #c6cbd1;
-}
-
-.readme table td,
-.readme table th {
-  padding: 6px 13px;
-  border: 1px solid #dfe2e5;
-}
-
-.readme table th {
-  font-weight: 600;
-  background-color: #f1f3f4;
+.markdown-body {
+  margin-top: 1.5rem;
+  font-family: var(--base-font-family) !important;
 }

@@ -5,7 +5,7 @@ async function renderReadme() {
   if (!resp.ok) return
   document
     .querySelector('.container')
-    .insertAdjacentHTML('beforeend', '<div class="readme">' + window.marked(await resp.text()) + '</div>')
+    .insertAdjacentHTML('beforeend', '<div class="markdown-body">' + window.marked(await resp.text()) + '</div>')
   // eslint-disable-next-line no-undef
   Prism.highlightAll()
 }

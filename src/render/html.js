@@ -1,6 +1,6 @@
 import { favicon } from './favicon'
 
-const COMMIT_HASH = 'c5c58ce5a01ba94a019fcb650bceabafcdfea6be'
+const COMMIT_HASH = 'f760d6d72db04ae38c3ab0d16295f69dc71890f2'
 
 export function renderHTML(body) {
   return `<!DOCTYPE html>
@@ -18,7 +18,7 @@ export function renderHTML(body) {
     </head>
     <body>
       ${body}
-      <div style="flex-grow:1"></div>
+      <div style="flex-grow: 1;"></div>
       <footer><p>Powered by <a href="https://github.com/spencerwooo/onedrive-cf-index">onedrive-cf-index</a>, hosted on <a href="https://www.cloudflare.com/products/cloudflare-workers/">Cloudflare Workers</a>.</p></footer>
       <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/prism.min.js" data-manual></script>
       <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/plugins/autoloader/prism-autoloader.min.js"></script>

@@ -16,14 +16,9 @@ async function renderReadme() {
     .then(res => {
       document
         .querySelector('.container')
-        .insertAdjacentHTML(
-          'beforeend',
-          '<div class="markdown-body">' + window.marked(res) + '</div>'
-        )
-      document
-        .querySelector('.loading-label')
-        .setAttribute('style', 'opacity: 0;')
-        .remove()
+        .insertAdjacentHTML('beforeend', '<div class="markdown-body">' + window.marked(res) + '</div>')
+      document.querySelector('.loading-label').setAttribute('style', 'opacity: 0;')
+      document.querySelector('.loading-label').remove()
       document.querySelector('.markdown-body').setAttribute('style', 'opacity: 1;')
       // eslint-disable-next-line no-undef
       Prism.highlightAll()

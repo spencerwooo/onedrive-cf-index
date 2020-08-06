@@ -63,32 +63,32 @@ export function renderFolderIndex(items, isIndex, path) {
 
   return renderHTML(
     nav +
-    div(
-      'container',
-      div('path', renderPath(path)) +
       div(
-        'items',
-        el(
-          'div',
-          ['style="min-width: 600px"'],
-          (!isIndex ? item('fa-folder', '..') : '') +
-          items
-            .map(i => {
-              if ('folder' in i) {
-                return item('fa-folder', i.name, i.size)
-              } else if ('file' in i) {
-                // console.log(i.file.mimeType, getClassNameForMimeType(i.file.mimeType))
-                let fileIcon = getClassNameForMimeType(i.file.mimeType)
-                if (fileIcon === 'fa-file') {
-                  fileIcon = getClassNameForFilename(i.name)
-                }
-                return item(fileIcon, i.name, i.size)
-              } else console.log(`unknown item type ${i}`)
-            })
-            .join('')
-        )
-      ) +
-      (isIndex ? intro : '')
-    )
+        'container',
+        div('path', renderPath(path)) +
+          div(
+            'items',
+            el(
+              'div',
+              ['style="min-width: 600px"'],
+              (!isIndex ? item('fa-folder', '..') : '') +
+                items
+                  .map(i => {
+                    if ('folder' in i) {
+                      return item('fa-folder', i.name, i.size)
+                    } else if ('file' in i) {
+                      // console.log(i.file.mimeType, getClassNameForMimeType(i.file.mimeType))
+                      let fileIcon = getClassNameForMimeType(i.file.mimeType)
+                      if (fileIcon === 'fa-file') {
+                        fileIcon = getClassNameForFilename(i.name)
+                      }
+                      return item(fileIcon, i.name, i.size)
+                    } else console.log(`unknown item type ${i}`)
+                  })
+                  .join('')
+            )
+          ) +
+          (isIndex ? intro : '')
+      )
   )
 }

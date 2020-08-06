@@ -110,6 +110,7 @@ a.item:hover {
 
 .loading-label {
   text-align: center;
+  opacity: 0.6;
 }
 
 .fade-in-bottom {

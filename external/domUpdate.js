@@ -4,13 +4,6 @@ async function renderReadme() {
   const resp = await fetch('readme.md')
   if (!resp.ok) return
 
-  // Current directory contains README.md, load with spinner
-  const loadingLabel = `<div class="loading-label">
-                          <i class="fas fa-spinner fa-pulse"></i>
-                          <span>Loading <code>README.md</code></span>
-                        </div>`
-
-  document.querySelector('.container').insertAdjacentHTML('beforeend', loadingLabel)
   resp
     .text()
     .then(res => {

@@ -1,8 +1,11 @@
 name = "drive"
 type = "webpack"
-account_id = "b87997a496f985b46b927b3f24c61de1"
 workers_dev = true
+account_id = "b87997a496f985b46b927b3f24c61de1"
+zone_id = "b04152d2c33ff4653cec1a579be6d42a"
+
+[env.staging]
+name = "drive-staging"
 
 [env.production]
 route = "drive.swoo.workers.dev"
-zone_id = "b04152d2c33ff4653cec1a579be6d42a"

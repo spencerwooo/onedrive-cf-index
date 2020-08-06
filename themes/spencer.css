@@ -29,7 +29,7 @@ nav {
   align-items: center;
   width: 100%;
   min-height: 2rem;
-  padding: 0.8rem;
+  padding: 0.8rem 0rem;
   background: #ffffff;
   color: #000000;
   font-size: 1.4rem;
@@ -93,7 +93,7 @@ footer {
   font-size: 0.8rem;
   color: #666;
   width: calc(100% - 40px);
-  padding: 0.8rem;
+  padding: 1.6rem 0rem;
   text-align: center;
 }
 

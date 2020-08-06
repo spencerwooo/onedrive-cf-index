@@ -6,8 +6,8 @@
 
 Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 
-| Home | Folder |
-|:-:|:-:|
+|                                 Home                                 |                                Folder                                |
+| :------------------------------------------------------------------: | :------------------------------------------------------------------: |
 | ![](https://cdn.spencer.felinae98.cn/blog/2020/08/200806_153117.png) | ![](https://cdn.spencer.felinae98.cn/blog/2020/08/200806_153124.png) |
 
 ## Deployment

@@ -14,6 +14,7 @@ module.exports = {
   globals: {
     TransformStream: true,
     REFRESH_TOKEN: true,
-    CLIENT_SECRET: true
+    CLIENT_SECRET: true,
+    FIREBASE_TOKEN: true
   }
 }

@@ -14,10 +14,17 @@ async function renderReadme() {
   resp
     .text()
     .then(res => {
-      document.querySelector('.loading-label').remove()
       document
         .querySelector('.container')
-        .insertAdjacentHTML('beforeend', '<div class="markdown-body">' + window.marked(res) + '</div>')
+        .insertAdjacentHTML(
+          'beforeend',
+          '<div class="markdown-body" style="opacity: 0;">' + window.marked(res) + '</div>'
+        )
+      document
+        .querySelector('.loading-label')
+        .setAttribute('style', 'opacity: 0;')
+        .remove()
+      document.querySelector('.markdown-body').setAttribute('style', 'opacity: 1;')
       // eslint-disable-next-line no-undef
       Prism.highlightAll()
     })

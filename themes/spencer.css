@@ -102,7 +102,27 @@ a.item:hover {
   opacity: 0.6;
 }
 
+.loading-label,
 .markdown-body {
   margin-top: 1.5rem;
   font-family: var(--base-font-family) !important;
+  transition: 0.2s all ease-in-out;
+}
+
+.loading-label {
+  text-align: center;
+  opacity: 1;
+  animation: flicker 1s infinite;
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

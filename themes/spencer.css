@@ -24,7 +24,7 @@ nav {
   color: #000000;
   font-size: 1.4rem;
   box-shadow: inset 0 -1px #eaeaea;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   width: calc(100% - 40px);
 }
 
@@ -36,6 +36,16 @@ a.brand {
   width: calc(100% - 40px);
   max-width: 800px;
   margin: 0 auto;
+}
+
+.path {
+  margin-bottom: 1.5rem;
+}
+
+.path a {
+  transition: 0.2s all ease-in-out;
+  color: #0070f3;
+  text-decoration: none;
 }
 
 .items {
@@ -82,6 +92,7 @@ footer a,
 footer a:hover,
 .intro a:hover,
 .readme a:hover,
+.path a:hover,
 a.item:hover {
   opacity: 0.6;
 }

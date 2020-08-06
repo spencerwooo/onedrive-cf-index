@@ -61,6 +61,13 @@ export function renderFolderIndex(items, isIndex, path) {
                     <p><a href="https://spencerwoo.com">Portfolio</a> · <a href="https://blog.spencerwoo.com">Blog</a> · <a href="https://github.com/spencerwooo">GitHub</a></p>
                   </div>`
 
+  // Check if current directory contains README.md, if true, then render spinner
+  let readmeExists = false
+  const loadingLabel = `<div class="loading-label">
+                          <i class="fas fa-spinner fa-pulse"></i>
+                          <span>Loading README.md...</span>
+                        </div>`
+
   return renderHTML(
     nav +
       div(
@@ -77,7 +84,12 @@ export function renderFolderIndex(items, isIndex, path) {
                     if ('folder' in i) {
                       return item('fa-folder', i.name, i.size)
                     } else if ('file' in i) {
-                      // console.log(i.file.mimeType, getClassNameForMimeType(i.file.mimeType))
+                      // Check if README.md exists
+                      if (!readmeExists) {
+                        readmeExists = i.name.toLowerCase() === 'readme.md'
+                      }
+
+                      // Render file icons
                       let fileIcon = getClassNameForMimeType(i.file.mimeType)
                       if (fileIcon === 'fa-file') {
                         fileIcon = getClassNameForFilename(i.name)
@@ -88,6 +100,7 @@ export function renderFolderIndex(items, isIndex, path) {
                   .join('')
             )
           ) +
+          (readmeExists && !isIndex ? loadingLabel : '') +
           (isIndex ? intro : '')
       )
   )

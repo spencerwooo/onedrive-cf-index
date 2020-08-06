@@ -1,6 +1,6 @@
 import { favicon } from './favicon'
 
-const COMMIT_HASH = '619b3df11f135c92dd5a70c5df4b03295a59c84f'
+const COMMIT_HASH = 'f0ed61720b15a6f8f54668c9e69eef854f5ec73c'
 
 export function renderHTML(body) {
   return `<!DOCTYPE html>

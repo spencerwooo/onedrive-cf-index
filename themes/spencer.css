@@ -1,17 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
+:root {
+  --base-font-family: Lato, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, pingfang sc,
+    source han sans sc, noto sans cjk sc, sarasa gothic sc, microsoft yahei, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji;
+}
+
+html,
 body {
   margin: 0;
   padding: 0;
-  font-family: Lato, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, pingfang sc, source han sans sc,
-    noto sans cjk sc, sarasa gothic sc, microsoft yahei, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+}
+
+body {
+  font-family: var(--base-font-family);
   -webkit-font-smoothing: antialiased;
   background: #fafafa;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-flow: column nowrap;
-  height: 100vh;
 }
 
 nav {
@@ -19,13 +27,18 @@ nav {
   justify-content: center;
   align-items: center;
   width: 100%;
+  min-height: 2rem;
   padding: 0.8rem;
   background: #ffffff;
   color: #000000;
   font-size: 1.4rem;
   box-shadow: inset 0 -1px #eaeaea;
   margin-bottom: 1.5rem;
-  width: calc(100% - 40px);
+}
+
+a {
+  transition: 0.2s all ease-in-out;
+  color: #0070f3;
 }
 
 a.brand {
@@ -43,8 +56,6 @@ a.brand {
 }
 
 .path a {
-  transition: 0.2s all ease-in-out;
-  color: #0070f3;
   text-decoration: none;
 }
 
@@ -82,17 +93,7 @@ footer {
   text-align: center;
 }
 
-footer a,
-.intro a,
-.readme a {
-  transition: 0.2s all ease-in-out;
-  color: #0070f3;
-}
-
-footer a:hover,
-.intro a:hover,
-.readme a:hover,
-.path a:hover,
+a:hover,
 a.item:hover {
   opacity: 0.6;
 }

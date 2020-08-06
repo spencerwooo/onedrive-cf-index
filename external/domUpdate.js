@@ -5,7 +5,7 @@ async function renderReadme() {
   if (!resp.ok) return
 
   // Current directory contains README.md, load with spinner
-  const loadingLabel = `<div class="loading-label">
+  const loadingLabel = `<div class="loading-label fade-out-top">
                           <i class="fas fa-spinner fa-pulse"></i>
                           <span>Loading <code>README.md</code></span>
                         </div>`
@@ -16,10 +16,8 @@ async function renderReadme() {
     .then(res => {
       document
         .querySelector('.container')
-        .insertAdjacentHTML('beforeend', '<div class="markdown-body">' + window.marked(res) + '</div>')
-      document.querySelector('.loading-label').setAttribute('style', 'opacity: 0;')
+        .insertAdjacentHTML('beforeend', '<div class="markdown-body fade-in-bottom">' + window.marked(res) + '</div>')
       document.querySelector('.loading-label').remove()
-      document.querySelector('.markdown-body').setAttribute('style', 'opacity: 1;')
       // eslint-disable-next-line no-undef
       Prism.highlightAll()
     })
@@ -27,7 +25,10 @@ async function renderReadme() {
       document.querySelector('.loading-label').remove()
       document
         .querySelector('.container')
-        .insertAdjacentHTML('beforeend', `<div class="markdown-warning">Failed to render README: ${e}</div>`)
+        .insertAdjacentHTML(
+          'beforeend',
+          `<div class="markdown-body fade-in-bottom">❌ <strong>Failed to render README:</strong> ${e}</div>`
+        )
     })
 }
 

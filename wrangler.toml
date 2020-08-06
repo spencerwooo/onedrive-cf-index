@@ -6,6 +6,3 @@ zone_id = "b04152d2c33ff4653cec1a579be6d42a"
 
 [env.staging]
 name = "drive-staging"
-
-[env.production]
-route = "drive.swoo.workers.dev"

@@ -1,4 +1,4 @@
-const COMMIT_HASH = '15209b69690c02c83f414c630ee8d2c407a63971'
+const COMMIT_HASH = '5fb93b1a056d6c11c94f173fede5483ac52374a2'
 
 export function renderHTML(body) {
   return `<!DOCTYPE html>
@@ -12,7 +12,7 @@ export function renderHTML(body) {
       <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.min.css" rel="stylesheet">
       <link href='https://cdn.jsdelivr.net/gh/spencerwooo/onedrive-cf-index@${COMMIT_HASH}/themes/spencer.css' rel='stylesheet'>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/themes/prism.css">
-      <script type="module" src="https://cdn.jsdelivr.net/gh/spencerwooo/onedrive-cf-index@${COMMIT_HASH}/src/domUpdate.js"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/gh/spencerwooo/onedrive-cf-index@${COMMIT_HASH}/external/domUpdate.js"></script>
     </head>
     <body>
       ${body}

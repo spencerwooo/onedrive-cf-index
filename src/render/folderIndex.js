@@ -45,7 +45,7 @@ function renderPath(path) {
  * @param {*} isIndex don't show ".." on index page.
  */
 export function renderFolderIndex(items, isIndex, path) {
-  const nav = '<nav><a class="brand">📁 Spencer\'s OneDrive Index</a></nav>'
+  const nav = '<nav><div class="brand">📁 Spencer\'s OneDrive Index</div></nav>'
   const el = (tag, attrs, content) => `<${tag} ${attrs.join(' ')}>${content}</${tag}>`
   const div = (className, content) => el('div', [`class=${className}`], content)
   const item = (icon, filename, size) =>

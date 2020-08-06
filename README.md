@@ -4,9 +4,11 @@
 
 ## Demo
 
-![](https://cdn.spencer.felinae98.cn/blog/2020/08/200806_023252.png)
-
 Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
+
+| Home | Folder |
+|:-:|:-:|
+| ![](https://cdn.spencer.felinae98.cn/blog/2020/08/200806_153117.png) | ![](https://cdn.spencer.felinae98.cn/blog/2020/08/200806_153124.png) |
 
 ## Deployment
 
@@ -18,6 +20,12 @@ See: [How to use | OneDrive-Index-Cloudflare-Worker](https://github.com/heymind/
 
 - New design: [`spencer.css`](themes/spencer.css).
 - File icon rendered according to file type.
+- Use [Font Awesome icons](https://fontawesome.com/) instead of material design icons (For better design consistency).
+- Use [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) for `README.md` rendering.
+- Add breadcrumbs for better directory navigation.
+- Package source code with wrangler and webpack.
+- Convert all CDN assets to load with jsDelivr.
+- ...
 
 ### All other features
 

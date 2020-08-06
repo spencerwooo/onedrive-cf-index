@@ -5,7 +5,7 @@ async function renderReadme() {
   if (!resp.ok) return
 
   // Current directory contains README.md, load with spinner
-  const loadingLabel = `<div class="loading-label fade-out-top">
+  const loadingLabel = `<div class="loading-label">
                           <i class="fas fa-spinner fa-pulse"></i>
                           <span>Loading <code>README.md</code></span>
                         </div>`

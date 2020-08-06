@@ -17,12 +17,12 @@ async function renderReadme() {
       document
         .querySelector('.container')
         .insertAdjacentHTML('beforeend', '<div class="markdown-body fade-in-bottom">' + window.marked(res) + '</div>')
-      document.querySelector('.loading-label').remove()
+      document.querySelector('.loading-label').classList.add('fade-out-bck')
       // eslint-disable-next-line no-undef
       Prism.highlightAll()
     })
     .catch(e => {
-      document.querySelector('.loading-label').remove()
+      document.querySelector('.loading-label').classList.add('fade-out-bck')
       document
         .querySelector('.container')
         .insertAdjacentHTML(

@@ -94,7 +94,7 @@ async function handleRequest(request) {
       if (!request.url.endsWith('/')) {
         return Response.redirect(request.url + '/', 302)
       }
-      return new Response(renderFolderIndex(data.children, pathname === '/'), {
+      return new Response(renderFolderIndex(data.children, pathname === '/', pathname), {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'content-type': 'text/html'

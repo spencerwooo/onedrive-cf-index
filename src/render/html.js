@@ -1,4 +1,4 @@
-const COMMIT_HASH = '5fb93b1a056d6c11c94f173fede5483ac52374a2'
+const COMMIT_HASH = 'a2788b556ebda14504eec4b546c50803a9424600'
 
 export function renderHTML(body) {
   return `<!DOCTYPE html>

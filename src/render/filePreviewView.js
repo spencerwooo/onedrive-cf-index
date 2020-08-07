@@ -26,7 +26,22 @@ async function renderCodePreview(file, lang) {
 }
 
 function renderPDFPreview(file) {
-  return '<p>PDF preview online is work in progress.</p>'
+  return `<div id="pdf-preview-wrapper"></div>
+          <div class="loading-label">
+            <i class="fas fa-spinner fa-pulse"></i>
+            <span>Loading PDF...</span>
+          </div>
+          <script src="https://cdn.jsdelivr.net/gh/pipwerks/PDFObject/pdfobject.min.js"></script>
+          <script>
+            fetch("${file['@microsoft.graph.downloadUrl']}").then(resp => {
+              resp.blob().then(blob => {
+                document.querySelector('.loading-label').classList.add('fade-out-bck')
+                const pdfFile = new Blob([blob], { type: 'application/pdf' })
+                const pdfFileUrl = URL.createObjectURL(pdfFile)
+                PDFObject.embed(pdfFileUrl, "#pdf-preview-wrapper")
+              })
+            })
+          </script>`
 }
 
 function renderImage(file) {
@@ -34,6 +49,12 @@ function renderImage(file) {
   const ratio = (file.image.height / file.image.width) * 100
   return `<div class="image-wrapper" style="width: 100%; height: 0; padding-bottom: ${ratio}%; position: relative;">
             <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: absolute;"></img>
+          </div>`
+}
+
+function renderUnsupportedView(fileExt) {
+  return `<div class="markdown-body" style="margin-top: 0;">
+            <p>Sorry, we don't support previewing <code>.${fileExt}</code> files as of today. You can download the file directly.</p>
           </div>`
 }
 
@@ -55,7 +76,7 @@ async function renderPreview(file, fileExt) {
       return renderPDFPreview(file)
 
     default:
-      return Response.redirect(file['@microsoft.graph.downloadUrl'], 302)
+      return renderUnsupportedView(fileExt)
   }
 }
 

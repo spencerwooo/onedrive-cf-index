@@ -1,6 +1,7 @@
 const preview = {
   image: 'image',
   text: 'text',
+  pdf: 'pdf',
   code: 'code',
   markdown: 'markdown'
 }
@@ -14,6 +15,8 @@ const extensions = {
   md: preview.markdown,
   markdown: preview.markdown,
   mdown: preview.markdown,
+
+  pdf: preview.pdf,
 
   c: preview.code,
   cpp: preview.code,

@@ -41,6 +41,14 @@ async function renderCodePreview(file, lang) {
           </div>`
 }
 
+function renderPDFPreview(file) {
+  return `<object data="${file['@microsoft.graph.downloadUrl']}" type="application/pdf" width="100%" height="80vh">
+            <iframe src="${file['@microsoft.graph.downloadUrl']}" width="100%" height="80vh" style="border: none;" __idm_frm__="124">
+              This browser does not support PDFs. Please download the PDF to view it.
+            </iframe>
+          </object>`
+}
+
 function renderImage(file) {
   return `<img src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="display: block; max-width: 100%; margin: 0 auto;"></img>`
 }
@@ -58,6 +66,9 @@ async function renderPreview(file, fileExt) {
 
     case preview.code:
       return await renderCodePreview(file, fileExt)
+
+    case preview.pdf:
+      return renderPDFPreview(file)
 
     default:
       return Response.redirect(file['@microsoft.graph.downloadUrl'], 302)

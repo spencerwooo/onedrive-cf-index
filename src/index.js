@@ -64,7 +64,7 @@ async function handleRequest(request) {
 
   const url = `https://graph.microsoft.com/v1.0/me/drive/root${wrapPathName(
     pathname
-  )}?select=name,eTag,size,id,folder,file,%40microsoft.graph.downloadUrl&expand=children(select%3Dname,eTag,size,id,folder,file)`
+  )}?select=name,eTag,size,id,folder,file,%40microsoft.graph.downloadUrl&expand=children`
   const resp = await fetch(url, {
     headers: {
       Authorization: `bearer ${accessToken}`
@@ -94,7 +94,7 @@ async function handleRequest(request) {
       if (!request.url.endsWith('/')) {
         return Response.redirect(request.url + '/', 302)
       }
-      return new Response(renderFolderIndex(data.children, pathname === '/', pathname), {
+      return new Response(await renderFolderIndex(data.children, pathname === '/', pathname), {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'content-type': 'text/html'

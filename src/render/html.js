@@ -1,6 +1,6 @@
 import { favicon } from './favicon'
 
-const COMMIT_HASH = 'f760d6d72db04ae38c3ab0d16295f69dc71890f2'
+const COMMIT_HASH = 'ffc3a66e3e8e0aab081950d3571be19120a10d4c'
 
 export function renderHTML(body) {
   return `<!DOCTYPE html>
@@ -13,16 +13,16 @@ export function renderHTML(body) {
       <link rel="shortcut icon" type="image/png" sizes="16x16" href="${favicon}" />
       <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.min.css" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/gh/spencerwooo/onedrive-cf-index@${COMMIT_HASH}/themes/spencer.css" rel="stylesheet">
-      <link href="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/themes/prism.css" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css@gh-pages/github-markdown.css" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/themes/prism.css" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/prism.min.js" data-manual></script>
+      <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/plugins/autoloader/prism-autoloader.min.js"></script>
     </head>
     <body>
       ${body}
       <div style="flex-grow: 1;"></div>
       <footer><p>Powered by <a href="https://github.com/spencerwooo/onedrive-cf-index">onedrive-cf-index</a>, hosted on <a href="https://www.cloudflare.com/products/cloudflare-workers/">Cloudflare Workers</a>.</p></footer>
-      <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/prism.min.js" data-manual></script>
-      <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/plugins/autoloader/prism-autoloader.min.js"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/gh/spencerwooo/onedrive-cf-index@${COMMIT_HASH}/external/domUpdate.js"></script>
+      <script>Prism.highlightAll()</script>
     </body>
   </html>`
 }

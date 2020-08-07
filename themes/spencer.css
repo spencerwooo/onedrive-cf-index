@@ -119,6 +119,11 @@ a.item:hover {
   animation: fade-in-bottom 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
 
+.fade-in-fwd {
+  -webkit-animation: fade-in-fwd 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in-fwd 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
 .fade-out-bck {
   -webkit-animation: fade-out-bck 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: fade-out-bck 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
@@ -146,6 +151,32 @@ a.item:hover {
   100% {
     -webkit-transform: translateY(0);
     transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade-in-fwd {
+  0% {
+    -webkit-transform: translateZ(-80px);
+    transform: translateZ(-80px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-fwd {
+  0% {
+    -webkit-transform: translateZ(-80px);
+    transform: translateZ(-80px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
     opacity: 1;
   }
 }

@@ -30,6 +30,17 @@ async function renderMarkdownPreview(file) {
           </div>`
 }
 
+async function renderCodePreview(file, lang) {
+  const resp = await fetch(file['@microsoft.graph.downloadUrl'])
+  const content = await resp.text()
+  const toMarkdown = `\`\`\`${lang}\n${content}\n\`\`\``
+  console.log(toMarkdown)
+  const renderedCode = marked(toMarkdown)
+  return `<div class="markdown-body" style="margin-top: 0;">
+            ${renderedCode}
+          </div>`
+}
+
 function renderImage(file) {
   return `<img src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="display: block; max-width: 100%; margin: 0 auto;"></img>`
 }
@@ -44,6 +55,9 @@ async function renderPreview(file, fileExt) {
 
     case preview.image:
       return renderImage(file)
+
+    case preview.code:
+      return await renderCodePreview(file, fileExt)
 
     default:
       return Response.redirect(file['@microsoft.graph.downloadUrl'], 302)

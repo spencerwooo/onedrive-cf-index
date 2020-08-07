@@ -33,16 +33,17 @@ function renderPDFPreview(file) {
           </div>
           <script src="https://cdn.jsdelivr.net/gh/pipwerks/PDFObject/pdfobject.min.js"></script>
           <script>
-            fetch("${file['@microsoft.graph.downloadUrl']}").then(resp => {
+            fetch('${file['@microsoft.graph.downloadUrl']}').then(resp => {
               resp.blob().then(blob => {
                 document.querySelector('.loading-label').classList.add('fade-out-bck')
                 setTimeout(() => {
                   document.querySelector('.loading-label').remove()
+                  document.querySelector('#pdf-preview-wrapper').classList.add('fade-in-fwd')
                   const pdfFile = new Blob([blob], { type: 'application/pdf' })
                   const pdfFileUrl = URL.createObjectURL(pdfFile)
-                  PDFObject.embed(pdfFileUrl, "#pdf-preview-wrapper", {
-                    height: "80vh",
-                    fallbackLink: "<p>😟 This browser doesn't support previewing PDF, please download the PDF directly using the button below.</p>"
+                  PDFObject.embed(pdfFileUrl, '#pdf-preview-wrapper', {
+                    height: '80vh',
+                    fallbackLink: '<p>😟 This browser doesn't support previewing PDF, please download the PDF directly using the button below.</p>'
                   })
                 }, 600)
               })

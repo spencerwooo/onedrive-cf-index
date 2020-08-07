@@ -102,6 +102,27 @@ a.item:hover {
   opacity: 0.6;
 }
 
+.download-button-container {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.download-button {
+  display: block;
+  background-color: #000;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  margin: 1.5rem auto;
+  max-width: 180px;
+  user-select: none;
+  border-radius: 2px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+}
+
 .loading-label,
 .markdown-body {
   margin-top: 1.5rem;

@@ -29,24 +29,74 @@ function renderPDFPreview(file) {
   return `<div id="pdf-preview-wrapper"></div>
           <div class="loading-label">
             <i class="fas fa-spinner fa-pulse"></i>
-            <span>Loading PDF...</span>
+            <span id="loading-progress">Loading PDF...</span>
           </div>
           <script src="https://cdn.jsdelivr.net/gh/pipwerks/PDFObject/pdfobject.min.js"></script>
           <script>
-            fetch('${file['@microsoft.graph.downloadUrl']}').then(resp => {
-              resp.blob().then(blob => {
-                document.querySelector('.loading-label').classList.add('fade-out-bck')
-                setTimeout(() => {
-                  document.querySelector('.loading-label').remove()
-                  document.querySelector('#pdf-preview-wrapper').classList.add('fade-in-fwd')
-                  const pdfFile = new Blob([blob], { type: 'application/pdf' })
-                  const pdfFileUrl = URL.createObjectURL(pdfFile)
-                  PDFObject.embed(pdfFileUrl, '#pdf-preview-wrapper', {
-                    height: '80vh',
-                    fallbackLink: '<p>😟 This browser does not support previewing PDF, please download the PDF directly using the button below.</p>'
-                  })
-                }, 600)
+          const loadingLabel = document.querySelector('.loading-label')
+          const loadingProgress = document.querySelector('#loading-progress')
+          function progress({ loaded, total }) {
+            loadingProgress.innerHTML = 'Loading PDF... ' + Math.round(loaded / total * 100) + '%'
+          }
+
+          fetch('${file['@microsoft.graph.downloadUrl']}').then(response => {
+            if (!response.ok) {
+              loadingLabel.innerHTML = '😟 ' + response.status + ' ' + response.statusText
+              throw Error(response.status + ' ' + response.statusText)
+            }
+            if (!response.body) {
+              loadingLabel.innerHTML = '😟 ReadableStream not yet supported in this browser.'
+              throw Error('ReadableStream not yet supported in this browser.')
+            }
+
+            const contentEncoding = response.headers.get('content-encoding')
+            const contentLength = response.headers.get(contentEncoding ? 'x-file-size' : 'content-length')
+            if (contentLength === null) {
+              oadingLabel.innerHTML = '😟 Response size header unavailable.'
+              throw Error('Response size header unavailable')
+            }
+
+            const total = parseInt(contentLength, 10)
+            let loaded = 0
+
+            return new Response(
+              new ReadableStream({
+                start(controller) {
+                  const reader = response.body.getReader()
+
+                  read()
+                  function read() {
+                    reader.read().then(({ done, value }) => {
+                      if (done) {
+                        controller.close()
+                        return
+                      }
+                      loaded += value.byteLength
+                      progress({ loaded, total })
+                      controller.enqueue(value)
+                      read()
+                    }).catch(error => {
+                      console.error(error)
+                      controller.error(error)
+                    })
+                  }
+                }
               })
+            )
+          })
+            .then(resp => resp.blob())
+            .then(blob => {
+              loadingLabel.classList.add('fade-out-bck')
+              setTimeout(() => {
+                loadingLabel.remove()
+                document.querySelector('#pdf-preview-wrapper').classList.add('fade-in-fwd')
+                const pdfFile = new Blob([blob], { type: 'application/pdf' })
+                const pdfFileUrl = URL.createObjectURL(pdfFile)
+                PDFObject.embed(pdfFileUrl, '#pdf-preview-wrapper', {
+                  height: '80vh',
+                  fallbackLink: '<p>😟 This browser does not support previewing PDF, please download the PDF directly using the button below.</p>'
+                })
+              }, 600)
             })
           </script>`
 }

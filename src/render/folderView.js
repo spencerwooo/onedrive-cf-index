@@ -56,7 +56,7 @@ export async function renderFolderView(items, isIndex, path) {
     el(
       'a',
       [`href="${fileName}"`, 'class="item"', size ? `size="${size}"` : ''],
-      el('i', [`class="far ${icon}"`], '') +
+      el('i', [`class="${icon}"`], '') +
         fileName +
         el('div', ['style="flex-grow: 1;"'], '') +
         (fileName === '..' ? '' : el('span', ['class="size"'], readableFileSize(size)))
@@ -82,11 +82,11 @@ export async function renderFolderView(items, isIndex, path) {
           el(
             'div',
             ['style="min-width: 600px"'],
-            (!isIndex ? item('fa-folder', '..') : '') +
+            (!isIndex ? item('far fa-folder', '..') : '') +
               items
                 .map(i => {
                   if ('folder' in i) {
-                    return item('fa-folder', i.name, i.size)
+                    return item('far fa-folder', i.name, i.size)
                   } else if ('file' in i) {
                     // Check if README.md exists
                     if (!readmeExists) {
@@ -97,7 +97,13 @@ export async function renderFolderView(items, isIndex, path) {
                     // Render file icons
                     let fileIcon = getClassNameForMimeType(i.file.mimeType)
                     if (fileIcon === 'fa-file') {
-                      fileIcon = getClassNameForFilename(i.name)
+                      if (i.name.split('.').pop() === 'md') {
+                        fileIcon = 'fab fa-markdown'
+                      } else {
+                        fileIcon = `far ${getClassNameForFilename(i.name)}`
+                      }
+                    } else {
+                      fileIcon = `far ${fileIcon}`
                     }
                     return item(fileIcon, i.name, i.size)
                   } else {

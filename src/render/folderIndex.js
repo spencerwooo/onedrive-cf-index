@@ -1,4 +1,6 @@
 import { getClassNameForMimeType, getClassNameForFilename } from 'font-awesome-filetypes'
+import marked from 'marked'
+
 import { renderHTML } from './html'
 
 /**
@@ -33,9 +35,23 @@ function renderPath(path) {
   pathItems.forEach((item, idx) => {
     breadcrumb.push(link(getPathLink(pathItems, idx), idx === 0 ? '🚩 Home' : decodeURIComponent(item)))
   })
-  console.log(breadcrumb.join(' / '))
 
   return breadcrumb.join(' / ')
+}
+
+/**
+ * Fetch README.md from direct download url and render README
+ *
+ * @param {*} readmeFetchUrl README.md direct download url
+ */
+async function renderReadme(readmeFetchUrl) {
+  const resp = await fetch(readmeFetchUrl)
+  const md = await resp.text()
+  const renderedMd = marked(md)
+
+  return `<div class="markdown-body fade-in-fwd">
+            ${renderedMd}
+          </div>`
 }
 
 /**
@@ -67,7 +83,7 @@ function readableFileSize(bytes, si) {
  * @param {*} items
  * @param {*} isIndex don't show ".." on index page.
  */
-export function renderFolderIndex(items, isIndex, path) {
+export async function renderFolderIndex(items, isIndex, path) {
   const nav = '<nav><div class="brand">📁 Spencer\'s OneDrive Index</div></nav>'
   const el = (tag, attrs, content) => `<${tag} ${attrs.join(' ')}>${content}</${tag}>`
   const div = (className, content) => el('div', [`class=${className}`], content)
@@ -89,45 +105,45 @@ export function renderFolderIndex(items, isIndex, path) {
 
   // Check if current directory contains README.md, if true, then render spinner
   let readmeExists = false
-  const loadingLabel = `<div class="loading-label">
-                          <i class="fas fa-spinner fa-pulse"></i>
-                          <span>Loading README.md...</span>
-                        </div>`
+  let readmeFetchUrl = ''
 
-  return renderHTML(
+  const body =
     nav +
-      div(
-        'container',
-        div('path', renderPath(path)) +
-          div(
-            'items',
-            el(
-              'div',
-              ['style="min-width: 600px"'],
-              (!isIndex ? item('fa-folder', '..') : '') +
-                items
-                  .map(i => {
-                    if ('folder' in i) {
-                      return item('fa-folder', i.name, i.size)
-                    } else if ('file' in i) {
-                      // Check if README.md exists
-                      if (!readmeExists) {
-                        readmeExists = i.name.toLowerCase() === 'readme.md'
-                      }
+    div(
+      'container',
+      div('path', renderPath(path)) +
+        div(
+          'items',
+          el(
+            'div',
+            ['style="min-width: 600px"'],
+            (!isIndex ? item('fa-folder', '..') : '') +
+              items
+                .map(i => {
+                  if ('folder' in i) {
+                    return item('fa-folder', i.name, i.size)
+                  } else if ('file' in i) {
+                    // Check if README.md exists
+                    if (!readmeExists) {
+                      readmeExists = i.name.toLowerCase() === 'readme.md'
+                      readmeFetchUrl = i['@microsoft.graph.downloadUrl']
+                    }
 
-                      // Render file icons
-                      let fileIcon = getClassNameForMimeType(i.file.mimeType)
-                      if (fileIcon === 'fa-file') {
-                        fileIcon = getClassNameForFilename(i.name)
-                      }
-                      return item(fileIcon, i.name, i.size)
-                    } else console.log(`unknown item type ${i}`)
-                  })
-                  .join('')
-            )
-          ) +
-          (readmeExists && !isIndex ? loadingLabel : '') +
-          (isIndex ? intro : '')
-      )
-  )
+                    // Render file icons
+                    let fileIcon = getClassNameForMimeType(i.file.mimeType)
+                    if (fileIcon === 'fa-file') {
+                      fileIcon = getClassNameForFilename(i.name)
+                    }
+                    return item(fileIcon, i.name, i.size)
+                  } else {
+                    console.log(`unknown item type ${i}`)
+                  }
+                })
+                .join('')
+          )
+        ) +
+        (readmeExists && !isIndex ? await renderReadme(readmeFetchUrl) : '') +
+        (isIndex ? intro : '')
+    )
+  return renderHTML(body)
 }

@@ -43,7 +43,7 @@ function renderPDFPreview(file) {
                   const pdfFileUrl = URL.createObjectURL(pdfFile)
                   PDFObject.embed(pdfFileUrl, '#pdf-preview-wrapper', {
                     height: '80vh',
-                    fallbackLink: '<p>😟 This browser doesn't support previewing PDF, please download the PDF directly using the button below.</p>'
+                    fallbackLink: '<p>😟 This browser does not support previewing PDF, please download the PDF directly using the button below.</p>'
                   })
                 }, 600)
               })

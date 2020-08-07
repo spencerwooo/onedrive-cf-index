@@ -31,7 +31,7 @@ async function renderMarkdownPreview(file) {
 }
 
 function renderImage(file) {
-  return `<img src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="display: block; max-width: 100%; margin: 0 auto; border-radius: 8px;"></img>`
+  return `<img src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="display: block; max-width: 100%; margin: 0 auto;"></img>`
 }
 
 async function renderPreview(file, fileExt) {
@@ -67,7 +67,7 @@ export async function renderFilePreview(file, path, fileExt) {
           el(
             'a',
             ['class="download-button"', `href="${file['@microsoft.graph.downloadUrl']}"`],
-            '<i class="far fa-arrow-alt-circle-down"></i> Download'
+            '<i class="far fa-arrow-alt-circle-down"></i> DOWNLOAD'
           )
         )
     )

@@ -42,11 +42,7 @@ async function renderCodePreview(file, lang) {
 }
 
 function renderPDFPreview(file) {
-  return `<object data="${file['@microsoft.graph.downloadUrl']}" type="application/pdf" width="100%" height="80vh">
-            <iframe src="${file['@microsoft.graph.downloadUrl']}" width="100%" height="80vh" style="border: none;" __idm_frm__="124">
-              This browser does not support PDFs. Please download the PDF to view it.
-            </iframe>
-          </object>`
+  return '<p>PDF preview online is work in progress.</p>'
 }
 
 function renderImage(file) {

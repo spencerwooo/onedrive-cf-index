@@ -3,7 +3,9 @@ import { AUTH_ENABLED, NAME, PASS } from './auth/config'
 import { parseAuthHeader, unauthorizedResponse } from './auth/credentials'
 import { getAccessToken } from './auth/onedrive'
 import { handleFile, handleUpload } from './files/load'
-import { renderFolderIndex } from './render/folderIndex'
+import { extensions } from './render/fileExtension'
+import { renderFolderView } from './render/folderView'
+import { renderFilePreview } from './render/filePreviewView'
 
 addEventListener('fetch', event => {
   event.respondWith(handle(event.request))
@@ -70,31 +72,47 @@ async function handleRequest(request) {
       Authorization: `bearer ${accessToken}`
     }
   })
+
   let error = null
   if (resp.ok) {
     const data = await resp.json()
+
     if ('file' in data) {
-      return await handleFile(request, pathname, data['@microsoft.graph.downloadUrl'], {
-        proxied,
-        fileSize: data.size
-      })
+      // Render file preview view or download file directly
+      const fileExt = data.name.split('.').pop()
+      if (fileExt in extensions) {
+        return new Response(await renderFilePreview(data, pathname, fileExt), {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'content-type': 'text/html'
+          }
+        })
+      } else {
+        return await handleFile(request, pathname, data['@microsoft.graph.downloadUrl'], {
+          proxied,
+          fileSize: data.size
+        })
+      }
     } else if ('folder' in data) {
+      // Render folder view, list all children files
       if (config.upload && request.method === 'POST') {
         const filename = searchParams.get('upload')
         const key = searchParams.get('key')
         if (filename && key && config.upload.key === key) {
           return await handleUpload(request, pathname, filename)
         } else {
-          // eslint-disable-next-line no-undef
-          return new Response(body, {
+          return new Response('', {
             status: 400
           })
         }
       }
+
+      // 302 all folder requests that doesn't end with /
       if (!request.url.endsWith('/')) {
         return Response.redirect(request.url + '/', 302)
       }
-      return new Response(await renderFolderIndex(data.children, pathname === '/', pathname), {
+
+      return new Response(await renderFolderView(data.children, pathname === '/', pathname), {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'content-type': 'text/html'

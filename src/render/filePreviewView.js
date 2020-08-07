@@ -36,9 +36,15 @@ function renderPDFPreview(file) {
             fetch("${file['@microsoft.graph.downloadUrl']}").then(resp => {
               resp.blob().then(blob => {
                 document.querySelector('.loading-label').classList.add('fade-out-bck')
-                const pdfFile = new Blob([blob], { type: 'application/pdf' })
-                const pdfFileUrl = URL.createObjectURL(pdfFile)
-                PDFObject.embed(pdfFileUrl, "#pdf-preview-wrapper")
+                setTimeout(() => {
+                  document.querySelector('.loading-label').remove()
+                  const pdfFile = new Blob([blob], { type: 'application/pdf' })
+                  const pdfFileUrl = URL.createObjectURL(pdfFile)
+                  PDFObject.embed(pdfFileUrl, "#pdf-preview-wrapper", {
+                    height: "80vh",
+                    fallbackLink: "<p>😟 This browser doesn't support previewing PDF, please download the PDF directly using the button below.</p>"
+                  })
+                }, 600)
               })
             })
           </script>`

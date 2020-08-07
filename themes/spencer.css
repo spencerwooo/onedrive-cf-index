@@ -123,15 +123,15 @@ a.item:hover {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
 }
 
-.loading-label,
 .markdown-body {
-  margin-top: 1.5rem;
   font-family: var(--base-font-family) !important;
+  margin-top: 1.5rem;
 }
 
 .loading-label {
+  font-family: var(--base-font-family) !important;
   text-align: center;
-  margin-top: 1.5rem;
+  margin: 3rem 0rem;
   opacity: 0.6;
 }
 

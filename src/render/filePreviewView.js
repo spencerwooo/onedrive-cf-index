@@ -5,21 +5,6 @@ import { renderPath } from './pathUtil'
 
 import { preview, extensions } from './fileExtension'
 
-async function renderTextPreview(file) {
-  const resp = await fetch(file['@microsoft.graph.downloadUrl'])
-  const content = await resp.text()
-  const parseText = txt => {
-    let finalText = ''
-    txt.split('\n').forEach(t => {
-      finalText += `<p>${t}</p>`
-    })
-    return finalText
-  }
-  return `<div class="markdown-body" style="margin-top: 0;">
-            ${parseText(content)}
-          </div>`
-}
-
 async function renderMarkdownPreview(file) {
   const resp = await fetch(file['@microsoft.graph.downloadUrl'])
   const content = await resp.text()
@@ -58,7 +43,7 @@ async function renderPreview(file, fileExt) {
       return await renderMarkdownPreview(file)
 
     case preview.text:
-      return await renderTextPreview(file)
+      return await renderCodePreview(file, '')
 
     case preview.image:
       return renderImage(file)

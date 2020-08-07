@@ -34,7 +34,6 @@ async function renderCodePreview(file, lang) {
   const resp = await fetch(file['@microsoft.graph.downloadUrl'])
   const content = await resp.text()
   const toMarkdown = `\`\`\`${lang}\n${content}\n\`\`\``
-  console.log(toMarkdown)
   const renderedCode = marked(toMarkdown)
   return `<div class="markdown-body" style="margin-top: 0;">
             ${renderedCode}
@@ -46,7 +45,11 @@ function renderPDFPreview(file) {
 }
 
 function renderImage(file) {
-  return `<img src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="display: block; max-width: 100%; margin: 0 auto;"></img>`
+  // See: https://github.com/verlok/vanilla-lazyload#occupy-space-and-avoid-content-reflow
+  const ratio = (file.image.height / file.image.width) * 100
+  return `<div class="image-wrapper" style="width: 100%; height: 0; padding-bottom: ${ratio}%; position: relative;">
+            <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: absolute;"></img>
+          </div>`
 }
 
 async function renderPreview(file, fileExt) {
@@ -76,7 +79,6 @@ export async function renderFilePreview(file, path, fileExt) {
   const el = (tag, attrs, content) => `<${tag} ${attrs.join(' ')}>${content}</${tag}>`
   const div = (className, content) => el('div', [`class=${className}`], content)
 
-  console.log(file, path)
   const body =
     nav +
     div(

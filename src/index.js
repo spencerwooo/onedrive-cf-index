@@ -66,7 +66,7 @@ async function handleRequest(request) {
 
   const url = `https://graph.microsoft.com/v1.0/me/drive/root${wrapPathName(
     pathname
-  )}?select=name,eTag,size,id,folder,file,%40microsoft.graph.downloadUrl&expand=children`
+  )}?select=name,eTag,size,id,folder,file,image,%40microsoft.graph.downloadUrl&expand=children`
   const resp = await fetch(url, {
     headers: {
       Authorization: `bearer ${accessToken}`

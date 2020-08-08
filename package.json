@@ -25,7 +25,6 @@
   },
   "dependencies": {
     "font-awesome-filetypes": "^2.1.0",
-    "marked": "^1.1.1",
-    "vscode-material-icon-theme-js": "^1.0.7"
+    "marked": "^1.1.1"
   }
 }

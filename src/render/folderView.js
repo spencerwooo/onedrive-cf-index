@@ -55,7 +55,7 @@ export async function renderFolderView(items, isIndex, path) {
   const item = (icon, fileName, size) =>
     el(
       'a',
-      [`href="${fileName}"`, 'class="item"', size ? `size="${size}"` : ''],
+      [`href="${path}${fileName}"`, 'class="item"', size ? `size="${size}"` : ''],
       el('i', [`class="${icon}"`], '') +
         fileName +
         el('div', ['style="flex-grow: 1;"'], '') +

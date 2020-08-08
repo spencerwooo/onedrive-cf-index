@@ -86,12 +86,13 @@ function renderPDFPreview(file) {
           })
             .then(resp => resp.blob())
             .then(blob => {
+              const pdfFile = new Blob([blob], { type: 'application/pdf' })
+              const pdfFileUrl = URL.createObjectURL(pdfFile)
               loadingLabel.classList.add('fade-out-bck')
+
               setTimeout(() => {
                 loadingLabel.remove()
                 document.querySelector('#pdf-preview-wrapper').classList.add('fade-in-fwd')
-                const pdfFile = new Blob([blob], { type: 'application/pdf' })
-                const pdfFileUrl = URL.createObjectURL(pdfFile)
                 PDFObject.embed(pdfFileUrl, '#pdf-preview-wrapper', {
                   height: '80vh',
                   fallbackLink: '<p>😟 This browser does not support previewing PDF, please download the PDF directly using the button below.</p>'

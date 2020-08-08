@@ -13,6 +13,10 @@ const config = {
    */
   base: '/Public',
   /**
+   * The url for your Firebase Realtime Database storage, we'll cache your refresh token/access token here.
+   */
+  firebase_url: 'https://onedrive-cf-refresh-token.firebaseio.com/auth.json',
+  /**
    * Feature Caching
    * Enable Cloudflare cache for path pattern listed below.
    * Cache rules:

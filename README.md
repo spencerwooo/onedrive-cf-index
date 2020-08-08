@@ -162,6 +162,12 @@ wrangler publish
 
 You can also create a GitHub Actions for auto publishing your worker on `push`. See [main.yml](.github/workflows/main.yml).
 
+### Customizations
+
+- You can **(AND SHOULD)** change the `intro` on the default landing page here: [src/folderView.js](src/folderView.js#L51-L55). Write HTML directly.
+- Your custom styles are loaded from [themes/spencer.css](themes/spencer.css), change that according to your customizations.
+- You can also customize Markdown CSS styles, PrismJS code highlight color schemes, etc.
+
 ---
 
 🏵 **`onedrive-cf-index`** ©Spencer Woo. Released under the MIT License.

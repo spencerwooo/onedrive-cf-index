@@ -8,14 +8,17 @@ const config = {
   client_id: '6600e358-9328-4050-af82-0af9cdde796b',
   client_secret: CLIENT_SECRET,
   redirect_uri: 'https://heymind.github.io/tools/microsoft-graph-api-auth',
+
   /**
-   * The base path for indexing, all files and subfolders are public by this tool. For example `/Share`.
+   * The base path for indexing, all files and subfolders are public by this tool. For example: `/Public`.
    */
   base: '/Public',
+
   /**
-   * The url for your Firebase Realtime Database storage, we'll cache your refresh token/access token here.
+   * The url for your Firebase Realtime Database storage, we'll cache your refresh_token / access_token here.
    */
   firebase_url: 'https://onedrive-cf-refresh-token.firebaseio.com/auth.json',
+
   /**
    * Feature Caching
    * Enable Cloudflare cache for path pattern listed below.
@@ -39,26 +42,30 @@ const config = {
     chunkedCacheLimit: 100000000, // 100MB
     paths: ['/Images']
   },
+
   /**
-   * Feature Thumbnail
-   * Show a thumbnail of image by ?thumbnail=small (small,medium,large)
-   * more details: https://docs.microsoft.com/en-us/onedrive/developer/rest-api/api/driveitem_list_thumbnails?view=odsp-graph-online#size-options
-   * example: https://storage.idx0.workers.dev/Images/def.png?thumbnail=mediumSquare
-   *
+   * Feature: Thumbnail
+   * Show a thumbnail of image by ?thumbnail=small (small, medium, large)
+   * More details: https://docs.microsoft.com/en-us/onedrive/developer/rest-api/api/driveitem_list_thumbnails?view=odsp-graph-online#size-options
+   * Example: https://storage.spencerwoo.com/🥟%20Some%20test%20files/Previews/eb37c02438f.png?thumbnail=mediumSquare
+   * You can embed this link (url encoded) directly inside Markdown or HTML.
    */
   thumbnail: true,
+
   /**
-   * Small File Upload ( <= 4MB )
-   * example: POST https://storage.idx0.workers.dev/Images/?upload=<filename>&key=<secret_key>
+   * Small File Upload (<= 4MB)
+   * POST https://<base_url>/<directory_path>/?upload=<filename>&key=<secret_key>
    */
   upload: {
     enable: false,
-    key: 'your_secret_1key_here'
+    key: 'your_secret_key_here'
   },
+
   /**
-   * Feature Proxy Download
-   * Use Cloudflare as a relay to speed up download. ( especially in Mainland China )
-   * example: https://storage.idx0.workers.dev/Images/def.png?proxied
+   * Feature: Proxy Download
+   * Use Cloudflare as a relay to speed up download. (Especially in Mainland China)
+   * Example: https://storage.spencerwoo.com/🥟%20Some%20test%20files/Previews/eb37c02438f.png?raw=true&proxied
+   * You can also embed this link (url encoded) directly inside Markdown or HTML.
    */
   proxyDownload: true
 }

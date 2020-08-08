@@ -26,11 +26,14 @@ async function handle(request) {
   }
 }
 
-/**
- * Cloudflare cache instance
- */
+// Cloudflare cache instance
 const cache = caches.default
 
+/**
+ * Format and regularize directory path for OneDrive API
+ *
+ * @param {string} pathname The absolute path to file
+ */
 function wrapPathName(pathname) {
   pathname = config.base + (pathname === '/' ? '' : pathname)
   return pathname === '/' || pathname === '' ? '' : ':' + pathname
@@ -81,6 +84,8 @@ async function handleRequest(request) {
     if ('file' in data) {
       // Render file preview view or download file directly
       const fileExt = data.name.split('.').pop()
+
+      // Render image directly if ?raw=true parameters are given
       if (rawImage || !(fileExt in extensions)) {
         return await handleFile(request, pathname, data['@microsoft.graph.downloadUrl'], {
           proxied,

@@ -9,9 +9,7 @@ export async function getAccessToken() {
   }
 
   // Fetch access token from Google Firebase Database
-  const data = await (
-    await fetch(`${config.firebase_url}?auth=${FIREBASE_TOKEN}`)
-  ).json()
+  const data = await (await fetch(`${config.firebase_url}?auth=${FIREBASE_TOKEN}`)).json()
   if (data && data.access_token && timestamp() < data.expire_at) {
     console.log('Fetched token from storage.')
     return data.access_token

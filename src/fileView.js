@@ -6,6 +6,12 @@ import { renderMarkdown } from './render/mdRenderer'
 
 import { preview, extensions } from './render/fileExtension'
 
+/**
+ * Render code blocks with the help of marked and Markdown grammar
+ *
+ * @param {Object} file Object representing the code file to preview
+ * @param {string} lang The markdown code language string, usually just the file extension
+ */
 async function renderCodePreview(file, lang) {
   const resp = await fetch(file['@microsoft.graph.downloadUrl'])
   const content = await resp.text()
@@ -16,6 +22,11 @@ async function renderCodePreview(file, lang) {
           </div>`
 }
 
+/**
+ * Render PDF with built-in PDF viewer
+ *
+ * @param {Object} file Object representing the PDF to preview
+ */
 function renderPDFPreview(file) {
   return `<div id="pdf-preview-wrapper"></div>
           <div class="loading-label">
@@ -36,14 +47,14 @@ function renderPDFPreview(file) {
               throw Error(response.status + ' ' + response.statusText)
             }
             if (!response.body) {
-              loadingLabel.innerHTML = '😟 ReadableStream not yet supported in this browser.'
+              loadingLabel.innerHTML = '😟 ReadableStream not yet supported in this browser. Please download the PDF directly using the button below.'
               throw Error('ReadableStream not yet supported in this browser.')
             }
 
             const contentEncoding = response.headers.get('content-encoding')
             const contentLength = response.headers.get(contentEncoding ? 'x-file-size' : 'content-length')
             if (contentLength === null) {
-              oadingLabel.innerHTML = '😟 Response size header unavailable.'
+              loadingLabel.innerHTML = '😟 Response size header unavailable. Please download the PDF directly using the button below.'
               throw Error('Response size header unavailable')
             }
 
@@ -93,6 +104,11 @@ function renderPDFPreview(file) {
           </script>`
 }
 
+/**
+ * Render image (jpg, png or gif)
+ *
+ * @param {Object} file Object representing the image to preview
+ */
 function renderImage(file) {
   // See: https://github.com/verlok/vanilla-lazyload#occupy-space-and-avoid-content-reflow
   const ratio = (file.image.height / file.image.width) * 100
@@ -101,12 +117,23 @@ function renderImage(file) {
           </div>`
 }
 
+/**
+ * File preview fallback
+ *
+ * @param {string} fileExt The file extension parsed
+ */
 function renderUnsupportedView(fileExt) {
   return `<div class="markdown-body" style="margin-top: 0;">
             <p>Sorry, we don't support previewing <code>.${fileExt}</code> files as of today. You can download the file directly.</p>
           </div>`
 }
 
+/**
+ * Render preview of supported file format
+ *
+ * @param {Object} file Object representing the file to preview
+ * @param {string} fileExt The file extension parsed
+ */
 async function renderPreview(file, fileExt) {
   switch (extensions[fileExt]) {
     case preview.markdown:
@@ -133,10 +160,9 @@ export async function renderFilePreview(file, path, fileExt) {
   const el = (tag, attrs, content) => `<${tag} ${attrs.join(' ')}>${content}</${tag}>`
   const div = (className, content) => el('div', [`class=${className}`], content)
 
-  const body =
-    div(
-      'container',
-      div('path', renderPath(path) + ` / ${file.name}`) +
+  const body = div(
+    'container',
+    div('path', renderPath(path) + ` / ${file.name}`) +
       div('items', el('div', ['style="padding: 1rem 1rem;"'], await renderPreview(file, fileExt))) +
       div(
         'download-button-container',
@@ -146,6 +172,6 @@ export async function renderFilePreview(file, path, fileExt) {
           '<i class="far fa-arrow-alt-circle-down"></i> DOWNLOAD'
         )
       )
-    )
+  )
   return renderHTML(body)
 }

@@ -58,48 +58,47 @@ export async function renderFolderView(items, path) {
   let readmeExists = false
   let readmeFetchUrl = ''
 
-  const body =
-    div(
-      'container',
-      div('path', renderPath(path)) +
-        div(
-          'items',
-          el(
-            'div',
-            ['style="min-width: 600px"'],
-            (!isIndex ? item('far fa-folder', '..', `${path}..`) : '') +
-              items
-                .map(i => {
-                  if ('folder' in i) {
-                    return item('far fa-folder', i.name, `${path}${i.name}/`, i.size)
-                  } else if ('file' in i) {
-                    // Check if README.md exists
-                    if (!readmeExists) {
-                      readmeExists = i.name.toLowerCase() === 'readme.md'
-                      readmeFetchUrl = i['@microsoft.graph.downloadUrl']
-                    }
-
-                    // Render file icons
-                    let fileIcon = getClassNameForMimeType(i.file.mimeType)
-                    if (fileIcon === 'fa-file') {
-                      if (i.name.split('.').pop() === 'md') {
-                        fileIcon = 'fab fa-markdown'
-                      } else {
-                        fileIcon = `far ${getClassNameForFilename(i.name)}`
-                      }
-                    } else {
-                      fileIcon = `far ${fileIcon}`
-                    }
-                    return item(fileIcon, i.name, `${path}${i.name}`, i.size)
-                  } else {
-                    console.log(`unknown item type ${i}`)
+  const body = div(
+    'container',
+    div('path', renderPath(path)) +
+      div(
+        'items',
+        el(
+          'div',
+          ['style="min-width: 600px"'],
+          (!isIndex ? item('far fa-folder', '..', `${path}..`) : '') +
+            items
+              .map(i => {
+                if ('folder' in i) {
+                  return item('far fa-folder', i.name, `${path}${i.name}/`, i.size)
+                } else if ('file' in i) {
+                  // Check if README.md exists
+                  if (!readmeExists) {
+                    readmeExists = i.name.toLowerCase() === 'readme.md'
+                    readmeFetchUrl = i['@microsoft.graph.downloadUrl']
                   }
-                })
-                .join('')
-          )
-        ) +
-        (readmeExists && !isIndex ? await renderMarkdown(readmeFetchUrl, 'fade-in-fwd', '') : '') +
-        (isIndex ? intro : '')
-    )
+
+                  // Render file icons
+                  let fileIcon = getClassNameForMimeType(i.file.mimeType)
+                  if (fileIcon === 'fa-file') {
+                    if (i.name.split('.').pop() === 'md') {
+                      fileIcon = 'fab fa-markdown'
+                    } else {
+                      fileIcon = `far ${getClassNameForFilename(i.name)}`
+                    }
+                  } else {
+                    fileIcon = `far ${fileIcon}`
+                  }
+                  return item(fileIcon, i.name, `${path}${i.name}`, i.size)
+                } else {
+                  console.log(`unknown item type ${i}`)
+                }
+              })
+              .join('')
+        )
+      ) +
+      (readmeExists && !isIndex ? await renderMarkdown(readmeFetchUrl, 'fade-in-fwd', '') : '') +
+      (isIndex ? intro : '')
+  )
   return renderHTML(body)
 }

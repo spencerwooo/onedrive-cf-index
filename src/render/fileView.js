@@ -2,18 +2,9 @@ import marked from 'marked'
 
 import { renderHTML } from './htmlWrapper'
 import { renderPath } from './pathUtil'
+import { renderMarkdown } from './mdRenderer'
 
 import { preview, extensions } from './fileExtension'
-
-async function renderMarkdownPreview(file) {
-  const resp = await fetch(file['@microsoft.graph.downloadUrl'])
-  const content = await resp.text()
-
-  const renderedMd = marked(content)
-  return `<div class="markdown-body" style="margin-top: 0;">
-            ${renderedMd}
-          </div>`
-}
 
 async function renderCodePreview(file, lang) {
   const resp = await fetch(file['@microsoft.graph.downloadUrl'])
@@ -119,7 +110,7 @@ function renderUnsupportedView(fileExt) {
 async function renderPreview(file, fileExt) {
   switch (extensions[fileExt]) {
     case preview.markdown:
-      return await renderMarkdownPreview(file)
+      return await renderMarkdown(file['@microsoft.graph.downloadUrl'], '', 'style="margin-top: 0;"')
 
     case preview.text:
       return await renderCodePreview(file, '')
@@ -148,15 +139,15 @@ export async function renderFilePreview(file, path, fileExt) {
     div(
       'container',
       div('path', renderPath(path) + ` / ${file.name}`) +
-        div('items', el('div', ['style="padding: 1rem 1rem;"'], await renderPreview(file, fileExt))) +
-        div(
-          'download-button-container',
-          el(
-            'a',
-            ['class="download-button"', `href="${file['@microsoft.graph.downloadUrl']}"`],
-            '<i class="far fa-arrow-alt-circle-down"></i> DOWNLOAD'
-          )
+      div('items', el('div', ['style="padding: 1rem 1rem;"'], await renderPreview(file, fileExt))) +
+      div(
+        'download-button-container',
+        el(
+          'a',
+          ['class="download-button"', `href="${file['@microsoft.graph.downloadUrl']}"`],
+          '<i class="far fa-arrow-alt-circle-down"></i> DOWNLOAD'
         )
+      )
     )
   return renderHTML(body)
 }

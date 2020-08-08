@@ -5,7 +5,7 @@ import { getAccessToken } from './auth/onedrive'
 import { handleFile, handleUpload } from './files/load'
 import { extensions } from './render/fileExtension'
 import { renderFolderView } from './render/folderView'
-import { renderFilePreview } from './render/filePreviewView'
+import { renderFilePreview } from './render/fileView'
 
 addEventListener('fetch', event => {
   event.respondWith(handle(event.request))

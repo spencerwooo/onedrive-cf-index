@@ -1,23 +1,8 @@
 import { getClassNameForMimeType, getClassNameForFilename } from 'font-awesome-filetypes'
-import marked from 'marked'
 
 import { renderHTML } from './htmlWrapper'
 import { renderPath } from './pathUtil'
-
-/**
- * Fetch README.md from direct download url and render README
- *
- * @param {*} readmeFetchUrl README.md direct download url
- */
-async function renderReadme(readmeFetchUrl) {
-  const resp = await fetch(readmeFetchUrl)
-  const md = await resp.text()
-  const renderedMd = marked(md)
-
-  return `<div class="markdown-body fade-in-fwd">
-            ${renderedMd}
-          </div>`
-}
+import { renderMarkdown } from './mdRenderer'
 
 /**
  * Convert bytes to human readable file size
@@ -113,7 +98,7 @@ export async function renderFolderView(items, isIndex, path) {
                 .join('')
           )
         ) +
-        (readmeExists && !isIndex ? await renderReadme(readmeFetchUrl) : '') +
+        (readmeExists && !isIndex ? await renderMarkdown(readmeFetchUrl, 'fade-in-fwd', '') : '') +
         (isIndex ? intro : '')
     )
   return renderHTML(body)

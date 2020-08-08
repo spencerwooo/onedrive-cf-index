@@ -4,13 +4,15 @@ import config from '../config/default'
  * Get access token for microsoft graph API endpoints. Refresh token if needed.
  */
 export async function getAccessToken() {
-  const timestamp = Math.floor(Date.now() / 1000)
+  const timestamp = () => {
+    return Math.floor(Date.now() / 1000)
+  }
 
   // Fetch access token from Google Firebase Database
   const data = await (
     await fetch(`https://onedrive-cf-refresh-token.firebaseio.com/auth.json?auth=${FIREBASE_TOKEN}`)
   ).json()
-  if (data && data.access_token && timestamp < data.expire_at) {
+  if (data && data.access_token && timestamp() < data.expire_at) {
     console.log('Fetched token from storage.')
     return data.access_token
   }
@@ -29,7 +31,7 @@ export async function getAccessToken() {
     const data = await resp.json()
 
     // Update expiration time at Google Firebase on token refresh
-    data.expire_at = timestamp + data.expires_in
+    data.expire_at = timestamp() + data.expires_in
 
     const store = await fetch(`https://onedrive-cf-refresh-token.firebaseio.com/auth.json?auth=${FIREBASE_TOKEN}`, {
       method: 'PUT',

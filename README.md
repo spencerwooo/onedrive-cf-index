@@ -20,6 +20,7 @@
     - [Get Firebase Database Tokens](#get-firebase-database-tokens)
   - [Preparing](#preparing)
   - [Building and publishing](#building-and-publishing)
+- [Customizations](#customizations)
 
 ## Demo
 
@@ -162,7 +163,7 @@ wrangler publish
 
 You can also create a GitHub Actions for auto publishing your worker on `push`. See [main.yml](.github/workflows/main.yml).
 
-### Customizations
+## Customizations
 
 - You can **(AND SHOULD)** change the `intro` on the default landing page here: [src/folderView.js](src/folderView.js#L51-L55). Write HTML directly.
 - Your custom styles are loaded from [themes/spencer.css](themes/spencer.css), change that according to your customizations.

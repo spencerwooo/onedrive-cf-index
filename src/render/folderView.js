@@ -37,10 +37,10 @@ export async function renderFolderView(items, isIndex, path) {
   const nav = '<nav><div class="brand">📁 Spencer\'s OneDrive Index</div></nav>'
   const el = (tag, attrs, content) => `<${tag} ${attrs.join(' ')}>${content}</${tag}>`
   const div = (className, content) => el('div', [`class=${className}`], content)
-  const item = (icon, fileName, size) =>
+  const item = (icon, fileName, fileAbsoluteUrl, size) =>
     el(
       'a',
-      [`href="${path}${fileName}/"`, 'class="item"', size ? `size="${size}"` : ''],
+      [`href="${fileAbsoluteUrl}"`, 'class="item"', size ? `size="${size}"` : ''],
       el('i', [`class="${icon}"`], '') +
         fileName +
         el('div', ['style="flex-grow: 1;"'], '') +
@@ -67,11 +67,11 @@ export async function renderFolderView(items, isIndex, path) {
           el(
             'div',
             ['style="min-width: 600px"'],
-            (!isIndex ? item('far fa-folder', '..') : '') +
+            (!isIndex ? item('far fa-folder', '..', `${path}/`) : '') +
               items
                 .map(i => {
                   if ('folder' in i) {
-                    return item('far fa-folder', i.name, i.size)
+                    return item('far fa-folder', i.name, `${path}${i.name}/`, i.size)
                   } else if ('file' in i) {
                     // Check if README.md exists
                     if (!readmeExists) {
@@ -90,7 +90,7 @@ export async function renderFolderView(items, isIndex, path) {
                     } else {
                       fileIcon = `far ${fileIcon}`
                     }
-                    return item(fileIcon, i.name, i.size)
+                    return item(fileIcon, i.name, `${path}${i.name}`, i.size)
                   } else {
                     console.log(`unknown item type ${i}`)
                   }

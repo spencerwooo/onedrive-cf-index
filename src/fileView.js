@@ -54,8 +54,9 @@ function renderPDFPreview(file) {
             const contentEncoding = response.headers.get('content-encoding')
             const contentLength = response.headers.get(contentEncoding ? 'x-file-size' : 'content-length')
             if (contentLength === null) {
-              loadingLabel.innerHTML = '😟 Response size header unavailable. Please download the PDF directly using the button below.'
-              throw Error('Response size header unavailable')
+              loadingProgress.innerHTML = 'Loading progress unavailable. Please wait or download the PDF directly using the button below.'
+              console.error('Response size header unavailable')
+              return response
             }
 
             const total = parseInt(contentLength, 10)

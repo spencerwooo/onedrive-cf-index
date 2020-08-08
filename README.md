@@ -39,18 +39,18 @@ Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 - **New design:** [`spencer.css`](themes/spencer.css).
 - File icon rendered according to file type.
 - Use [Font Awesome icons](https://fontawesome.com/) instead of material design icons (For better design consistency).
-- Use [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) for `README.md` rendering.
+- Use [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) for `README.md` rendering → [Demo](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/README/).
 - **Add breadcrumbs for better directory navigation.**
 - **Support file previewing:**
-  - Images: `.png`, `.jpg`, `.gif`.
-  - Plain text: `.txt`.
-  - Markdown: `.md`, `.mdown`, `.markdown`.
-  - Code: `.js`, `.py`, `.c`, `.json`...
-  - **PDF: Lazy loading, loading progress and built-in PDF viewer.**
+  - Images: `.png`, `.jpg`, `.gif` → [Demo](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Previews/eb37c02438f.png).
+  - Plain text: `.txt` → [Demo](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Previews/iso_8859-1.txt).
+  - Markdown: `.md`, `.mdown`, `.markdown` → [Demo](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Previews/i_m_a_md.md).
+  - Code: `.js`, `.py`, `.c`, `.json`... → [Demo](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Code/pathUtil.js).
+  - **PDF: Lazy loading, loading progress and built-in PDF viewer** → [Demo](https://storage.spencerwoo.com/%F0%9F%A5%91%20Course%20PPT%20for%20CS%20(BIT)/2018%20-%20%E5%A4%A7%E4%BA%8C%E4%B8%8B%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/1%20FoundationofCG-Anonymous.pdf)
   - ...
 - Code syntax highlight in GitHub style. (With PrismJS.)
 - Image preview supports [Medium style zoom effect](https://github.com/francoischalifour/medium-zoom).
-- Token cached and refreshed with Google Firebase Realtime Database. (For those who can't afford Cloudflare Workers KV storage. 😢)
+- Token cached and refreshed with Google Firebase Realtime Database. (~~For those who can't afford Cloudflare Workers KV storage.~~ 😢)
 - Route lazy loading with the help of [Turbolinks®](https://github.com/turbolinks/turbolinks). (Somewhat buggy when going from `folder` to `file preview`, but not user-experience degrading.)
 - ...
 
@@ -96,7 +96,7 @@ After all this hassle, you should have successfully acquired the following token
 - `client_id`
 - `client_secret`
 - `redirect_uri`: <https://heymind.github.io/tools/microsoft-graph-api-auth> (default)
-- `base`: `/Public` (default)
+- `base`: '/Public' (default)
 - `firebase_url`
 - `firebase_token`
 

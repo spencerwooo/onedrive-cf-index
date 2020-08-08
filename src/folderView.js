@@ -67,7 +67,7 @@ export async function renderFolderView(items, path) {
           el(
             'div',
             ['style="min-width: 600px"'],
-            (!isIndex ? item('far fa-folder', '..', `${path}/`) : '') +
+            (!isIndex ? item('far fa-folder', '..', `${path}..`) : '') +
               items
                 .map(i => {
                   if ('folder' in i) {

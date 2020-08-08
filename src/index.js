@@ -47,6 +47,7 @@ async function handleRequest(request) {
 
   const { pathname, searchParams } = new URL(request.url)
 
+  const rawImage = searchParams.get('raw')
   const thumbnail = config.thumbnail ? searchParams.get('thumbnail') : false
   const proxied = config.proxyDownload ? searchParams.get('proxied') !== null : false
 
@@ -80,19 +81,19 @@ async function handleRequest(request) {
     if ('file' in data) {
       // Render file preview view or download file directly
       const fileExt = data.name.split('.').pop()
-      if (fileExt in extensions) {
-        return new Response(await renderFilePreview(data, pathname, fileExt), {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'content-type': 'text/html'
-          }
-        })
-      } else {
+      if (rawImage || !(fileExt in extensions)) {
         return await handleFile(request, pathname, data['@microsoft.graph.downloadUrl'], {
           proxied,
           fileSize: data.size
         })
       }
+
+      return new Response(await renderFilePreview(data, pathname, fileExt), {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'content-type': 'text/html'
+        }
+      })
     } else if ('folder' in data) {
       // Render folder view, list all children files
       if (config.upload && request.method === 'POST') {

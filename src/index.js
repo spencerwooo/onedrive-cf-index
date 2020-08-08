@@ -4,8 +4,8 @@ import { parseAuthHeader, unauthorizedResponse } from './auth/credentials'
 import { getAccessToken } from './auth/onedrive'
 import { handleFile, handleUpload } from './files/load'
 import { extensions } from './render/fileExtension'
-import { renderFolderView } from './render/folderView'
-import { renderFilePreview } from './render/fileView'
+import { renderFolderView } from './folderView'
+import { renderFilePreview } from './fileView'
 
 addEventListener('fetch', event => {
   event.respondWith(handle(event.request))
@@ -113,7 +113,7 @@ async function handleRequest(request) {
         return Response.redirect(request.url + '/', 302)
       }
 
-      return new Response(await renderFolderView(data.children, pathname === '/', pathname), {
+      return new Response(await renderFolderView(data.children, pathname), {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'content-type': 'text/html'

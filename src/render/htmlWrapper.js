@@ -21,9 +21,10 @@ export function renderHTML(body) {
       <script src="https://cdn.jsdelivr.net/npm/turbolinks@5.2.0/dist/turbolinks.min.js"></script>
     </head>
     <body>
+      <nav id="navbar" data-turbolinks-permanent><div class="brand">📁 Spencer's OneDrive Index</div></nav>
       ${body}
-      <div style="flex-grow: 1;"></div>
-      <footer><p>Powered by <a href="https://github.com/spencerwooo/onedrive-cf-index">onedrive-cf-index</a>, hosted on <a href="https://www.cloudflare.com/products/cloudflare-workers/">Cloudflare Workers</a>.</p></footer>
+      <div id="flex-container" data-turbolinks-permanent style="flex-grow: 1;"></div>
+      <footer id="footer" data-turbolinks-permanent><p>Powered by <a href="https://github.com/spencerwooo/onedrive-cf-index">onedrive-cf-index</a>, hosted on <a href="https://www.cloudflare.com/products/cloudflare-workers/">Cloudflare Workers</a>.</p></footer>
       <script>
         Turbolinks.start()
         Prism.highlightAll()

@@ -1,10 +1,10 @@
 import marked from 'marked'
 
-import { renderHTML } from './htmlWrapper'
-import { renderPath } from './pathUtil'
-import { renderMarkdown } from './mdRenderer'
+import { renderHTML } from './render/htmlWrapper'
+import { renderPath } from './render/pathUtil'
+import { renderMarkdown } from './render/mdRenderer'
 
-import { preview, extensions } from './fileExtension'
+import { preview, extensions } from './render/fileExtension'
 
 async function renderCodePreview(file, lang) {
   const resp = await fetch(file['@microsoft.graph.downloadUrl'])
@@ -130,12 +130,10 @@ async function renderPreview(file, fileExt) {
 }
 
 export async function renderFilePreview(file, path, fileExt) {
-  const nav = '<nav><div class="brand">📁 Spencer\'s OneDrive Index</div></nav>'
   const el = (tag, attrs, content) => `<${tag} ${attrs.join(' ')}>${content}</${tag}>`
   const div = (className, content) => el('div', [`class=${className}`], content)
 
   const body =
-    nav +
     div(
       'container',
       div('path', renderPath(path) + ` / ${file.name}`) +

@@ -1,8 +1,8 @@
 import { getClassNameForMimeType, getClassNameForFilename } from 'font-awesome-filetypes'
 
-import { renderHTML } from './htmlWrapper'
-import { renderPath } from './pathUtil'
-import { renderMarkdown } from './mdRenderer'
+import { renderHTML } from './render/htmlWrapper'
+import { renderPath } from './render/pathUtil'
+import { renderMarkdown } from './render/mdRenderer'
 
 /**
  * Convert bytes to human readable file size
@@ -33,8 +33,9 @@ function readableFileSize(bytes, si) {
  * @param {*} items
  * @param {*} isIndex don't show ".." on index page.
  */
-export async function renderFolderView(items, isIndex, path) {
-  const nav = '<nav><div class="brand">📁 Spencer\'s OneDrive Index</div></nav>'
+export async function renderFolderView(items, path) {
+  const isIndex = path === '/'
+
   const el = (tag, attrs, content) => `<${tag} ${attrs.join(' ')}>${content}</${tag}>`
   const div = (className, content) => el('div', [`class=${className}`], content)
   const item = (icon, fileName, fileAbsoluteUrl, size) =>
@@ -58,7 +59,6 @@ export async function renderFolderView(items, isIndex, path) {
   let readmeFetchUrl = ''
 
   const body =
-    nav +
     div(
       'container',
       div('path', renderPath(path)) +

@@ -124,9 +124,19 @@ function renderImage(file) {
  * @param {Object} file Object representing the video to preview
  */
 function renderVideoPreview(file) {
-  return `<script src="https://cdn.jsdelivr.net/npm/dplayer@1.26.0"></script>
-  <div id="dplayer"></div>
-  <script>const dp = new DPlayer({container: document.getElementById('dplayer'),lang:'zh-cn',preload:'auto',video: {url: '${file['@microsoft.graph.downloadUrl']}',type: 'auto'}});</script>`
+  return `<div id="dplayer"></div>
+          <script src="https://cdn.jsdelivr.net/npm/dplayer@1.26.0"></script>
+          <script>
+          const dp = new DPlayer({
+            container: document.getElementById('dplayer'),
+            lang: 'zh-cn',
+            preload: 'auto',
+            video: {
+              url: '${file['@microsoft.graph.downloadUrl']}',
+              type: 'auto'
+            }
+          })
+          </script>`
 }
 
 /**

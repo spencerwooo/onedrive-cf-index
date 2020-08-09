@@ -31,7 +31,7 @@ export async function getAccessToken() {
     // Update expiration time at Google Firebase on token refresh
     data.expire_at = timestamp() + data.expires_in
 
-    const store = await fetch(`https://onedrive-cf-refresh-token.firebaseio.com/auth.json?auth=${FIREBASE_TOKEN}`, {
+    const store = await fetch(`${config.firebase_url}?auth=${FIREBASE_TOKEN}`, {
       method: 'PUT',
       body: JSON.stringify(data),
       headers: {

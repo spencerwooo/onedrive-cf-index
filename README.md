@@ -84,6 +84,8 @@ See: [New features | OneDrive-Index-Cloudflare-Worker](https://github.com/heymin
 5. Get your `refresh_token` using <https://heymind.github.io/tools/microsoft-graph-api-auth>.
 6. Create a dedicated folder for your public files inside OneDrive, for instance: `/Public`.
 
+_If you can't fetch the `access_token` and/or `refresh_token` on step 5, please resolve to the solution suggested in [#13](https://github.com/spencerwooo/onedrive-cf-index/issues/13#issuecomment-671027672)._
+
 #### Get Firebase Database Tokens
 
 1. Register new project at [Google Firebase](https://firebase.google.com/).

@@ -3,7 +3,8 @@ const preview = {
   text: 'text',
   pdf: 'pdf',
   code: 'code',
-  markdown: 'markdown'
+  markdown: 'markdown',
+  video: 'video'
 }
 
 const extensions = {
@@ -33,7 +34,12 @@ const extensions = {
   yaml: preview.code,
   toml: preview.code,
 
-  txt: preview.text
+  txt: preview.text,
+
+  mp4: preview.video,
+  flv: preview.video,
+  webm: preview.video,
+  m3u8: preview.video
 }
 
 export { extensions, preview }

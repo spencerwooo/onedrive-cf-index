@@ -1,10 +1,11 @@
 const preview = {
+  markdown: 'markdown',
   image: 'image',
   text: 'text',
   pdf: 'pdf',
   code: 'code',
-  markdown: 'markdown',
-  video: 'video'
+  video: 'video',
+  audio: 'audio'
 }
 
 const extensions = {
@@ -39,7 +40,12 @@ const extensions = {
   mp4: preview.video,
   flv: preview.video,
   webm: preview.video,
-  m3u8: preview.video
+  m3u8: preview.video,
+
+  mp3: preview.audio,
+  aac: preview.audio,
+  wav: preview.audio,
+  oga: preview.audio
 }
 
 export { extensions, preview }

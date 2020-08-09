@@ -47,7 +47,7 @@ Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
   - Plain text: `.txt` → [Demo](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Previews/iso_8859-1.txt).
   - Markdown: `.md`, `.mdown`, `.markdown` → [Demo](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Previews/i_m_a_md.md).
   - Code: `.js`, `.py`, `.c`, `.json`... → [Demo](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Code/pathUtil.js).
-  - **PDF: Lazy loading, loading progress and built-in PDF viewer** → [Demo](<https://storage.spencerwoo.com/%F0%9F%A5%91%20Course%20PPT%20for%20CS%20(BIT)/2018%20-%20%E5%A4%A7%E4%BA%8C%E4%B8%8B%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/1%20FoundationofCG-Anonymous.pdf>)
+  - **PDF: Lazy loading, loading progress and built-in PDF viewer** → [Demo](<https://storage.spencerwoo.com/%F0%9F%A5%91%20Course%20PPT%20for%20CS%20(BIT)/2018%20-%20%E5%A4%A7%E4%BA%8C%E4%B8%8B%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/1%20FoundationofCG-Anonymous.pdf>).
   - ...
 - Code syntax highlight in GitHub style. (With PrismJS.)
 - Image preview supports [Medium style zoom effect](https://github.com/francoischalifour/medium-zoom).
@@ -75,10 +75,10 @@ See: [New features | OneDrive-Index-Cloudflare-Worker](https://github.com/heymin
 
 #### Get OneDrive API Tokens
 
-1. Create new blade app here: [Microsoft Azure App registrations](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade) with:
+1. Create a new blade app here [Microsoft Azure App registrations](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade) with:
    1. `Supported account types` set to "Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)".
    2. `Redirect URI (optional)` set to "Web: https://heymind.github.io/tools/microsoft-graph-api-auth".
-2. Get your Application (client) ID which is `client_id` at `Overview` panel.
+2. Get your Application (client) ID - `client_id` at `Overview` panel.
 3. Open `Certificates & secrets` panel and create a new secret called `client_secret`.
 4. Add permissions `offline_access, Files.Read, Files.Read.All` at `API permissions`.
 5. Get your `refresh_token` using <https://heymind.github.io/tools/microsoft-graph-api-auth>.
@@ -96,8 +96,8 @@ After all this hassle, you should have successfully acquired the following token
 - `refresh_token`
 - `client_id`
 - `client_secret`
-- `redirect_uri`: <https://heymind.github.io/tools/microsoft-graph-api-auth> (default)
-- `base`: '/Public' (default)
+- `redirect_uri`: Defaults to `https://heymind.github.io/tools/microsoft-graph-api-auth`.
+- `base`: Defaults to `/Public`.
 - `firebase_url`
 - `firebase_token`
 
@@ -119,7 +119,7 @@ wrangler config
 wrangler whoami
 ```
 
-Create a **DRAFT** worker at Cloudflare Workers with a cool name. Get your own Cloudflare `account_id` and `zone_id`.
+Create a **DRAFT** worker at Cloudflare Workers with a cool name. Get your own Cloudflare `account_id` and `zone_id`: [Docs - Account ID And Zone ID](https://developers.cloudflare.com/workers/quickstart#account-id-and-zone-id).
 
 Modify [`wrangler.toml`](wrangler.toml):
 

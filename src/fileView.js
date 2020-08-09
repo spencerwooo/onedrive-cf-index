@@ -119,6 +119,47 @@ function renderImage(file) {
 }
 
 /**
+ * Render video (mp4, flv, m3u8, webm ...)
+ *
+ * @param {Object} file Object representing the video to preview
+ */
+function renderVideoPlayer(file) {
+  return `<div id="dplayer"></div>
+          <script src="https://cdn.jsdelivr.net/npm/dplayer@1.26.0/dist/DPlayer.min.js"></script>
+          <script>
+          const dp = new DPlayer({
+            container: document.getElementById('dplayer'),
+            theme: '#0070f3',
+            video: {
+              url: '${file['@microsoft.graph.downloadUrl']}',
+              type: 'auto'
+            }
+          })
+          </script>`
+}
+
+/**
+ * Render audio (mp3, aac, wav, oga ...)
+ *
+ * @param {Object} file Object representing the audio to preview
+ */
+function renderAudioPlayer(file) {
+  return `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+          <div id="aplayer"></div>
+          <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+          <script>
+          const ap = new APlayer({
+            container: document.getElementById('aplayer'),
+            theme: '#0070f3',
+            audio: [{
+              name: '${file.name}',
+              url: '${file['@microsoft.graph.downloadUrl']}'
+            }]
+          })
+          </script>`
+}
+
+/**
  * File preview fallback
  *
  * @param {string} fileExt The file extension parsed
@@ -151,6 +192,12 @@ async function renderPreview(file, fileExt) {
 
     case preview.pdf:
       return renderPDFPreview(file)
+
+    case preview.video:
+      return renderVideoPlayer(file)
+
+    case preview.audio:
+      return renderAudioPlayer(file)
 
     default:
       return renderUnsupportedView(fileExt)

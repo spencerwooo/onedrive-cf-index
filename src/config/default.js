@@ -67,7 +67,14 @@ const config = {
    * Example: https://storage.spencerwoo.com/🥟%20Some%20test%20files/Previews/eb37c02438f.png?raw=true&proxied
    * You can also embed this link (url encoded) directly inside Markdown or HTML.
    */
-  proxyDownload: true
+  proxyDownload: true,
+
+  /**
+   * Feature: add CN(21Vianet) support
+   * Usage: simply uncomment the **useOnedriveCN: true** line
+   */
+
+  // useOnedriveCN: true 
 }
 
 export default config

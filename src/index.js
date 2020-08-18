@@ -54,8 +54,10 @@ async function handleRequest(request) {
   const thumbnail = config.thumbnail ? searchParams.get('thumbnail') : false
   const proxied = config.proxyDownload ? searchParams.get('proxied') !== null : false
 
+  const isUseCnUrl = config.useOnedriveCN && 'microsoftgraph.chinacloudapi.cn' || 'graph.microsoft.com'
+
   if (thumbnail) {
-    const url = `https://graph.microsoft.com/v1.0/me/drive/root:${base +
+    const url = `https://${ isUseCnUrl }/v1.0/me/drive/root:${base +
       (pathname === '/' ? '' : pathname)}:/thumbnails/0/${thumbnail}/content`
     const resp = await fetch(url, {
       headers: {
@@ -68,7 +70,7 @@ async function handleRequest(request) {
     })
   }
 
-  const url = `https://graph.microsoft.com/v1.0/me/drive/root${wrapPathName(
+  const url = `https://${ isUseCnUrl }/v1.0/me/drive/root${wrapPathName(
     pathname
   )}?select=name,eTag,size,id,folder,file,image,%40microsoft.graph.downloadUrl&expand=children`
   const resp = await fetch(url, {

@@ -20,6 +20,12 @@ const config = {
   firebase_url: 'https://onedrive-cf-refresh-token.firebaseio.com/auth.json',
 
   /**
+   * Feature: add OneDriveCN (21Vianet) support
+   * Usage: simply change `useOneDriveCN` to true
+   */
+  useOneDriveCN: false,
+
+  /**
    * Feature Caching
    * Enable Cloudflare cache for path pattern listed below.
    * Cache rules:

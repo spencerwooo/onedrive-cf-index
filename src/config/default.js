@@ -23,7 +23,6 @@ const config = {
    * Feature: add OneDriveCN (21Vianet) support
    * Usage: simply change `useOneDriveCN` to true
    */
-
   useOneDriveCN: false,
 
   /**

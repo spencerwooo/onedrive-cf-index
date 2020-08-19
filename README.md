@@ -55,6 +55,7 @@ Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 - Image preview supports [Medium style zoom effect](https://github.com/francoischalifour/medium-zoom).
 - Token cached and refreshed with Google Firebase Realtime Database. (~~For those who can't afford Cloudflare Workers KV storage.~~ 😢)
 - Route lazy loading with the help of [Turbolinks®](https://github.com/turbolinks/turbolinks). (Somewhat buggy when going from `folder` to `file preview`, but not user-experience degrading.)
+- Supports OneDrive 21Vianet.（由世纪互联运营的 OneDrive。）
 - ...
 
 #### Under the hood
@@ -77,16 +78,16 @@ See: [New features | OneDrive-Index-Cloudflare-Worker](https://github.com/heymin
 
 #### Get OneDrive API Tokens
 
-1. Create a new blade app here [Microsoft Azure App registrations](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade) with:
-   1. `Supported account types` set to "Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)".
+1. Create a new blade app here [Microsoft Azure App registrations](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade) (OneDrive normal version) or [Microsoft Azure.cn App registrations](https://portal.azure.cn/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade) (OneDrive 世纪互联版本) with:
+   1. `Supported account types` set to `Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)`. OneDrive 世纪互联用户设置为：`任何组织目录（任何 Azure AD 目录 - 多租户）中的帐户`.
    2. `Redirect URI (optional)` set to "Web: https://heymind.github.io/tools/microsoft-graph-api-auth".
 2. Get your Application (client) ID - `client_id` at `Overview` panel.
 3. Open `Certificates & secrets` panel and create a new secret called `client_secret`.
 4. Add permissions `offline_access, Files.Read, Files.Read.All` at `API permissions`.
 5. Get your `refresh_token` using <https://heymind.github.io/tools/microsoft-graph-api-auth>.
-6. Create a dedicated folder for your public files inside OneDrive, for instance: `/Public`.
+6. Create a dedicated folder for your public files inside OneDrive, for instance: `/Public`. Please don't share your root folder directly!
 
-_If you can't fetch the `access_token` and/or `refresh_token` on step 5, please resolve to the solution suggested in [#13](https://github.com/spencerwooo/onedrive-cf-index/issues/13#issuecomment-671027672)._
+_If you can't fetch the `access_token` and/or `refresh_token` on step 5, please resolve to the solution suggested in the pinned issue [#13](https://github.com/spencerwooo/onedrive-cf-index/issues/13#issuecomment-671027672)._
 
 #### Get Firebase Database Tokens
 
@@ -136,6 +137,8 @@ Modify [`src/config/default.js`](src/config/default.js):
 - `client_id`: Your `client_id` from above.
 - `base`: Your `base` path from above.
 - `firebase_url`: Your `firebase_url` from above.
+
+_For Chinese 21Vianet OneDrive users. OneDrive 世纪互联用户：将 `useOneDriveCN` 设置（修改）为 `true`。_
 
 Add secrets to Cloudflare Workers environment variables with `wrangler`:
 

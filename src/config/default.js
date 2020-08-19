@@ -20,6 +20,13 @@ const config = {
   firebase_url: 'https://onedrive-cf-refresh-token.firebaseio.com/auth.json',
 
   /**
+   * Feature: add OneDriveCN (21Vianet) support
+   * Usage: simply change `useOneDriveCN` to true
+   */
+
+  useOneDriveCN: false,
+
+  /**
    * Feature Caching
    * Enable Cloudflare cache for path pattern listed below.
    * Cache rules:
@@ -67,14 +74,7 @@ const config = {
    * Example: https://storage.spencerwoo.com/🥟%20Some%20test%20files/Previews/eb37c02438f.png?raw=true&proxied
    * You can also embed this link (url encoded) directly inside Markdown or HTML.
    */
-  proxyDownload: true,
-
-  /**
-   * Feature: add CN(21Vianet) support
-   * Usage: simply uncomment the **useOnedriveCN: true** line
-   */
-
-  // useOnedriveCN: true 
+  proxyDownload: true
 }
 
 export default config

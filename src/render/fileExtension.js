@@ -13,12 +13,20 @@ const extensions = {
   jpeg: preview.image,
   jpg: preview.image,
   png: preview.image,
+  GIF: preview.image,
+  JPEG: preview.image,
+  JPE: preview.image,
+  PNG: preview.image,
 
   md: preview.markdown,
   markdown: preview.markdown,
   mdown: preview.markdown,
+  MD: preview.markdown,
+  MARKDOWN: preview.markdown,
+  MDOWN: preview.markdown,
 
   pdf: preview.pdf,
+  PDF: preview.pdf,
 
   c: preview.code,
   cpp: preview.code,
@@ -34,18 +42,41 @@ const extensions = {
   json: preview.code,
   yaml: preview.code,
   toml: preview.code,
+  C: preview.code,
+  CPP: preview.code,
+  JS: preview.code,
+  JAVA: preview.code,
+  SH: preview.code,
+  CS: preview.code,
+  PY: preview.code,
+  CSS: preview.code,
+  HTML: preview.code,
+  TS: preview.code,
+  VUE: preview.code,
+  JSON: preview.code,
+  YAML: preview.code,
+  TOML: preview.code,
 
   txt: preview.text,
+  TXT: preview.text,
 
   mp4: preview.video,
   flv: preview.video,
   webm: preview.video,
   m3u8: preview.video,
+  MP4: preview.video,
+  FLV: preview.video,
+  WEBM: preview.video,
+  M3U8: preview.video,
 
   mp3: preview.audio,
   aac: preview.audio,
   wav: preview.audio,
-  oga: preview.audio
+  oga: preview.audio,
+  MP3: preview.audio,
+  ACC: preview.audio,
+  WAV: preview.audio,
+  OGA: preview.audio
 }
 
 export { extensions, preview }

@@ -82,7 +82,7 @@ export async function handleFile(request, pathname, downloadUrl, { proxied = fal
 }
 
 export async function handleUpload(request, pathname, filename) {
-  const url = `https://graph.microsoft.com/v1.0/me/drive/root:${config.base +
+  const url = `https://graph.microsoft.com/v1.0/me/drive/root:${encodeURIComponent(config.base) +
     (pathname.slice(-1) === '/' ? pathname : pathname + '/')}${filename}:/content`
   return await fetch(url, {
     method: 'PUT',

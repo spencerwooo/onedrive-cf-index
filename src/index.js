@@ -35,7 +35,7 @@ const cache = caches.default
  * @param {string} pathname The absolute path to file
  */
 function wrapPathName(pathname) {
-  pathname = config.base + (pathname === '/' ? '' : pathname)
+  pathname = encodeURIComponent(config.base) + (pathname === '/' ? '' : pathname)
   return pathname === '/' || pathname === '' ? '' : ':' + pathname
 }
 
@@ -45,7 +45,7 @@ async function handleRequest(request) {
     if (maybeResponse) return maybeResponse
   }
 
-  const base = config.base
+  const base = encodeURIComponent(config.base)
   const accessToken = await getAccessToken()
 
   const { pathname, searchParams } = new URL(request.url)

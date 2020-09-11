@@ -115,7 +115,7 @@ function renderPDFPreview(file) {
 async function renderImage(file) {
   const oneDriveApiEndpoint = config.useOneDriveCN ? 'microsoftgraph.chinacloudapi.cn' : 'graph.microsoft.com'
 
-  var ratio = 100
+  let ratio = 100
   if (Object.keys(file.image).length !== 2) {
     const url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/items/${file.id}/thumbnails/0/large`
     const accessToken = await getAccessToken()

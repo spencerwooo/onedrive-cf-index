@@ -85,7 +85,10 @@ async function handleRequest(request) {
 
     if ('file' in data) {
       // Render file preview view or download file directly
-      const fileExt = data.name.split('.').pop().toLowerCase()
+      const fileExt = data.name
+        .split('.')
+        .pop()
+        .toLowerCase()
 
       // Render image directly if ?raw=true parameters are given
       if (rawImage || !(fileExt in extensions)) {

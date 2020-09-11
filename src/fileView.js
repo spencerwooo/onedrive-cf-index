@@ -117,7 +117,7 @@ async function renderImage(file) {
 
   var ratio = 100
   if (Object.keys(file.image).length !== 2) {
-    const url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/items/${file.id}/thumbnails`
+    const url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/items/${file.id}/thumbnails/0/large`
     const accessToken = await getAccessToken()
     const resp = await fetch(url, {
       headers: {
@@ -125,9 +125,8 @@ async function renderImage(file) {
       }
     })
     if (resp.ok) {
-      const data = await resp.json()
-      const large_thumb = data.value[0].large
-      ratio = (large_thumb.height / large_thumb.width) * 100
+      const largeThumb = await resp.json()
+      ratio = (largeThumb.height / largeThumb.width) * 100
     }
   } else {
     ratio = (file.image.height / file.image.width) * 100

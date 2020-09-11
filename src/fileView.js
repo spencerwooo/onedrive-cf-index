@@ -113,14 +113,14 @@ function renderPDFPreview(file) {
 function renderImage(file) {
   if (Object.keys(file.image).length !== 2) {
     return `<div class="image-wrapper">
-    <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: relative;"></img>
-  </div>`
+              <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: relative;"></img>
+            </div>`
   } else {
-    ratio = (file.image.height / file.image.width) * 100
+    const ratio = (file.image.height / file.image.width) * 100
     // See: https://github.com/verlok/vanilla-lazyload#occupy-space-and-avoid-content-reflow
     return `<div class="image-wrapper" style="width: 100%; height: 0; padding-bottom: ${ratio}%; position: relative;">
-    <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: absolute;"></img>
-  </div>`
+              <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: absolute;"></img>
+            </div>`
   }
 }
 

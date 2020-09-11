@@ -1,6 +1,4 @@
 import marked from 'marked'
-import config from './config/default'
-import { getAccessToken } from './auth/onedrive'
 
 import { renderHTML } from './render/htmlWrapper'
 import { renderPath } from './render/pathUtil'
@@ -113,29 +111,19 @@ function renderPDFPreview(file) {
  * @param {Object} file Object representing the image to preview
  */
 async function renderImage(file) {
-  const oneDriveApiEndpoint = config.useOneDriveCN ? 'microsoftgraph.chinacloudapi.cn' : 'graph.microsoft.com'
-
-  let ratio = 100
   if (Object.keys(file.image).length !== 2) {
-    const url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/items/${file.id}/thumbnails/0/large`
-    const accessToken = await getAccessToken()
-    const resp = await fetch(url, {
-      headers: {
-        Authorization: `bearer ${accessToken}`
-      }
-    })
-    if (resp.ok) {
-      const largeThumb = await resp.json()
-      ratio = (largeThumb.height / largeThumb.width) * 100
-    }
+    return `<div class="image-wrapper">
+    <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: relative;"></img>
+  </div>`
   } else {
     ratio = (file.image.height / file.image.width) * 100
+    // See: https://github.com/verlok/vanilla-lazyload#occupy-space-and-avoid-content-reflow
+    return `<div class="image-wrapper" style="width: 100%; height: 0; padding-bottom: ${ratio}%; position: relative;">
+    <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: absolute;"></img>
+  </div>`
   }
 
-  // See: https://github.com/verlok/vanilla-lazyload#occupy-space-and-avoid-content-reflow
-  return `<div class="image-wrapper" style="width: 100%; height: 0; padding-bottom: ${ratio}%; position: relative;">
-            <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: absolute;"></img>
-          </div>`
+
 }
 
 /**

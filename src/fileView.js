@@ -111,17 +111,9 @@ function renderPDFPreview(file) {
  * @param {Object} file Object representing the image to preview
  */
 function renderImage(file) {
-  if (Object.keys(file.image).length !== 2) {
-    return `<div class="image-wrapper">
-              <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: relative;"></img>
-            </div>`
-  } else {
-    const ratio = (file.image.height / file.image.width) * 100
-    // See: https://github.com/verlok/vanilla-lazyload#occupy-space-and-avoid-content-reflow
-    return `<div class="image-wrapper" style="width: 100%; height: 0; padding-bottom: ${ratio}%; position: relative;">
-              <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: absolute;"></img>
-            </div>`
-  }
+  return `<div class="image-wrapper">
+            <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: relative;"></img>
+          </div>`
 }
 
 /**
@@ -217,15 +209,15 @@ export async function renderFilePreview(file, path, fileExt) {
   const body = div(
     'container',
     div('path', renderPath(path) + ` / ${file.name}`) +
-      div('items', el('div', ['style="padding: 1rem 1rem;"'], await renderPreview(file, fileExt))) +
-      div(
-        'download-button-container',
-        el(
-          'a',
-          ['class="download-button"', `href="${file['@microsoft.graph.downloadUrl']}"`],
-          '<i class="far fa-arrow-alt-circle-down"></i> DOWNLOAD'
-        )
+    div('items', el('div', ['style="padding: 1rem 1rem;"'], await renderPreview(file, fileExt))) +
+    div(
+      'download-button-container',
+      el(
+        'a',
+        ['class="download-button"', `href="${file['@microsoft.graph.downloadUrl']}"`],
+        '<i class="far fa-arrow-alt-circle-down"></i> DOWNLOAD'
       )
+    )
   )
   return renderHTML(body)
 }

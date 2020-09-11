@@ -122,8 +122,6 @@ async function renderImage(file) {
     <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: absolute;"></img>
   </div>`
   }
-
-
 }
 
 /**

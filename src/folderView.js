@@ -81,8 +81,12 @@ export async function renderFolderView(items, path) {
                   // Render file icons
                   let fileIcon = getClassNameForMimeType(i.file.mimeType)
                   if (fileIcon === 'fa-file') {
-                    if (i.name.split('.').pop() === 'md') {
+                    // Check for files that haven't been rendered as expected
+                    const extension = i.name.split('.').pop()
+                    if (extension === 'md') {
                       fileIcon = 'fab fa-markdown'
+                    } else if (['7z', 'rar', 'bz2', 'xz', 'tar', 'wim'].includes(extension)) {
+                      fileIcon = 'far fa-file-archive'
                     } else {
                       fileIcon = `far ${getClassNameForFilename(i.name)}`
                     }

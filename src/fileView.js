@@ -110,7 +110,7 @@ function renderPDFPreview(file) {
  *
  * @param {Object} file Object representing the image to preview
  */
-async function renderImage(file) {
+function renderImage(file) {
   if (Object.keys(file.image).length !== 2) {
     return `<div class="image-wrapper">
     <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: relative;"></img>
@@ -191,7 +191,7 @@ async function renderPreview(file, fileExt) {
       return await renderCodePreview(file, '')
 
     case preview.image:
-      return await renderImage(file)
+      return renderImage(file)
 
     case preview.code:
       return await renderCodePreview(file, fileExt)

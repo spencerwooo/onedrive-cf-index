@@ -209,15 +209,15 @@ export async function renderFilePreview(file, path, fileExt) {
   const body = div(
     'container',
     div('path', renderPath(path) + ` / ${file.name}`) +
-    div('items', el('div', ['style="padding: 1rem 1rem;"'], await renderPreview(file, fileExt))) +
-    div(
-      'download-button-container',
-      el(
-        'a',
-        ['class="download-button"', `href="${file['@microsoft.graph.downloadUrl']}"`],
-        '<i class="far fa-arrow-alt-circle-down"></i> DOWNLOAD'
+      div('items', el('div', ['style="padding: 1rem 1rem;"'], await renderPreview(file, fileExt))) +
+      div(
+        'download-button-container',
+        el(
+          'a',
+          ['class="download-button"', `href="${file['@microsoft.graph.downloadUrl']}"`],
+          '<i class="far fa-arrow-alt-circle-down"></i> DOWNLOAD'
+        )
       )
-    )
   )
   return renderHTML(body)
 }

@@ -45,7 +45,10 @@ const extensions = {
   mp3: preview.audio,
   aac: preview.audio,
   wav: preview.audio,
-  oga: preview.audio
+  ogg: preview.audio,
+  oga: preview.audio,
+  opus: preview.audio,
+  flac: preview.audio,
 }
 
 export { extensions, preview }

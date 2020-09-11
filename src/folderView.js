@@ -87,6 +87,8 @@ export async function renderFolderView(items, path) {
                       fileIcon = 'fab fa-markdown'
                     } else if (['7z', 'rar', 'bz2', 'xz', 'tar', 'wim'].includes(extension)) {
                       fileIcon = 'far fa-file-archive'
+                    } else if (['flac', 'oga', 'opus'].includes(extension)){
+                      fileIcon = 'far fa-file-audio'
                     } else {
                       fileIcon = `far ${getClassNameForFilename(i.name)}`
                     }

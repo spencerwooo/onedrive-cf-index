@@ -49,7 +49,7 @@ const extensions = {
   ogg: preview.audio,
   oga: preview.audio,
   opus: preview.audio,
-  flac: preview.audio,
+  flac: preview.audio
 }
 
 export { extensions, preview }

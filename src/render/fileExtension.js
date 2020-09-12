@@ -43,6 +43,7 @@ const extensions = {
   m3u8: preview.video,
 
   mp3: preview.audio,
+  m4a: preview.audio,
   aac: preview.audio,
   wav: preview.audio,
   ogg: preview.audio,

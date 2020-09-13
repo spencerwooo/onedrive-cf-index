@@ -70,7 +70,7 @@ async function handleRequest(request) {
     })
   }
 
-  const url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(
+  let url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(
     pathname
   )}?select=name,eTag,size,id,folder,file,image,%40microsoft.graph.downloadUrl&expand=children`
   const resp = await fetch(url, {
@@ -82,6 +82,24 @@ async function handleRequest(request) {
   let error = null
   if (resp.ok) {
     const data = await resp.json()
+
+    // collecting clildren to Array —— `data.clildren`
+    if (data.folder && data.folder.childCount > 200) {
+      url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(
+        pathname.slice(0, pathname.length - 1)
+      )}:/children?select=name,eTag,size,id,folder,file,image,%40microsoft.graph.downloadUrl`
+      while (url) {
+        const nextData = await (
+          await fetch(url, {
+            headers: {
+              Authorization: `bearer ${accessToken}`
+            }
+          })
+        ).json()
+        url.includes('skiptoken') && data.children.push(...nextData.value)
+        url = nextData['@odata.nextLink']
+      }
+    }
 
     if ('file' in data) {
       // Render file preview view or download file directly

@@ -70,9 +70,13 @@ async function handleRequest(request) {
     })
   }
 
-  let url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(
-    pathname
-  )}?select=name,eTag,size,id,folder,file,image,%40microsoft.graph.downloadUrl&expand=children`
+  const isRequestFolder = pathname.endsWith('/')
+
+  // handle fileView and folderView using separate api
+  const url = isRequestFolder
+    ? `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(pathname.replace(/\/$/, ''))}:/children` +
+      (config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : ``)
+    : `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(pathname)}`
   const resp = await fetch(url, {
     headers: {
       Authorization: `bearer ${accessToken}`
@@ -82,24 +86,6 @@ async function handleRequest(request) {
   let error = null
   if (resp.ok) {
     const data = await resp.json()
-
-    // collecting clildren to Array —— `data.clildren`
-    if (data.folder && data.folder.childCount > 200) {
-      url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(
-        pathname.slice(0, pathname.length - 1)
-      )}:/children?select=name,eTag,size,id,folder,file,image,%40microsoft.graph.downloadUrl`
-      while (url) {
-        const nextData = await (
-          await fetch(url, {
-            headers: {
-              Authorization: `bearer ${accessToken}`
-            }
-          })
-        ).json()
-        url.includes('skiptoken') && data.children.push(...nextData.value)
-        url = nextData['@odata.nextLink']
-      }
-    }
 
     if ('file' in data) {
       // Render file preview view or download file directly
@@ -122,7 +108,7 @@ async function handleRequest(request) {
           'content-type': 'text/html'
         }
       })
-    } else if ('folder' in data) {
+    } else {
       // Render folder view, list all children files
       if (config.upload && request.method === 'POST') {
         const filename = searchParams.get('upload')
@@ -137,19 +123,17 @@ async function handleRequest(request) {
       }
 
       // 302 all folder requests that doesn't end with /
-      if (!request.url.endsWith('/')) {
+      if (!isRequestFolder) {
         return Response.redirect(request.url + '/', 302)
       }
 
-      return new Response(await renderFolderView(data.children, pathname), {
+      return new Response(await renderFolderView(data.value, pathname), {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'content-type': 'text/html'
         }
       })
-    } else {
-      error = `unknown data ${JSON.stringify(data)}`
-    }
+    } 
   } else {
     error = (await resp.json()).error
   }

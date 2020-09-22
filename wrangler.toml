@@ -1,8 +1,8 @@
-name = "drive"
+name = "Hiroshi"
 type = "webpack"
 workers_dev = true
-account_id = "b87997a496f985b46b927b3f24c61de1"
-zone_id = "b04152d2c33ff4653cec1a579be6d42a"
+account_id = "2912a37c7c764ca29d9dd889f8176d5e"
+zone_id = "81db3deea44e5a3899851f6b3ec34d76"
 
 [env.staging]
-name = "drive-staging"
+name = "Hiroshi-staging"

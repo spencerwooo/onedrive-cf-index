@@ -38,7 +38,7 @@ Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 #### New features
 
 - **New design:** [`spencer.css`](themes/spencer.css).
-- File icon rendered according to file type.
+- File icon rendered according to file type. Emoji as folder icon when available (if the first character of the folder name is an emoji).
 - Use [Font Awesome icons](https://fontawesome.com/) instead of material design icons (For better design consistency).
 - Use [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) for `README.md` rendering → [Demo](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/README/).
 - **Add breadcrumbs for better directory navigation.**
@@ -173,7 +173,8 @@ You can also create a GitHub Actions for auto publishing your worker on `push`. 
 ## Customizations
 
 - You can **(AND SHOULD)** change the `intro` on the default landing page here: [src/folderView.js](src/folderView.js#L51-L55). Write HTML directly.
-- Your custom styles are loaded from [themes/spencer.css](themes/spencer.css), change that according to your customizations.
+- You can **(AND ALSO SHOULD)** change the header of the site here: [src/render/htmlWrapper.js](src/render/htmlWrapper.js#L24).
+- Your custom styles are loaded from [themes/spencer.css](themes/spencer.css), change that according to your customizations. You may also need to change the commit HASH at [src/render/htmlWrapper.js](src/render/htmlWrapper.js#L3).
 - You can also customize Markdown CSS styles, PrismJS code highlight color schemes, etc.
 
 ---

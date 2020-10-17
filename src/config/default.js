@@ -27,12 +27,11 @@ const config = {
 
   /**
    * Feature: Pagination when a floder has multiple(>${top}) files
-   * - enable: toggle this feature on by assign true to `enable`
    * - top: specify the page size limit of the result set, a big `top` value will slow down the fetching speed
    */
   pagination: {
     enable: true,
-    top: 333 // default: 200, accepts a minimum value of 1 and a maximum value of 999 (inclusive)
+    top: 100 // default: 200, accepts a minimum value of 1 and a maximum value of 999 (inclusive)
   },
 
   /**

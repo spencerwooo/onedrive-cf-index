@@ -12,7 +12,7 @@ function getPathLink(pathItems, idx) {
   }
 
   pathList[0] = ''
-  return pathList.join('/')
+  return pathList.join('/') + '/'
 }
 
 /**

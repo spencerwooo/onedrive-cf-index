@@ -15,8 +15,7 @@ export async function getAccessToken() {
     return data.access_token
   }
 
-  // Need refreshing, fetch new access token from Microsoft OneDrive API
-  // > add CN API option bellow, activate this at `src/auth/onedrive.js`
+  // Token expired, refresh access token with Microsoft API. Both international and china-specific API are supported
   const oneDriveAuthEndpoint = config.useOneDriveCN
     ? 'https://login.chinacloudapi.cn/common/oauth2/v2.0/token'
     : 'https://login.microsoftonline.com/common/oauth2/v2.0/token'

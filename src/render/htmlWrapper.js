@@ -1,8 +1,32 @@
 import { favicon } from './favicon'
 
-const COMMIT_HASH = '89afde99425f90047d6cde015bb90ab7d5b64b2f'
+const COMMIT_HASH = '5d7579fcfb4729fcb855110c5f0ed5488d1d0d44'
 
-export function renderHTML(body) {
+const pagination = (pIdx, attrs) => {
+  const getAttrs = (c, h, isNext) =>
+    `class="${c}" ${h ? `href="pagination?page=${h}"` : ''} ${
+      isNext === undefined ? '' : `onclick="handlePagination(${isNext})"`
+    }`
+  if (pIdx) {
+    switch (pIdx) {
+      case pIdx < 0 ? pIdx : null:
+        attrs = [getAttrs('pre', -pIdx - 1, 0), getAttrs('next off', null)]
+        break
+      case 1:
+        attrs = [getAttrs('pre off', null), getAttrs('next', pIdx + 1, 1)]
+        break
+      default:
+        attrs = [getAttrs('pre', pIdx - 1, 0), getAttrs('next', pIdx + 1, 1)]
+    }
+    return `${`<a ${attrs[0]}><i class="fas fa-angle-left" style="font-size: 8px;"></i> PREV</a>`}<span>Page ${pIdx}</span> ${`<a ${attrs[1]}>NEXT <i class="fas fa-angle-right" style="font-size: 8px;"></i></a>`}`
+  }
+  return ''
+}
+
+export function renderHTML(body, pLink, pIdx) {
+  pLink = pLink ? pLink : ''
+  const p = 'window[pLinkId]'
+
   return `<!DOCTYPE html>
   <html lang="en">
     <head>
@@ -23,15 +47,36 @@ export function renderHTML(body) {
     <body>
       <nav id="navbar" data-turbolinks-permanent><div class="brand">📁 Spencer's OneDrive Index</div></nav>
       ${body}
+      <div class="paginate-container">${pagination(pIdx)}</div>
       <div id="flex-container" data-turbolinks-permanent style="flex-grow: 1;"></div>
       <footer id="footer" data-turbolinks-permanent><p>Powered by <a href="https://github.com/spencerwooo/onedrive-cf-index">onedrive-cf-index</a>, hosted on <a href="https://www.cloudflare.com/products/cloudflare-workers/">Cloudflare Workers</a>.</p></footer>
       <script>
         if (typeof ap !== "undefined" && ap.paused !== true) {
           ap.pause()
         }
-        Turbolinks.start()
         Prism.highlightAll()
         mediumZoom('[data-zoomable]')
+        if ('${pLink}') {
+          if (!window.pLinkId) history.pushState(history.state, '', location.pathname.replace('pagination', ''))
+          if (location.pathname.endsWith('/')) {
+            pLinkId = history.state.turbolinks.restorationIdentifier
+            ${p} = [['${pLink}'], 1]
+          }
+          if (${p}[0].length < ${p}[1]) (${p} = [[...${p}[0], '${pLink}'], ${p}[1]])
+        }
+        function handlePagination(isNext) {
+          isNext ? ${p}[1]++ : ${p}[1]--
+          addEventListener(
+            'turbolinks:request-start',
+            event => {
+              const xhr = event.data.xhr
+              xhr.setRequestHeader('pLink', ${p}[0][${p}[1] -2])
+              xhr.setRequestHeader('pIdx', ${p}[1] + '')
+            },
+            { once: true }
+          )
+        }
+        Turbolinks.start()
       </script>
     </body>
   </html>`

@@ -26,6 +26,15 @@ const config = {
   useOneDriveCN: false,
 
   /**
+   * Feature: Pagination when a folder has multiple(>${top}) files
+   * - top: specify the page size limit of the result set, a big `top` value will slow down the fetching speed
+   */
+  pagination: {
+    enable: true,
+    top: 100 // default: 200, accepts a minimum value of 1 and a maximum value of 999 (inclusive)
+  },
+
+  /**
    * Feature Caching
    * Enable Cloudflare cache for path pattern listed below.
    * Cache rules:

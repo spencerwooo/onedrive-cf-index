@@ -49,6 +49,7 @@ async function handleRequest(request) {
   const accessToken = await getAccessToken()
 
   const { pathname, searchParams } = new URL(request.url)
+  const neoPathname = pathname.replace(/pagination$/, '')
 
   const rawImage = searchParams.get('raw')
   const thumbnail = config.thumbnail ? searchParams.get('thumbnail') : false
@@ -70,9 +71,18 @@ async function handleRequest(request) {
     })
   }
 
-  const url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(
-    pathname
-  )}?select=name,eTag,size,id,folder,file,image,%40microsoft.graph.downloadUrl&expand=children`
+  const isRequestFolder = pathname.endsWith('/') || searchParams.get('page')
+  const childrenApi =
+    `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(neoPathname.replace(/\/$/, ''))}:/children` +
+    (config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : ``)
+  // using different api to handle file or folder: children or driveItem
+  let url = isRequestFolder ? childrenApi : `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(pathname)}`
+  // get & set {pLink ,pIdx} for fetching and paging
+  const paginationLink = request.headers.get('pLink')
+  const paginationIdx = request.headers.get('pIdx') - 0
+
+  if (paginationLink && paginationLink !== 'undefined') url = `${childrenApi}&$skiptoken=${paginationLink}`
+
   const resp = await fetch(url, {
     headers: {
       Authorization: `bearer ${accessToken}`
@@ -82,6 +92,12 @@ async function handleRequest(request) {
   let error = null
   if (resp.ok) {
     const data = await resp.json()
+    if (data['@odata.nextLink']) {
+      request.pIdx = paginationIdx ? paginationIdx : 1
+      request.pLink = data['@odata.nextLink'].match(/&\$skiptoken=(.+)/)[1]
+    } else if (paginationIdx) {
+      request.pIdx = -paginationIdx
+    }
 
     if ('file' in data) {
       // Render file preview view or download file directly
@@ -104,13 +120,13 @@ async function handleRequest(request) {
           'content-type': 'text/html'
         }
       })
-    } else if ('folder' in data) {
+    } else {
       // Render folder view, list all children files
       if (config.upload && request.method === 'POST') {
         const filename = searchParams.get('upload')
         const key = searchParams.get('key')
         if (filename && key && config.upload.key === key) {
-          return await handleUpload(request, pathname, filename)
+          return await handleUpload(request, neoPathname, filename)
         } else {
           return new Response('', {
             status: 400
@@ -119,18 +135,16 @@ async function handleRequest(request) {
       }
 
       // 302 all folder requests that doesn't end with /
-      if (!request.url.endsWith('/')) {
+      if (!isRequestFolder) {
         return Response.redirect(request.url + '/', 302)
       }
 
-      return new Response(await renderFolderView(data.children, pathname), {
+      return new Response(await renderFolderView(data.value, neoPathname, request), {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'content-type': 'text/html'
         }
       })
-    } else {
-      error = `unknown data ${JSON.stringify(data)}`
     }
   } else {
     error = (await resp.json()).error

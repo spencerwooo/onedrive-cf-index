@@ -46,7 +46,8 @@ a {
   font-weight: bold;
 }
 
-.container {
+.container,
+.paginate-container {
   width: calc(100% - 40px);
   max-width: 800px;
   margin: 0 auto;
@@ -133,6 +134,22 @@ a.item:hover {
   text-align: center;
   margin: 3rem 0rem;
   opacity: 0.6;
+}
+
+.paginate-container {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.paginate-container a {
+  text-decoration: none;
+  color: #000;
+}
+
+.paginate-container a.off {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .fade-in-bottom {

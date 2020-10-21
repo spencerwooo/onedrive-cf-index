@@ -98,6 +98,10 @@ footer {
   text-align: center;
 }
 
+footer a {
+  text-decoration: none;
+}
+
 a:hover,
 a.item:hover {
   opacity: 0.6;
@@ -144,7 +148,6 @@ a.item:hover {
 
 .paginate-container a {
   text-decoration: none;
-  color: #000;
 }
 
 .paginate-container a.off {

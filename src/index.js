@@ -49,7 +49,7 @@ async function handleRequest(request) {
   const accessToken = await getAccessToken()
 
   const { pathname, searchParams } = new URL(request.url)
-  const neopathname = pathname.replace(/pagination$/, '')
+  const neoPathname = pathname.replace(/pagination$/, '')
 
   const rawImage = searchParams.get('raw')
   const thumbnail = config.thumbnail ? searchParams.get('thumbnail') : false
@@ -73,7 +73,7 @@ async function handleRequest(request) {
 
   const isRequestFolder = pathname.endsWith('/') || searchParams.get('page')
   const childrenApi =
-    `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(neopathname.replace(/\/$/, ''))}:/children` +
+    `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(neoPathname.replace(/\/$/, ''))}:/children` +
     (config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : ``)
   // using different api to handle file or folder: children or driveItem
   let url = isRequestFolder ? childrenApi : `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(pathname)}`
@@ -126,7 +126,7 @@ async function handleRequest(request) {
         const filename = searchParams.get('upload')
         const key = searchParams.get('key')
         if (filename && key && config.upload.key === key) {
-          return await handleUpload(request, neopathname, filename)
+          return await handleUpload(request, neoPathname, filename)
         } else {
           return new Response('', {
             status: 400
@@ -139,7 +139,7 @@ async function handleRequest(request) {
         return Response.redirect(request.url + '/', 302)
       }
 
-      return new Response(await renderFolderView(data.value, neopathname, request), {
+      return new Response(await renderFolderView(data.value, neoPathname, request), {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'content-type': 'text/html'

@@ -1,6 +1,6 @@
 import { favicon } from './favicon'
 
-const COMMIT_HASH = '89afde99425f90047d6cde015bb90ab7d5b64b2f'
+const COMMIT_HASH = '5d7579fcfb4729fcb855110c5f0ed5488d1d0d44'
 
 const pagination = (pIdx, attrs) => {
   const getAttrs = (c, h, isNext) =>
@@ -18,7 +18,7 @@ const pagination = (pIdx, attrs) => {
       default:
         attrs = [getAttrs('pre', pIdx - 1, 0), getAttrs('next', pIdx + 1, 1)]
     }
-    return `${`<a ${attrs[0]}><i class="fas fa-arrow-left"></i></a>`} &nbsp;${`<a ${attrs[1]}><i class="fas fa-arrow-right"></i></a>`}`
+    return `${`<a ${attrs[0]}><i class="fas fa-angle-left" style="font-size: 8px;"></i> PREV</a>`}<span>Page ${pIdx}</span> ${`<a ${attrs[1]}>NEXT <i class="fas fa-angle-right" style="font-size: 8px;"></i></a>`}`
   }
   return ''
 }
@@ -43,12 +43,11 @@ export function renderHTML(body, pLink, pIdx) {
       <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/plugins/autoloader/prism-autoloader.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/turbolinks@5.2.0/dist/turbolinks.min.js"></script>
-      <style>.paginate-container a.off {pointer-events: none;opacity: 0.5;}</style>
     </head>
     <body>
       <nav id="navbar" data-turbolinks-permanent><div class="brand">📁 Spencer's OneDrive Index</div></nav>
       ${body}
-      <div class='paginate-container' style="margin-top: 0.5em">${pagination(pIdx)}</div>
+      <div class="paginate-container">${pagination(pIdx)}</div>
       <div id="flex-container" data-turbolinks-permanent style="flex-grow: 1;"></div>
       <footer id="footer" data-turbolinks-permanent><p>Powered by <a href="https://github.com/spencerwooo/onedrive-cf-index">onedrive-cf-index</a>, hosted on <a href="https://www.cloudflare.com/products/cloudflare-workers/">Cloudflare Workers</a>.</p></footer>
       <script>

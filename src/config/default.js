@@ -26,7 +26,7 @@ const config = {
   useOneDriveCN: false,
 
   /**
-   * Feature: Pagination when a floder has multiple(>${top}) files
+   * Feature: Pagination when a folder has multiple(>${top}) files
    * - top: specify the page size limit of the result set, a big `top` value will slow down the fetching speed
    */
   pagination: {

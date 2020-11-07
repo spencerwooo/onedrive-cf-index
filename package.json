@@ -24,6 +24,7 @@
     "prettier": "^1.18.2"
   },
   "dependencies": {
+    "emoji-regex": "^9.2.0",
     "font-awesome-filetypes": "^2.1.0",
     "marked": "^1.1.1"
   }

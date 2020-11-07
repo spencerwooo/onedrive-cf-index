@@ -1,5 +1,5 @@
+import emojiRegex from 'emoji-regex/RGI_Emoji'
 import { getClassNameForMimeType, getClassNameForFilename } from 'font-awesome-filetypes'
-const emojiRegex = require('emoji-regex/RGI_Emoji.js');
 
 import { renderHTML } from './render/htmlWrapper'
 import { renderPath } from './render/pathUtil'

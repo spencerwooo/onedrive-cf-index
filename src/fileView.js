@@ -33,10 +33,9 @@ function renderPDFPreview(file) {
             <i class="fas fa-spinner fa-pulse"></i>
             <span id="loading-progress">Loading PDF...</span>
           </div>
-          <script src="https://cdn.jsdelivr.net/gh/pipwerks/PDFObject/pdfobject.min.js"></script>
           <script>
-          const loadingLabel = document.querySelector('.loading-label')
-          const loadingProgress = document.querySelector('#loading-progress')
+          loadingLabel = document.querySelector('.loading-label')
+          loadingProgress = document.querySelector('#loading-progress')
           function progress({ loaded, total }) {
             loadingProgress.innerHTML = 'Loading PDF... ' + Math.round(loaded / total * 100) + '%'
           }
@@ -123,7 +122,6 @@ function renderImage(file) {
  */
 function renderVideoPlayer(file) {
   return `<div id="dplayer"></div>
-          <script src="https://cdn.jsdelivr.net/npm/dplayer@1.26.0/dist/DPlayer.min.js"></script>
           <script>
           const dp = new DPlayer({
             container: document.getElementById('dplayer'),
@@ -142,9 +140,7 @@ function renderVideoPlayer(file) {
  * @param {Object} file Object representing the audio to preview
  */
 function renderAudioPlayer(file) {
-  return `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-          <div id="aplayer"></div>
-          <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+  return `<div id="aplayer"></div>
           <script>
           const ap = new APlayer({
             container: document.getElementById('aplayer'),

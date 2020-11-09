@@ -38,7 +38,7 @@ const base = encodeURI(config.base).replace(/\/$/, '')
  */
 function wrapPathName(pathname, isRequestFolder) {
   pathname = base + pathname
-  const isIndexingRoot = base + pathname === '/'
+  const isIndexingRoot = pathname === '/'
   // using different api to handle folder or file: children or driveItem
   if (isRequestFolder) {
     if (isIndexingRoot) return '/children'

@@ -74,7 +74,7 @@ async function handleRequest(request) {
       }
     })
 
-    return await handleFile(request, neoPathname, resp.url, {
+    return await handleFile(request, pathname, resp.url, {
       proxied
     })
   }

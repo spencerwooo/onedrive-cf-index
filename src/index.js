@@ -28,15 +28,23 @@ async function handle(request) {
 
 // Cloudflare cache instance
 const cache = caches.default
+const base = encodeURI(config.base).replace(/\/$/, '')
 
 /**
  * Format and regularize directory path for OneDrive API
  *
  * @param {string} pathname The absolute path to file
+ * @param {boolean} isRequestFolder is indexing folder or not
  */
-function wrapPathName(pathname) {
-  pathname = encodeURI(config.base) + (pathname === '/' ? '' : pathname)
-  return pathname === '/' || pathname === '' ? '' : ':' + pathname
+function wrapPathName(pathname, isRequestFolder) {
+  pathname = base + pathname
+  const isIndexingRoot = base + pathname === '/'
+  // using different api to handle folder or file: children or driveItem
+  if (isRequestFolder) {
+    if (isIndexingRoot) return '/children'
+    return `:${pathname.replace(/\/$/, '')}:/children`
+  }
+  return `:${pathname}`
 }
 
 async function handleRequest(request) {
@@ -45,7 +53,6 @@ async function handleRequest(request) {
     if (maybeResponse) return maybeResponse
   }
 
-  const base = encodeURI(config.base)
   const accessToken = await getAccessToken()
 
   const { pathname, searchParams } = new URL(request.url)
@@ -58,25 +65,25 @@ async function handleRequest(request) {
   const oneDriveApiEndpoint = config.useOneDriveCN ? 'microsoftgraph.chinacloudapi.cn' : 'graph.microsoft.com'
 
   if (thumbnail) {
-    const url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/root:${base +
-      (pathname === '/' ? '' : pathname)}:/thumbnails/0/${thumbnail}/content`
+    const url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/root:${
+      base ? base : '/' + (neoPathname === '/' ? '' : neoPathname)
+    }:/thumbnails/0/${thumbnail}/content`
     const resp = await fetch(url, {
       headers: {
         Authorization: `bearer ${accessToken}`
       }
     })
 
-    return await handleFile(request, pathname, resp.url, {
+    return await handleFile(request, neoPathname, resp.url, {
       proxied
     })
   }
 
   const isRequestFolder = pathname.endsWith('/') || searchParams.get('page')
-  const childrenApi =
-    `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(neoPathname.replace(/\/$/, ''))}:/children` +
-    (config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : ``)
-  // using different api to handle file or folder: children or driveItem
-  let url = isRequestFolder ? childrenApi : `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(pathname)}`
+  let url =
+    `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(neoPathname, isRequestFolder)}` +
+    (isRequestFolder && config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : ``)
+
   // get & set {pLink ,pIdx} for fetching and paging
   const paginationLink = request.headers.get('pLink')
   const paginationIdx = request.headers.get('pIdx') - 0
@@ -98,7 +105,6 @@ async function handleRequest(request) {
     } else if (paginationIdx) {
       request.pIdx = -paginationIdx
     }
-
     if ('file' in data) {
       // Render file preview view or download file directly
       const fileExt = data.name

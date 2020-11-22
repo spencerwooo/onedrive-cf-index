@@ -8,8 +8,22 @@ renderer.image = (href, title, text) => {
   if (href === null) {
     return text
   }
-
-  let out = '<img data-zoomable src="' + href + '?raw=true" alt="' + text + '"'
+  let url
+  try {
+    // Check if href is relative
+    url = new URL(href).href
+  } catch (TypeError) {
+    // Add param raw=true
+    if (href.includes("?")) {
+      let tmp = href.split("?")
+      let param = new URLSearchParams(tmp[1])
+      param.append("raw", true)
+      url = tmp[0] + "?" + param.toString()
+    } else {
+      url = href + "?raw=true"
+    }
+  }
+  let out = '<img data-zoomable src="' + url + '" alt="' + text + '"'
   if (title) {
     out += ' title="' + title + '"'
   }

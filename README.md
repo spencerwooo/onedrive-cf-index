@@ -17,7 +17,6 @@
 - [Deployment](#deployment)
   - [Prerequisites](#prerequisites)
     - [Get OneDrive API Tokens](#get-onedrive-api-tokens)
-    - [Get Firebase Database Tokens](#get-firebase-database-tokens)
   - [Preparing](#preparing)
   - [Building and publishing](#building-and-publishing)
 - [Customizations](#customizations)
@@ -53,7 +52,7 @@ Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
   - ...
 - Code syntax highlight in GitHub style. (With PrismJS.)
 - Image preview supports [Medium style zoom effect](https://github.com/francoischalifour/medium-zoom).
-- Token cached and refreshed with Google Firebase Realtime Database. (~~For those who can't afford Cloudflare Workers KV storage.~~ 😢)
+- Token cached and refreshed with Cloudflare Workers KV storage.
 - Route lazy loading with the help of [Turbolinks®](https://github.com/turbolinks/turbolinks). (Somewhat buggy when going from `folder` to `file preview`, but not user-experience degrading.)
 - Supports OneDrive 21Vianet.（由世纪互联运营的 OneDrive。）
 - ...
@@ -89,13 +88,6 @@ See: [New features | OneDrive-Index-Cloudflare-Worker](https://github.com/heymin
 
 _If you can't fetch the `access_token` and/or `refresh_token` on step 5, please resolve to the solution suggested in the pinned issue [#13](https://github.com/spencerwooo/onedrive-cf-index/issues/13#issuecomment-671027672)._
 
-#### Get Firebase Database Tokens
-
-1. Register new project at [Google Firebase](https://firebase.google.com/).
-2. Enable "Realtime Database" at "Develop » Database", create a key called `auth` and get the URL for your database as `firebase_url` (which should look like `https://xxx.firebaseio.com/auth.json`.).
-3. Set database rules to be: `".read": false` and `".write": false`.
-4. Get your database token `firebase_token` at "Settings » Service Accounts » Database key".
-
 After all this hassle, you should have successfully acquired the following tokens and secrets:
 
 - `refresh_token`
@@ -103,8 +95,6 @@ After all this hassle, you should have successfully acquired the following token
 - `client_secret`
 - `redirect_uri`: Defaults to `https://heymind.github.io/tools/microsoft-graph-api-auth`.
 - `base`: Defaults to `/Public`.
-- `firebase_url`
-- `firebase_token`
 
 ### Preparing
 
@@ -122,6 +112,9 @@ wrangler config
 
 # Verify wrangler status with this command
 wrangler whoami
+
+# Create KV bucket
+wrangler kv:namespace create "BUCKET"
 ```
 
 Create a **DRAFT** worker at Cloudflare Workers with a cool name. Get your own Cloudflare `account_id` and `zone_id`: [Docs - Account ID And Zone ID](https://developers.cloudflare.com/workers/quickstart#account-id-and-zone-id).
@@ -131,27 +124,24 @@ Modify [`wrangler.toml`](wrangler.toml):
 - `name`: The draft worker's name, your worker will be published at `<name>.<worker_subdomain>.workers.dev`.
 - `account_id`: Your Cloudflare Account ID.
 - `zone_id`: Your Cloudflare Zone ID.
+- `kv_namespaces`: Your Cloudflare KV namespace.
 
 Modify [`src/config/default.js`](src/config/default.js):
 
 - `client_id`: Your `client_id` from above.
 - `base`: Your `base` path from above.
-- `firebase_url`: Your `firebase_url` from above.
 
 _For Chinese 21Vianet OneDrive users. OneDrive 世纪互联用户：将 `useOneDriveCN` 设置（修改）为 `true`。_
 
 Add secrets to Cloudflare Workers environment variables with `wrangler`:
 
 ```sh
-# Add your refresh_token, client_secret, firebase_token to Cloudflare
+# Add your refresh_token and client_secret to Cloudflare
 wrangler secret put REFRESH_TOKEN
 # ... enter your refresh_token from above here
 
 wrangler secret put CLIENT_SECRET
 # ... enter your client_secret from above here
-
-wrangler secret put FIREBASE_TOKEN
-# ... enter your firebase_token from above here
 ```
 
 ### Building and publishing

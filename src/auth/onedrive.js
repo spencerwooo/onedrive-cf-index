@@ -9,7 +9,7 @@ export async function getAccessToken() {
   }
 
   // Fetch access token
-  const data = await BUCKET.get("onedrive", "json")
+  const data = await BUCKET.get('onedrive', 'json')
   if (data && data.access_token && timestamp() < data.expire_at) {
     console.log('Fetched token from storage.')
     return data.access_token
@@ -35,7 +35,7 @@ export async function getAccessToken() {
     // Update expiration time on token refresh
     data.expire_at = timestamp() + data.expires_in
 
-    await BUCKET.put("onedrive", JSON.stringify(data))
+    await BUCKET.put('onedrive', JSON.stringify(data))
     console.info('Successfully updated access_token.')
 
     // Finally, return access token

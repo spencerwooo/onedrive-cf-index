@@ -14,13 +14,13 @@ renderer.image = (href, title, text) => {
     url = new URL(href).href
   } catch (TypeError) {
     // Add param raw=true
-    if (href.includes("?")) {
-      let tmp = href.split("?")
-      let param = new URLSearchParams(tmp[1])
-      param.append("raw", true)
-      url = tmp[0] + "?" + param.toString()
+    if (href.includes('?')) {
+      const urlSplitParams = href.split('?')
+      const param = new URLSearchParams(urlSplitParams[1])
+      param.append('raw', true)
+      url = urlSplitParams[0] + '?' + param.toString()
     } else {
-      url = href + "?raw=true"
+      url = href + '?raw=true'
     }
   }
   let out = '<img data-zoomable src="' + url + '" alt="' + text + '"'

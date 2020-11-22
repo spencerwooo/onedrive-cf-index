@@ -34,6 +34,7 @@ function renderPDFPreview(file) {
             <span id="loading-progress">Loading PDF...</span>
           </div>
           <script>
+          // No variable declaration. Described in https://github.com/spencerwooo/onedrive-cf-index/pull/46
           loadingLabel = document.querySelector('.loading-label')
           loadingProgress = document.querySelector('#loading-progress')
           function progress({ loaded, total }) {

@@ -15,10 +15,9 @@
     - [Under the hood](#under-the-hood)
   - [All other features](#all-other-features)
 - [Deployment](#deployment)
-  - [Prerequisites](#prerequisites)
-    - [Get OneDrive API Tokens](#get-onedrive-api-tokens)
-  - [Preparing](#preparing)
-  - [Building and publishing](#building-and-publishing)
+  - [Generating OneDrive API Tokens](#generating-onedrive-api-tokens)
+  - [Preparations](#preparations)
+  - [Building and deployment](#building-and-deployment)
 - [Customizations](#customizations)
 
 ## Demo
@@ -52,8 +51,8 @@ Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
   - ...
 - Code syntax highlight in GitHub style. (With PrismJS.)
 - Image preview supports [Medium style zoom effect](https://github.com/francoischalifour/medium-zoom).
-- Token cached and refreshed with Cloudflare Workers KV storage.
-- Route lazy loading with the help of [Turbolinks®](https://github.com/turbolinks/turbolinks). (Somewhat buggy when going from `folder` to `file preview`, but not user-experience degrading.)
+- Token cached and refreshed with Cloudflare Workers KV storage. _(We got rid of external Firebase dependencies!)_
+- Route lazy loading with the help of [Turbolinks®](https://github.com/turbolinks/turbolinks).
 - Supports OneDrive 21Vianet.（由世纪互联运营的 OneDrive。）
 - ...
 
@@ -62,7 +61,8 @@ Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 - CSS animations all the way.
 - Package source code with wrangler and webpack.
 - Convert all CDN assets to load with jsDelivr.
-- No external JS scripts, **all scripts are loaded with webpack!** (Other than some libraries.)
+- **Almost all scripts are loaded with webpack!** (Other than some libraries for
+  rendering file previews.)
 - ...
 
 ### All other features
@@ -73,9 +73,7 @@ See: [New features | OneDrive-Index-Cloudflare-Worker](https://github.com/heymin
 
 > Online token generation tool taken from the generous: <https://heymind.github.io/tools/microsoft-graph-api-auth>.
 
-### Prerequisites
-
-#### Get OneDrive API Tokens
+### Generating OneDrive API Tokens
 
 1. Create a new blade app here [Microsoft Azure App registrations](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade) (OneDrive normal version) or [Microsoft Azure.cn App registrations](https://portal.azure.cn/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade) (OneDrive 世纪互联版本) with:
    1. `Supported account types` set to `Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)`. OneDrive 世纪互联用户设置为：`任何组织目录（任何 Azure AD 目录 - 多租户）中的帐户`.
@@ -96,7 +94,7 @@ After all this hassle, you should have successfully acquired the following token
 - `redirect_uri`: Defaults to `https://heymind.github.io/tools/microsoft-graph-api-auth`.
 - `base`: Defaults to `/Public`.
 
-### Preparing
+### Preparations
 
 Fork the repository. Install dependencies.
 
@@ -112,19 +110,29 @@ wrangler config
 
 # Verify wrangler status with this command
 wrangler whoami
-
-# Create KV bucket
-wrangler kv:namespace create "BUCKET"
 ```
 
 Create a **DRAFT** worker at Cloudflare Workers with a cool name. Get your own Cloudflare `account_id` and `zone_id`: [Docs - Account ID And Zone ID](https://developers.cloudflare.com/workers/quickstart#account-id-and-zone-id).
+
+
+Create Cloudflare Workers KV bucket named `BUCKET`:
+
+```sh
+# Create KV bucket
+wrangler kv:namespace create "BUCKET"
+
+# ... or, create KV bucket with preview functions enabled
+wrangler kv:namespace create "BUCKET" --preview
+```
 
 Modify [`wrangler.toml`](wrangler.toml):
 
 - `name`: The draft worker's name, your worker will be published at `<name>.<worker_subdomain>.workers.dev`.
 - `account_id`: Your Cloudflare Account ID.
 - `zone_id`: Your Cloudflare Zone ID.
-- `kv_namespaces`: Your Cloudflare KV namespace.
+- `kv_namespaces`: Your Cloudflare KV namespace, you should substitute the `id`
+  and `preview_id` values accordingly. _If you don't need preview functions, you
+  can remove the `preview_id` field._
 
 Modify [`src/config/default.js`](src/config/default.js):
 
@@ -144,7 +152,7 @@ wrangler secret put CLIENT_SECRET
 # ... enter your client_secret from above here
 ```
 
-### Building and publishing
+### Building and deployment
 
 You can preview the worker with `wrangler`:
 

@@ -88,7 +88,9 @@ async function handleRequest(request) {
   const paginationLink = request.headers.get('pLink')
   const paginationIdx = request.headers.get('pIdx') - 0
 
-  if (paginationLink && paginationLink !== 'undefined') url = `${childrenApi}&$skiptoken=${paginationLink}`
+  if (paginationLink && paginationLink !== 'undefined') {
+    url += `&$skiptoken=${paginationLink}`
+  }
 
   const resp = await fetch(url, {
     headers: {

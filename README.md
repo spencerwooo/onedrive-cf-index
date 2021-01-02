@@ -127,7 +127,7 @@ wrangler whoami
 Create a **DRAFT** worker at Cloudflare Workers with a cool name. Get your own Cloudflare `account_id` and `zone_id`: [Docs - Account ID And Zone ID](https://developers.cloudflare.com/workers/quickstart#account-id-and-zone-id).
 
 Create Cloudflare Workers KV bucket named `BUCKET`:
-
+**YOU NEED CHANGE THE account_id AND zone_id IN wrangler.toml BEFORE YOU DO NEXT STEPS**
 ```sh
 # Create KV bucket
 wrangler kv:namespace create "BUCKET"

@@ -61,8 +61,7 @@ Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 - CSS animations all the way.
 - Package source code with wrangler and webpack.
 - Convert all CDN assets to load with jsDelivr.
-- **Almost all scripts are loaded with webpack!** (Other than some libraries for
-  rendering file previews.)
+- **Almost all scripts are loaded with webpack!** (Other than a few libraries for rendering file previews.)
 - ...
 
 ### All other features
@@ -98,12 +97,14 @@ After all this hassle, you should have successfully acquired the following token
 
 Fork the repository. Install dependencies.
 
+_We strongly recommend you install npm with a Node version manager like [n](https://github.com/tj/n) or [nvm](https://github.com/nvm-sh/nvm), which will allow wrangler to install configuration data in a global node_modules directory in your user's home directory, without requiring that you run as root._
+
 ```sh
 # Install cloudflare workers official packing and publishing tool
-yarn global add @cloudflare/wrangler
+npm i @cloudflare/wrangler -g
 
-# Install dependencies with yarn
-yarn install
+# Install dependencies with npm
+npm install
 
 # Login to Cloudflare with wrangler
 wrangler config
@@ -113,7 +114,6 @@ wrangler whoami
 ```
 
 Create a **DRAFT** worker at Cloudflare Workers with a cool name. Get your own Cloudflare `account_id` and `zone_id`: [Docs - Account ID And Zone ID](https://developers.cloudflare.com/workers/quickstart#account-id-and-zone-id).
-
 
 Create Cloudflare Workers KV bucket named `BUCKET`:
 

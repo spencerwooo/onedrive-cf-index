@@ -13,7 +13,9 @@
   - [Improvements](#improvements)
     - [New features](#new-features)
     - [Under the hood](#under-the-hood)
-  - [All other features](#all-other-features)
+  - [Other features](#other-features)
+    - [Proxied / Raw file download](#proxied--raw-file-download)
+    - [Others](#others)
 - [Deployment](#deployment)
   - [Generating OneDrive API Tokens](#generating-onedrive-api-tokens)
   - [Preparations](#preparations)
@@ -64,9 +66,18 @@ Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 - **Almost all scripts are loaded with webpack!** (Other than a few libraries for rendering file previews.)
 - ...
 
-### All other features
+### Other features
 
-See: [New features | OneDrive-Index-Cloudflare-Worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker#-%E6%96%B0%E7%89%B9%E6%80%A7-v11).
+#### Proxied / Raw file download
+
+- Proxied download: `?proxied` - Downloads the file through CloudFlare Workers if (1) `proxyDownload` is true in `config/default.js` and (2) parameter is present in url.
+- Raw file download: `?raw` - Return direct raw file instead of rich rendered preview if parameter is present.
+
+Both these parameters can be used side by side, meaning that `?proxied&raw` and `?raw&proxied` are both valid. Example: [`https://storage.spencerwoo.com/🥟%20Some%20test%20files/Previews/eb37c02438f.png?raw&proxied`](https://storage.spencerwoo.com/🥟%20Some%20test%20files/Previews/eb37c02438f.png?raw&proxied).
+
+#### Others
+
+See: [New features - OneDrive-Index-Cloudflare-Worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker#-%E6%96%B0%E7%89%B9%E6%80%A7-v11).
 
 ## Deployment
 

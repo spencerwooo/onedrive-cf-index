@@ -58,7 +58,7 @@ async function handleRequest(request) {
   const { pathname, searchParams } = new URL(request.url)
   const neoPathname = pathname.replace(/pagination$/, '')
 
-  const rawImage = searchParams.get('raw') !== null
+  const rawFile = searchParams.get('raw') !== null
   const thumbnail = config.thumbnail ? searchParams.get('thumbnail') : false
   const proxied = config.proxyDownload ? searchParams.get('proxied') !== null : false
 
@@ -113,8 +113,8 @@ async function handleRequest(request) {
         .pop()
         .toLowerCase()
 
-      // Render image directly if url params 'raw' are given
-      if (rawImage || !(fileExt in extensions)) {
+      // Render file directly if url params 'raw' are given
+      if (rawFile || !(fileExt in extensions)) {
         return await handleFile(request, pathname, data['@microsoft.graph.downloadUrl'], {
           proxied,
           fileSize: data.size

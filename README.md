@@ -128,7 +128,7 @@ Create a **DRAFT** worker at Cloudflare Workers with a cool name. Get your own C
 
 Create Cloudflare Workers KV bucket named `BUCKET`:
 
- `NOTICE: YOU NEED CHANGE THE account_id AND zone_id IN wrangler.toml BEFORE YOU DO NEXT STEPS
+`NOTICE: YOU NEED CHANGE THE account_id AND zone_id IN wrangler.toml BEFORE YOU DO NEXT STEPS`
 ```sh
 # Create KV bucket
 wrangler kv:namespace create "BUCKET"

@@ -74,7 +74,7 @@ const config = {
   /**
    * Feature: Proxy Download
    * Use Cloudflare as a relay to speed up download. (Especially in Mainland China)
-   * Example: https://storage.spencerwoo.com/🥟%20Some%20test%20files/Previews/eb37c02438f.png?raw=true&proxied
+   * Example: https://storage.spencerwoo.com/🥟%20Some%20test%20files/Previews/eb37c02438f.png?raw&proxied
    * You can also embed this link (url encoded) directly inside Markdown or HTML.
    */
   proxyDownload: true

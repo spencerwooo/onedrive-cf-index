@@ -13,14 +13,14 @@ renderer.image = (href, title, text) => {
     // Check if href is relative
     url = new URL(href).href
   } catch (TypeError) {
-    // Add param raw=true
+    // Add param raw
     if (href.includes('?')) {
       const urlSplitParams = href.split('?')
       const param = new URLSearchParams(urlSplitParams[1])
-      param.append('raw', true)
+      param.append('raw')
       url = urlSplitParams[0] + '?' + param.toString()
     } else {
-      url = href + '?raw=true'
+      url = href + '?raw'
     }
   }
   let out = '<img data-zoomable src="' + url + '" alt="' + text + '"'

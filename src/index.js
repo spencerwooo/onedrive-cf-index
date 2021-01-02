@@ -58,16 +58,15 @@ async function handleRequest(request) {
   const { pathname, searchParams } = new URL(request.url)
   const neoPathname = pathname.replace(/pagination$/, '')
 
-  const rawImage = searchParams.get('raw')
+  const rawImage = searchParams.get('raw') !== null
   const thumbnail = config.thumbnail ? searchParams.get('thumbnail') : false
   const proxied = config.proxyDownload ? searchParams.get('proxied') !== null : false
 
   const oneDriveApiEndpoint = config.useOneDriveCN ? 'microsoftgraph.chinacloudapi.cn' : 'graph.microsoft.com'
 
   if (thumbnail) {
-    const url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/root:${
-      base ? base : '/' + (neoPathname === '/' ? '' : neoPathname)
-    }:/thumbnails/0/${thumbnail}/content`
+    const url = `https://${oneDriveApiEndpoint}/v1.0/me/drive/root:${base ||
+      '/' + (neoPathname === '/' ? '' : neoPathname)}:/thumbnails/0/${thumbnail}/content`
     const resp = await fetch(url, {
       headers: {
         Authorization: `bearer ${accessToken}`
@@ -82,7 +81,7 @@ async function handleRequest(request) {
   const isRequestFolder = pathname.endsWith('/') || searchParams.get('page')
   let url =
     `https://${oneDriveApiEndpoint}/v1.0/me/drive/root${wrapPathName(neoPathname, isRequestFolder)}` +
-    (isRequestFolder && config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : ``)
+    (isRequestFolder && config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : '')
 
   // get & set {pLink ,pIdx} for fetching and paging
   const paginationLink = request.headers.get('pLink')
@@ -102,7 +101,7 @@ async function handleRequest(request) {
   if (resp.ok) {
     const data = await resp.json()
     if (data['@odata.nextLink']) {
-      request.pIdx = paginationIdx ? paginationIdx : 1
+      request.pIdx = paginationIdx || 1
       request.pLink = data['@odata.nextLink'].match(/&\$skiptoken=(.+)/)[1]
     } else if (paginationIdx) {
       request.pIdx = -paginationIdx
@@ -114,7 +113,7 @@ async function handleRequest(request) {
         .pop()
         .toLowerCase()
 
-      // Render image directly if ?raw=true parameters are given
+      // Render image directly if url params 'raw' are given
       if (rawImage || !(fileExt in extensions)) {
         return await handleFile(request, pathname, data['@microsoft.graph.downloadUrl'], {
           proxied,

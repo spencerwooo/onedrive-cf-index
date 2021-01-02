@@ -126,6 +126,12 @@ wrangler whoami
 
 Create a **DRAFT** worker at Cloudflare Workers with a cool name. Get your own Cloudflare `account_id` and `zone_id`: [Docs - Account ID And Zone ID](https://developers.cloudflare.com/workers/quickstart#account-id-and-zone-id).
 
+Modify [`wrangler.toml`](wrangler.toml):
+
+- `name`: The draft worker's name, your worker will be published at `<name>.<worker_subdomain>.workers.dev`.
+- `account_id`: Your Cloudflare Account ID.
+- `zone_id`: Your Cloudflare Zone ID.
+
 Create Cloudflare Workers KV bucket named `BUCKET`:
 
 ```sh
@@ -136,11 +142,8 @@ wrangler kv:namespace create "BUCKET"
 wrangler kv:namespace create "BUCKET" --preview
 ```
 
-Modify [`wrangler.toml`](wrangler.toml):
+Modify `kv_namespaces` inside [`wrangler.toml`](wrangler.toml):
 
-- `name`: The draft worker's name, your worker will be published at `<name>.<worker_subdomain>.workers.dev`.
-- `account_id`: Your Cloudflare Account ID.
-- `zone_id`: Your Cloudflare Zone ID.
 - `kv_namespaces`: Your Cloudflare KV namespace, you should substitute the `id`
   and `preview_id` values accordingly. _If you don't need preview functions, you
   can remove the `preview_id` field._

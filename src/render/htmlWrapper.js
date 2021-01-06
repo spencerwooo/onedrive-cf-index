@@ -60,28 +60,42 @@ export function renderHTML(body, pLink, pIdx) {
         }
         Prism.highlightAll()
         mediumZoom('[data-zoomable]')
-        if ('${pLink}') {
-          if (!window.pLinkId) history.pushState(history.state, '', location.pathname.replace('pagination', ''))
-          if (location.pathname.endsWith('/')) {
-            pLinkId = history.state.turbolinks.restorationIdentifier
-            ${p} = [['${pLink}'], 1]
-          }
-          if (${p}[0].length < ${p}[1]) (${p} = [[...${p}[0], '${pLink}'], ${p}[1]])
-        }
-        function handlePagination(isNext) {
-          isNext ? ${p}[1]++ : ${p}[1]--
-          addEventListener(
-            'turbolinks:request-start',
-            event => {
-              const xhr = event.data.xhr
-              xhr.setRequestHeader('pLink', ${p}[0][${p}[1] -2])
-              xhr.setRequestHeader('pIdx', ${p}[1] + '')
-            },
-            { once: true }
-          )
-        }
         Turbolinks.Location.prototype.isHTML = () => {return true}
         Turbolinks.start()
+        pagination()
+
+        function pagination() {
+          if ('${pLink ? 1 : ''}') {
+            if (location.pathname.endsWith('/')) {
+              pLinkId = history.state.turbolinks.restorationIdentifier
+              ${p} = { link: ['${pLink}'], idx: 1 }
+            } else if (!window.pLinkId) {
+              history.pushState(history.state, '', location.pathname.replace('pagination', '/'))
+              return
+            }
+            if (${p}.link.length < ${p}.idx) (${p} = { link: [...${p}.link, '${pLink}'], idx: ${p}.idx })
+          }
+          listen = ({ isNext }) => {
+            isNext ? ${p}.idx++ : ${p}.idx--
+            addEventListener(
+              'turbolinks:request-start',
+              event => {
+                const xhr = event.data.xhr
+                xhr.setRequestHeader('pLink', ${p}.link[${p}.idx -2])
+                xhr.setRequestHeader('pIdx', ${p}.idx + '')
+              },
+              { once: true }
+            )
+          }
+          preBtn = document.getElementById('pagination-pre')
+          nextBtn = document.getElementById('pagination-next')
+          if (nextBtn) {
+            nextBtn.addEventListener('click', () => listen({ isNext: true }), { once: true })
+          }
+          if (preBtn) {
+            preBtn.addEventListener('click', () => listen({ isNext: false }), { once: true })
+          }
+        }
       </script>
     </body>
   </html>`

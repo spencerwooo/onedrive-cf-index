@@ -121,13 +121,13 @@ async function handleRequest(request) {
         })
       }
 
-      // Add cache preview feature
-      let cacheUrl
+      // Add preview by CloudFlare worker cache feature
+      let cacheUrl = null
       if (config.cache.enable && config.cache.previewCache && data.size < config.cache.chunkedCacheLimit) {
-        cacheUrl = pathname + '?proxied&raw=true'
+        cacheUrl = pathname + '?proxied&raw'
       }
 
-      return new Response(await renderFilePreview(data, pathname, fileExt, cacheUrl ? cacheUrl : null), {
+      return new Response(await renderFilePreview(data, pathname, fileExt, cacheUrl || null), {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'content-type': 'text/html'

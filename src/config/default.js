@@ -15,10 +15,16 @@ const config = {
   base: '/Public',
 
   /**
-   * Feature: add OneDriveCN (21Vianet) support
-   * Usage: simply change `useOneDriveCN` to true
+   * Feature: add support for Chinese Onedrive (21Vianet) API endpoints
+   * Usage: set param `useCnEndpoints` value to `true`
    */
-  useOneDriveCN: false,
+  useCnEndpoints: false,
+  apiEndpoint: (useCnEndpoints => {
+    return {
+      graph: useCnEndpoints ? 'https://microsoftgraph.chinacloudapi.cn' : 'https://graph.microsoft.com',
+      auth: useCnEndpoints ? 'https://login.chinacloudapi.cn' : 'https://login.microsoftonline.com'
+    }
+  })(),
 
   /**
    * Feature: Pagination when a folder has multiple(>${top}) files

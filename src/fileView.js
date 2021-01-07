@@ -171,7 +171,12 @@ function renderUnsupportedView(fileExt) {
  * @param {Object} file Object representing the file to preview
  * @param {string} fileExt The file extension parsed
  */
-async function renderPreview(file, fileExt) {
+async function renderPreview(file, fileExt, cacheUrl) {
+  if (cacheUrl) {
+    // This will change your download url too! (proxied download)
+    file['@microsoft.graph.downloadUrl'] = cacheUrl
+  }
+
   switch (extensions[fileExt]) {
     case preview.markdown:
       return await renderMarkdown(file['@microsoft.graph.downloadUrl'], '', 'style="margin-top: 0;"')
@@ -199,14 +204,14 @@ async function renderPreview(file, fileExt) {
   }
 }
 
-export async function renderFilePreview(file, path, fileExt) {
+export async function renderFilePreview(file, path, fileExt, cacheUrl) {
   const el = (tag, attrs, content) => `<${tag} ${attrs.join(' ')}>${content}</${tag}>`
   const div = (className, content) => el('div', [`class=${className}`], content)
 
   const body = div(
     'container',
     div('path', renderPath(path) + ` / ${file.name}`) +
-      div('items', el('div', ['style="padding: 1rem 1rem;"'], await renderPreview(file, fileExt))) +
+      div('items', el('div', ['style="padding: 1rem 1rem;"'], await renderPreview(file, fileExt, cacheUrl))) +
       div(
         'download-button-container',
         el(

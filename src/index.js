@@ -63,7 +63,7 @@ async function handleRequest(request) {
   const proxied = config.proxyDownload ? searchParams.get('proxied') !== null : false
 
   if (thumbnail) {
-    const url = `${config.nationalApi.graph}/v1.0/me/drive/root:${base ||
+    const url = `${config.apiEndpoint.graph}/v1.0/me/drive/root:${base ||
       '/' + (neoPathname === '/' ? '' : neoPathname)}:/thumbnails/0/${thumbnail}/content`
     const resp = await fetch(url, {
       headers: {
@@ -78,7 +78,7 @@ async function handleRequest(request) {
 
   const isRequestFolder = pathname.endsWith('/') || searchParams.get('page')
   let url =
-    `${config.nationalApi.graph}/v1.0/me/drive/root${wrapPathName(neoPathname, isRequestFolder)}` +
+    `${config.apiEndpoint.graph}/v1.0/me/drive/root${wrapPathName(neoPathname, isRequestFolder)}` +
     (isRequestFolder && config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : '')
 
   // get & set {pLink ,pIdx} for fetching and paging

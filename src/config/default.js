@@ -15,13 +15,14 @@ const config = {
   base: '/Public',
 
   /**
-   * Feature: add china onedrive (21Vianet) support
-   * Usage: set param `China` defalut value to `true`
+   * Feature: add support for Chinese Onedrive (21Vianet) API endpoints
+   * Usage: set param `useCnEndpoints` value to `true`
    */
-  nationalApi: ((China = false) => {
+  useCnEndpoints: false,
+  apiEndpoint: (useCnEndpoints => {
     return {
-      graph: China ? 'https://microsoftgraph.chinacloudapi.cn' : 'https://graph.microsoft.com',
-      auth: China ? 'https://login.chinacloudapi.cn' : '	https://login.microsoftonline.com'
+      graph: useCnEndpoints ? 'https://microsoftgraph.chinacloudapi.cn' : 'https://graph.microsoft.com',
+      auth: useCnEndpoints ? 'https://login.chinacloudapi.cn' : 'https://login.microsoftonline.com'
     }
   })(),
 

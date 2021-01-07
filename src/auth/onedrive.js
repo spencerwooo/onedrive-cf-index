@@ -16,7 +16,7 @@ export async function getAccessToken() {
   }
 
   // Token expired, refresh access token with Microsoft API. Both international and china-specific API are supported
-  const oneDriveAuthEndpoint = `${config.nationalApi.auth}/common/oauth2/v2.0/token`
+  const oneDriveAuthEndpoint = `${config.apiEndpoint.auth}/common/oauth2/v2.0/token`
 
   const resp = await fetch(oneDriveAuthEndpoint, {
     method: 'POST',

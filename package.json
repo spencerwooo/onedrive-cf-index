@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write '**/*.{js,css,json,md}'",
     "lint": "eslint src/**/* *.js --color --fix",
-    "dev": "wrangler preview --watch"
+    "preview": "wrangler preview --watch",
+    "dev": "wrangler dev"
   },
   "author": "spencerwooo <spencerwoo98@foxmail.com>",
   "license": "MIT",

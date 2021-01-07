@@ -54,11 +54,11 @@ const config = {
    * `previewCache`: using CloudFlare cache to preview
    */
   cache: {
-    enable: false,
+    enable: true,
     entireFileCacheLimit: 10000000, // 10MB
     chunkedCacheLimit: 100000000, // 100MB
-    previewCache: false,
-    paths: ['/Images']
+    previewCache: true,
+    paths: ['/🥟%20Some%20test%20files/Previews']
   },
 
   /**

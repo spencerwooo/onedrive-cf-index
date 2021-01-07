@@ -173,9 +173,10 @@ function renderUnsupportedView(fileExt) {
  */
 async function renderPreview(file, fileExt, cacheUrl) {
   if (cacheUrl) {
-    // This will change your download url too!(porxied download)
+    // This will change your download url too! (proxied download)
     file['@microsoft.graph.downloadUrl'] = cacheUrl
   }
+
   switch (extensions[fileExt]) {
     case preview.markdown:
       return await renderMarkdown(file['@microsoft.graph.downloadUrl'], '', 'style="margin-top: 0;"')

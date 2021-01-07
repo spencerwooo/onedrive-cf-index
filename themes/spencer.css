@@ -142,11 +142,12 @@ a.item:hover {
 
 .paginate-container {
   margin-top: 1.5rem;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
 }
 
 .paginate-container a {
+  cursor: pointer;
   text-decoration: none;
 }
 

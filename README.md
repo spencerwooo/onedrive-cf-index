@@ -65,7 +65,7 @@ See the new features section at the original [onedrive-index-cloudflare-worker](
 
 ## Deployment
 
-_Online token generation tool taken from the generous: <https://heymind.github.io/tools/microsoft-graph-api-auth>. We will be using this in the following steps._
+_Very, very long, tedious, step by step guide warning! Online token generation tool taken from the generous: <https://heymind.github.io/tools/microsoft-graph-api-auth>. We will be using this in the following steps._
 
 ### Generating OneDrive API Tokens
 

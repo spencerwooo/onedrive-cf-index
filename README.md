@@ -1,6 +1,6 @@
 <div align="center">
-  <image src="assets/onedrive-cf-index.png" alt="onedrive-cf-index" width="100px" />
-  <h2>onedrive-cf-index</h2>
+  <image src="assets/onedrive-cf-index.png" alt="onedrive-cf-index" width="150px" />
+  <h3><a href="https://storage.spencerwoo.com">onedrive-cf-index</a></h3>
   <em>Yet another OneDrive index, powered by CloudFlare Workers.</em>
 </div>
 
@@ -8,31 +8,15 @@
 
 [![Hosted on Cloudflare Workers](https://img.shields.io/badge/Hosted%20on-CF%20Workers-f38020?logo=cloudflare&logoColor=f38020&labelColor=282d33)](https://storage.spencerwoo.com/)
 [![Deploy](https://github.com/spencerwooo/onedrive-cf-index/workflows/Deploy/badge.svg)](https://github.com/spencerwooo/onedrive-cf-index/actions?query=workflow%3ADeploy)
+[![README-CN](assets/chinese.svg)](./README-CN.md)
 
-> This project is greatly inspired by: [heymind/onedrive-index-cloudflare-worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker).
-
-- [Demo](#demo)
-- [Features](#features)
-  - [Improvements](#improvements)
-    - [New features](#new-features)
-    - [Under the hood](#under-the-hood)
-  - [Other features](#other-features)
-    - [Proxied / Raw file download](#proxied--raw-file-download)
-    - [Others](#others)
-- [Deployment](#deployment)
-  - [Generating OneDrive API Tokens](#generating-onedrive-api-tokens)
-  - [Preparations](#preparations)
-  - [Building and deployment](#building-and-deployment)
-- [Customizations](#customizations)
+<h5>This project is greatly inspired by: <a href="https://github.com/heymind/OneDrive-Index-Cloudflare-Worker">onedrive-index-cloudflare-worker</a>.</h5>
 
 ## Demo
 
-Live demo: [📁 Spencer's OneDrive Index](https://storage.spencerwoo.com/).
+Live demo at [Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 
-| Scenario |                              Screenshot                              |
-| :------: | :------------------------------------------------------------------: |
-|   Home   | ![](https://cdn.spencer.felinae98.cn/blog/2020/08/200806_153117.png) |
-|  Folder  | ![](https://cdn.spencer.felinae98.cn/blog/2020/08/200806_153124.png) |
+![Screenshot Demo](assets/screenshot.png)
 
 ## Features
 
@@ -194,7 +178,7 @@ You can also create a GitHub Actions for auto publishing your worker on `push`. 
 
 ---
 
-🏵 **`onedrive-cf-index`** ©Spencer Woo. Released under the MIT License.
+🏵 **onedrive-cf-index** ©Spencer Woo. Released under the MIT License.
 
 Authored and maintained by Spencer Woo.
 

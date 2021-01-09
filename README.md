@@ -1,12 +1,15 @@
+<div align="center">
+  <image src="assets/onedrive-cf-index.png" alt="onedrive-cf-index" width="100px" />
+  <h2>onedrive-cf-index</h2>
+  <em>Yet another OneDrive index, powered by CloudFlare Workers.</em>
+</div>
+
+---
+
 [![Hosted on Cloudflare Workers](https://img.shields.io/badge/Hosted%20on-CF%20Workers-f38020?logo=cloudflare&logoColor=f38020&labelColor=282d33)](https://storage.spencerwoo.com/)
 [![Deploy](https://github.com/spencerwooo/onedrive-cf-index/workflows/Deploy/badge.svg)](https://github.com/spencerwooo/onedrive-cf-index/actions?query=workflow%3ADeploy)
-<image align="right" src="assets/onedrive-cf-index.png" alt="onedrive-cf-index" width="125px" />
 
-<h1>onedrive-cf-index</h1>
-
-🏵 **Yet Another OneDrive Index.** Powered by Cloudflare Workers. Inspired and originated greatly from [heymind/OneDrive-Index-Cloudflare-Worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker).
-
-<h2>Table of contents</h2>
+> This project is greatly inspired by: [heymind/onedrive-index-cloudflare-worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker).
 
 - [Demo](#demo)
 - [Features](#features)

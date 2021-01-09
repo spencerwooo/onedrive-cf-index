@@ -44,12 +44,11 @@ Live demo at [Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 - Music / Audio: `.mp3`, `.aac`, `.wav`, `.oga`. [_DEMO_](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Multimedia/Elysian%20Fields%20-%20Climbing%20My%20Dark%20Hair.mp3).
 - Videos: `.mp4`, `.flv`, `.webm`, `.m3u8`. [_DEMO_](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Multimedia/%E8%BD%A6%E5%BA%93%E5%A5%B3%E7%8E%8B%20%E9%AB%98%E8%B7%9F%E8%B9%A6%E8%BF%AA%20%E4%B9%98%E9%A3%8E%E7%A0%B4%E6%B5%AA%E7%9A%84%E5%A7%90%E5%A7%90%E4%B8%BB%E9%A2%98%E6%9B%B2%E3%80%90%E9%86%8B%E9%86%8B%E3%80%91.mp4).
 
-### ⬇️ Proxied / Raw file download
+### ⬇️ Proxied / raw file download
 
-- Proxied download: `?proxied` - Downloads the file through CloudFlare Workers if (1) `proxyDownload` is true in `config/default.js` and (2) parameter is present in url.
-- Raw file download: `?raw` - Return direct raw file instead of rich rendered preview if parameter is present.
-
-Both these parameters can be used side by side, meaning that `?proxied&raw` and `?raw&proxied` are both valid.
+- [Optional] Proxied download: `?proxied` - Downloads the file through CloudFlare Workers if (1) `proxyDownload` is true in `config/default.js` and (2) parameter is present in url.
+- [Optional] Raw file download: `?raw` - Return direct raw file instead of rich rendered preview if parameter is present.
+- Both these parameters can be used side by side, meaning that `?proxied&raw` and `?raw&proxied` are both valid.
 
 Yes, this means you can use this project as an image storage service or for serving static files, for example:
 
@@ -61,7 +60,7 @@ https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/nyancat.gif?ra
 
 ### Others
 
-See [New features - OneDrive-Index-Cloudflare-Worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker#-%E6%96%B0%E7%89%B9%E6%80%A7-v11) for reference, although I cannot guarantee that all features are usable.
+See the new features section at the original [onedrive-index-cloudflare-worker](https://github.com/heymind/OneDrive-Index-Cloudflare-Worker#-%E6%96%B0%E7%89%B9%E6%80%A7-v11) project page for reference, **although I cannot guarantee that all features are usable.**
 
 ## Deployment
 
@@ -70,6 +69,7 @@ _Online token generation tool taken from the generous: <https://heymind.github.i
 ### Generating OneDrive API Tokens
 
 1. Create a new blade app here [Microsoft Azure App registrations](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade) (OneDrive normal version) or [Microsoft Azure.cn App registrations](https://portal.azure.cn/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade) (OneDrive 世纪互联版本):
+
    1. Login with your Microsoft account, select `New registration`.
    2. Input `Name` for your blade app, `my-onedrive-cf-index` for example.
    3. Set `Supported account types` to `Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)`. OneDrive 世纪互联用户设置为：`任何组织目录（任何 Azure AD 目录 - 多租户）中的帐户`.
@@ -95,6 +95,7 @@ _Online token generation tool taken from the generous: <https://heymind.github.i
    ![](assets/permissions-used.png)
 
 5. Get our `refresh_token` and :
+
    1. Open <https://heymind.github.io/tools/microsoft-graph-api-auth>.
    2. At `4. Authorize for code`, input our `client_id`, and hit `AUTHORIZE`.
 
@@ -122,7 +123,7 @@ After all this hassle, you should have successfully acquired the following token
 - `redirect_uri`: Defaults to `https://heymind.github.io/tools/microsoft-graph-api-auth`.
 - `base`: Defaults to `/Public`.
 
-*Yes, I know it's a long and tedious procedure, but it's Microsoft, we can understand. 🤷🏼‍♂️*
+_Yes, I know it's a long and tedious procedure, but it's Microsoft, we can understand. 🤷🏼‍♂️_
 
 ### Preparations
 
@@ -138,7 +139,7 @@ npm i @cloudflare/wrangler -g
 npm install
 
 # Login to Cloudflare with wrangler
-wrangler config
+wrangler login
 
 # Verify wrangler status with this command
 wrangler whoami

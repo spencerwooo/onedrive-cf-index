@@ -31,7 +31,8 @@ Live demo at [Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 
 - Complete new and customisable design at [spencer.css](themes/spencer.css).
 - Emoji as folder icon when available (if the first character of the folder name is an emoji).
-- Renders `README.md` if found in current folder. Rendered with [github-markdown-css](https://github.com/sindresorhus/github-markdown-css). [_DEMO_](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/README/).
+- Renders `README.md` if found in current folder. Rendered with [github-markdown-css](https://github.com/sindresorhus/github-markdown-css).
+- Supports pagination, no more limitations like 200 items max for each folder ever again!
 
 ### 📁 File previews
 

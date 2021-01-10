@@ -87,7 +87,7 @@ _Very, very long, tedious, step by step guide warning! Online token generation t
 
    ![](assets/add-client-secret.png)
 
-4. Open `API permissions` panel, select `Microsoft Graph`, select `Delegated permissions`, search for `offline_access, Files.Read, Files.Read.All`, select all three of them and click `Add permissions`.
+4. Open `API permissions` panel, select `Microsoft Graph`, select `Delegated permissions`, search for `offline_access, Files.Read, Files.Read.All`, **select all three of them** and click `Add permissions`.
 
    ![](assets/add-permissions.png)
 
@@ -95,7 +95,7 @@ _Very, very long, tedious, step by step guide warning! Online token generation t
 
    ![](assets/permissions-used.png)
 
-5. Get our `refresh_token` and :
+5. Get your `refresh_token`:
 
    1. Open <https://heymind.github.io/tools/microsoft-graph-api-auth>.
    2. At `4. Authorize for code`, input our `client_id`, and hit `AUTHORIZE`.
@@ -175,7 +175,7 @@ Modify [`src/config/default.js`](src/config/default.js):
 - `client_id`: Your `client_id` from above.
 - `base`: Your `base` path from above.
 
-_For Chinese 21Vianet OneDrive users. OneDrive 世纪互联用户：将 `useOneDriveCN` 设置（修改）为 `true`。_
+_For Chinese 21Vianet OneDrive users. OneDrive 世纪互联用户：将 `useCnEndpoints` 设置（修改）为 `true`。_
 
 Add secrets to Cloudflare Workers environment variables with `wrangler`:
 

@@ -5,7 +5,7 @@ const COMMIT_HASH = '88570208bdd3dc88ab2e13bbf7de370b3b8dba38'
 const pagination = (pIdx, attrs) => {
   const getAttrs = (c, h, isNext) =>
     `class="${c}" ${h ? `href="pagination?page=${h}"` : ''} ${
-      isNext === undefined ? '' : `onclick="handlePagination(${isNext})"`
+      isNext === undefined ? '' : `id=${c.includes('pre') ? 'pagination-pre' : 'pagination-next'}`
     }`
   if (pIdx) {
     switch (pIdx) {

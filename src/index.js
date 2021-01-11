@@ -79,7 +79,9 @@ async function handleRequest(request) {
   }
 
   let url = `${config.nationalApi.graph}/v1.0/me/drive/root${wrapPathName(neoPathname, isRequestFolder)}${
-    isRequestFolder ? '/children' : ''
+    isRequestFolder
+      ? '/children?$select=name,size,folder,file'
+      : '?select=%40microsoft.graph.downloadUrl,name,size,file'
   }${isRequestFolder && config.pagination.enable && config.pagination.top ? `&$top=${config.pagination.top}` : ''}`
 
   // get & set {pLink ,pIdx} for fetching and paging

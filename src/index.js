@@ -39,10 +39,9 @@ const base = encodeURI(config.base).replace(/\/$/, '')
 function wrapPathName(pathname, isRequestFolder) {
   pathname = base + pathname
   const isIndexingRoot = pathname === '/'
-  // using different api to handle folder or file: children or driveItem
   if (isRequestFolder) {
-    if (isIndexingRoot) return '/children'
-    return `:${pathname.replace(/\/$/, '')}:/children`
+    if (isIndexingRoot) return ''
+    return `:${pathname.replace(/\/$/, '')}:`
   }
   return `:${pathname}`
 }
@@ -57,14 +56,17 @@ async function handleRequest(request) {
 
   const { pathname, searchParams } = new URL(request.url)
   const neoPathname = pathname.replace(/pagination$/, '')
+  const isRequestFolder = pathname.endsWith('/') || searchParams.get('page')
 
   const rawFile = searchParams.get('raw') !== null
   const thumbnail = config.thumbnail ? searchParams.get('thumbnail') : false
   const proxied = config.proxyDownload ? searchParams.get('proxied') !== null : false
 
   if (thumbnail) {
-    const url = `${config.apiEndpoint.graph}/v1.0/me/drive/root:${base ||
-      '/' + (neoPathname === '/' ? '' : neoPathname)}:/thumbnails/0/${thumbnail}/content`
+    const url = `${config.nationalApi.graph}/v1.0/me/drive/root${wrapPathName(
+      neoPathname,
+      isRequestFolder
+    )}:/thumbnails/0/${thumbnail}/content`
     const resp = await fetch(url, {
       headers: {
         Authorization: `bearer ${accessToken}`
@@ -76,10 +78,9 @@ async function handleRequest(request) {
     })
   }
 
-  const isRequestFolder = pathname.endsWith('/') || searchParams.get('page')
-  let url =
-    `${config.apiEndpoint.graph}/v1.0/me/drive/root${wrapPathName(neoPathname, isRequestFolder)}` +
-    (isRequestFolder && config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : '')
+  let url = `${config.nationalApi.graph}/v1.0/me/drive/root${wrapPathName(neoPathname, isRequestFolder)}${
+    isRequestFolder ? '/children' : ''
+  }${isRequestFolder && config.pagination.enable && config.pagination.top ? `&$top=${config.pagination.top}` : ''}`
 
   // get & set {pLink ,pIdx} for fetching and paging
   const paginationLink = request.headers.get('pLink')

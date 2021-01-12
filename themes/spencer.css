@@ -267,13 +267,12 @@ a.item:hover {
   div.medium-zoom-overlay {
     background-color: #1b1b1b !important;
   }
-  div.items,
-  div.markdown-body,
-  .items {
-    background: #131313 !important;
-  }
   nav {
     background: #181818 !important;
+  }
+  .items,
+  .markdown-body {
+    background: #131313 !important;
   }
   .markdown-body code,
   .markdown-body pre,

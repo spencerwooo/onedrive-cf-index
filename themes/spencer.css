@@ -248,3 +248,50 @@ a.item:hover {
     opacity: 0;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  a.item,
+  nav,
+  .markdown-body,
+  .markdown-body code,
+  .markdown-body pre,
+  .markdown-body .highlight pre,
+  .markdown-body table td,
+  .markdown-body table th,
+  .path a {
+    color: #a2a2a2 !important;
+  }
+  body,
+  div.fade-in-fwd,
+  div.intro,
+  div.medium-zoom-overlay {
+    background-color: #1b1b1b !important;
+  }
+  div.items,
+  div.markdown-body,
+  .items {
+    background: #131313 !important;
+  }
+  nav {
+    background: #181818 !important;
+  }
+  .markdown-body code,
+  .markdown-body pre,
+  .markdown-body .highlight pre,
+  .markdown-body table td,
+  .markdown-body table th {
+    background: #2b2b2b !important;
+  }
+  .token.atrule,
+  .token.attr-value,
+  .token.punctuation,
+  .token.string {
+    color: #afd5fb !important;
+  }
+  .language-css .token.string,
+  .token.entity,
+  .token.operator,
+  .token.url {
+    color: #89befa !important;
+  }
+}

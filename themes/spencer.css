@@ -259,6 +259,7 @@ a.item:hover {
   .markdown-body .highlight pre,
   .markdown-body table td,
   .markdown-body table th,
+  .paginate-container span,
   .path a {
     color: #a2a2a2 !important;
   }

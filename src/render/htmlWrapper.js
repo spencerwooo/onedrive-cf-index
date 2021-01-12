@@ -24,7 +24,6 @@ const pagination = (pIdx, attrs) => {
 }
 
 export function renderHTML(body, pLink, pIdx) {
-  pLink = pLink || ''
   const p = 'window[pLinkId]'
 
   return `<!DOCTYPE html>

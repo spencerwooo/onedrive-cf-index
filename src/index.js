@@ -63,7 +63,7 @@ async function handleRequest(request) {
   const proxied = config.proxyDownload ? searchParams.get('proxied') !== null : false
 
   if (thumbnail) {
-    const url = `${config.nationalApi.graph}/v1.0/me/drive/root${wrapPathName(
+    const url = `${config.apiEndpoint.graph}/v1.0/me/drive/root${wrapPathName(
       neoPathname,
       isRequestFolder
     )}:/thumbnails/0/${thumbnail}/content`
@@ -78,7 +78,7 @@ async function handleRequest(request) {
     })
   }
 
-  let url = `${config.nationalApi.graph}/v1.0/me/drive/root${wrapPathName(neoPathname, isRequestFolder)}${
+  let url = `${config.apiEndpoint.graph}/v1.0/me/drive/root${wrapPathName(neoPathname, isRequestFolder)}${
     isRequestFolder
       ? '/children?$select=name,size,folder,file'
       : '?select=%40microsoft.graph.downloadUrl,name,size,file'

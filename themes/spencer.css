@@ -273,7 +273,8 @@ a.item:hover {
     background: #181818 !important;
   }
   .items,
-  .markdown-body {
+  .markdown-body,
+  .markdown-body img {
     background: #131313 !important;
   }
   .markdown-body code,

@@ -253,6 +253,7 @@ a.item:hover {
 @media (prefers-color-scheme: dark) {
   a.item,
   nav,
+  .download-button,
   .markdown-body,
   .markdown-body code,
   .markdown-body pre,
@@ -268,6 +269,10 @@ a.item:hover {
   div.intro,
   div.medium-zoom-overlay {
     background-color: #1b1b1b !important;
+  }
+  img.medium-zoom-image {
+    background: #131313 !important;
+    opacity: 0.75 !important;
   }
   nav {
     background: #181818 !important;

@@ -253,6 +253,7 @@ a.item:hover {
 @media (prefers-color-scheme: dark) {
   a.item,
   nav,
+  .aplayer-title,
   .download-button,
   .markdown-body,
   .markdown-body code,
@@ -275,10 +276,15 @@ a.item:hover {
     opacity: 0.75 !important;
   }
   nav,
+  .aplayer-info,
   .items,
   .markdown-body,
   .markdown-body img {
     background: #131313 !important;
+  }
+  .aplayer-author,
+  .path {
+    color: #626262 !important;
   }
   .markdown-body code,
   .markdown-body pre,

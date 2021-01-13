@@ -274,9 +274,7 @@ a.item:hover {
   img.medium-zoom-image {
     opacity: 0.75 !important;
   }
-  nav {
-    background: #181818 !important;
-  }
+  nav,
   .items,
   .markdown-body,
   .markdown-body img {

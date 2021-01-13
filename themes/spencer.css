@@ -253,7 +253,7 @@ a.item:hover {
 @media (prefers-color-scheme: dark) {
   a.item,
   nav,
-  .aplayer-title,
+  .aplayer .aplayer-info .aplayer-music .aplayer-title,
   .download-button,
   .loading-label,
   .markdown-body,
@@ -279,13 +279,16 @@ a.item:hover {
     opacity: 0.75 !important;
   }
   nav,
-  .aplayer-info,
+  .aplayer .aplayer-info,
   .items,
   .markdown-body,
   .markdown-body img {
     background: #131313 !important;
   }
-  .aplayer-author,
+  .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon:hover path {
+    fill: #a2a2a2 !important;
+  }
+  .aplayer .aplayer-info .aplayer-music .aplayer-author,
   .path {
     color: #626262 !important;
   }

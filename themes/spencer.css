@@ -267,11 +267,11 @@ a.item:hover {
   body,
   div.fade-in-fwd,
   div.intro,
-  div.medium-zoom-overlay {
+  div.medium-zoom-overlay,
+  img.medium-zoom-image {
     background-color: #1b1b1b !important;
   }
   img.medium-zoom-image {
-    background: #131313 !important;
     opacity: 0.75 !important;
   }
   nav {

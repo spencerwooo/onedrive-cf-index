@@ -1,6 +1,23 @@
 /* eslint-disable no-irregular-whitespace */
 const config = {
   /**
+   * Configure the account/resource type for deployment (with 0 or 1)
+   * - accountType: controls account type, 0 for global, 1 for china (21Vianet)
+   * - resourceType: controls resource type, 0 for ondrive, 1 for sharepoint
+   *
+   * Follow key is used for sharepoint resource, change them only if you use sharepoint
+   * - hostname: sharepoint site hostname (like 'name.sharepoint.com')
+   * - sitePath: sharepoint site path (like '/sites/name')
+   * we do not support using onedrive & sharepoint at the same time
+   */
+  type: {
+    accountType: 0,
+    resourceType: 0,
+    hostname: null,
+    sitePath: null
+  },
+
+  /**
    * You can use this tool http://heymind.github.io/tools/microsoft-graph-api-auth
    * to get following params: client_id, client_secret, refresh_token & redirect_uri.
    */
@@ -13,18 +30,6 @@ const config = {
    * The base path for indexing, all files and subfolders are public by this tool. For example: `/Public`.
    */
   base: '/Public',
-
-  /**
-   * Feature: add support for Chinese Onedrive (21Vianet) API endpoints
-   * Usage: set param `useCnEndpoints` value to `true`
-   */
-  useCnEndpoints: false,
-  apiEndpoint: (useCnEndpoints => {
-    return {
-      graph: useCnEndpoints ? 'https://microsoftgraph.chinacloudapi.cn' : 'https://graph.microsoft.com',
-      auth: useCnEndpoints ? 'https://login.chinacloudapi.cn' : 'https://login.microsoftonline.com'
-    }
-  })(),
 
   /**
    * Feature: Pagination when a folder has multiple(>${top}) files
@@ -85,7 +90,15 @@ const config = {
    * Example: https://storage.spencerwoo.com/🥟%20Some%20test%20files/Previews/eb37c02438f.png?raw&proxied
    * You can also embed this link (url encoded) directly inside Markdown or HTML.
    */
-  proxyDownload: true
+  proxyDownload: true,
+
+  apiEndpoint: (() => {
+    const { accountType } = this.type
+    return {
+      graph: accountType ? 'https://microsoftgraph.chinacloudapi.cn' : 'https://graph.microsoft.com',
+      auth: accountType ? 'https://login.chinacloudapi.cn' : 'https://login.microsoftonline.com'
+    }
+  })()
 }
 
 export default config

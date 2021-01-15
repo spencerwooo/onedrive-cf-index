@@ -43,3 +43,25 @@ export async function getAccessToken() {
     throw `getAccessToken error ${JSON.stringify(await resp.text())}`
   }
 }
+
+/**
+ * Get & store siteID for finding sharepoint resources
+ *
+ * @param {string} accessToken token for accessing graph API
+ */
+export async function getSiteID(accessToken) {
+  let data = await BUCKET.get('sharepoint', 'json')
+  if (!data) {
+    const resp = await fetch(`${config.nationalApi.graph}/v1.0/sites/${config.type.hostname}:${config.type.sitePath}`, {
+      headers: {
+        Authorization: `bearer ${accessToken}`
+      }
+    })
+    if (resp.ok) {
+      data = await resp.json()
+      console.log('get site-id from graph')
+      await BUCKET.put('sharepoint', JSON.stringify(data))
+    }
+  }
+  return data.id
+}

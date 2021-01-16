@@ -3,17 +3,17 @@ const config = {
   /**
    * Configure the account/resource type for deployment (with 0 or 1)
    * - accountType: controls account type, 0 for global, 1 for china (21Vianet)
-   * - resourceType: controls resource type, 0 for ondrive, 1 for sharepoint
+   * - driveType: controls drive resource type, 0 for onedrive, 1 for sharepoint document
    *
-   * Follow key is used for sharepoint resource, change them only if you use sharepoint
-   * - hostname: sharepoint site hostname (like 'name.sharepoint.com')
+   * Followed keys is used for sharepoint resource, change them only if you gonna use sharepoint
+   * - hostName: sharepoint site hostname (like 'name.sharepoint.com')
    * - sitePath: sharepoint site path (like '/sites/name')
-   * we do not support using onedrive & sharepoint at the same time
+   * !Note: we do not support deploy onedrive & sharepoint at the same time
    */
   type: {
     accountType: 0,
-    resourceType: 0,
-    hostname: null,
+    driveType: 0,
+    hostName: null,
     sitePath: null
   },
 
@@ -90,15 +90,18 @@ const config = {
    * Example: https://storage.spencerwoo.com/🥟%20Some%20test%20files/Previews/eb37c02438f.png?raw&proxied
    * You can also embed this link (url encoded) directly inside Markdown or HTML.
    */
-  proxyDownload: true,
-
-  apiEndpoint: (() => {
-    const { accountType } = this.type
-    return {
-      graph: accountType ? 'https://microsoftgraph.chinacloudapi.cn' : 'https://graph.microsoft.com',
-      auth: accountType ? 'https://login.chinacloudapi.cn' : 'https://login.microsoftonline.com'
-    }
-  })()
+  proxyDownload: true
 }
+
+// IIFE to set apiEndpoint & baseResource
+!(function ({ accountType, driveType, hostName, sitePath }) {
+  config.apiEndpoint = {
+    graph: accountType ? 'https://microsoftgraph.chinacloudapi.cn/v1.0' : 'https://graph.microsoft.com/v1.0',
+    auth: accountType
+      ? 'https://login.chinacloudapi.cn/common/oauth2/v2.0'
+      : 'https://login.microsoftonline.com/common/oauth2/v2.0'
+  }
+  config.baseResource = driveType ? `/sites/${hostName}:${sitePath}` : '/me/drive'
+})(config.type)
 
 export default config

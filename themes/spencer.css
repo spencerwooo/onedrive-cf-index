@@ -272,7 +272,7 @@ a.item:hover {
   div.medium-zoom-overlay,
   embed.pdfobject,
   img.medium-zoom-image {
-    background-color: #1b1b1b !important;
+    background: #1b1b1b !important;
   }
   embed.pdfobject,
   img.medium-zoom-image {

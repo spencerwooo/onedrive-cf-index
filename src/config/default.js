@@ -18,8 +18,9 @@ const config = {
    * Feature: add support for Chinese Onedrive (21Vianet) API endpoints
    * Usage: set param `useCnEndpoints` value to `true`
    */
-  useCnEndpoints: false,
-  apiEndpoint: (useCnEndpoints => {
+  apiEndpoint: (() => {
+    const useCnEndpoints = true
+
     return {
       graph: useCnEndpoints ? 'https://microsoftgraph.chinacloudapi.cn' : 'https://graph.microsoft.com',
       auth: useCnEndpoints ? 'https://login.chinacloudapi.cn' : 'https://login.microsoftonline.com'

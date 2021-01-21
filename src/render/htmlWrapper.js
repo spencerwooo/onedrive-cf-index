@@ -56,7 +56,12 @@ export function renderHTML(body, pLink, pIdx) {
       <footer id="footer" data-turbolinks-permanent><p>Powered by <a href="https://github.com/spencerwooo/onedrive-cf-index">onedrive-cf-index</a>, hosted on <a href="https://www.cloudflare.com/products/cloudflare-workers/">Cloudflare Workers</a>.</p></footer>
       <script>
         if (typeof ap !== "undefined" && ap.paused !== true) {
-          ap.pause()
+          ap.destroy()
+          ap = undefined
+        }
+        if (typeof dp !== "undefined" && dp.paused !== true) {
+          dp.destroy()
+          dp = undefined
         }
         Prism.highlightAll()
         mediumZoom('[data-zoomable]')

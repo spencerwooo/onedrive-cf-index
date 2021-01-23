@@ -124,7 +124,7 @@ function renderImage(file) {
 function renderVideoPlayer(file) {
   return `<div id="dplayer"></div>
           <script>
-          new DPlayer({
+          dp = new DPlayer({
             container: document.getElementById('dplayer'),
             theme: '#0070f3',
             video: {
@@ -143,7 +143,7 @@ function renderVideoPlayer(file) {
 function renderAudioPlayer(file) {
   return `<div id="aplayer"></div>
           <script>
-          new APlayer({
+          ap = new APlayer({
             container: document.getElementById('aplayer'),
             theme: '#0070f3',
             audio: [{

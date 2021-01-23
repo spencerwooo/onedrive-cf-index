@@ -19,7 +19,7 @@ const config = {
    * Usage: set param `useCnEndpoints` value to `true`
    */
   apiEndpoint: (() => {
-    const useCnEndpoints = true
+    const useCnEndpoints = false
 
     return {
       graph: useCnEndpoints ? 'https://microsoftgraph.chinacloudapi.cn' : 'https://graph.microsoft.com',

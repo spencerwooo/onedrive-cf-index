@@ -1,7 +1,7 @@
 import config from './config/default'
 import { AUTH_ENABLED, NAME, PASS } from './auth/config'
 import { parseAuthHeader, unauthorizedResponse } from './auth/credentials'
-import { getAccessToken } from './auth/onedrive'
+import { getAccessToken, getSiteID } from './auth/onedrive'
 import { handleFile, handleUpload } from './files/load'
 import { extensions } from './render/fileExtension'
 import { renderFolderView } from './folderView'
@@ -53,6 +53,9 @@ async function handleRequest(request) {
   }
 
   const accessToken = await getAccessToken()
+  if (config.type.driveType) {
+    config.baseResource = `/sites/${await getSiteID(accessToken)}/drive`
+  }
 
   const { pathname, searchParams } = new URL(request.url)
   const neoPathname = pathname.replace(/pagination$/, '')

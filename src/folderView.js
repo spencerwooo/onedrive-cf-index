@@ -72,7 +72,7 @@ export async function renderFolderView(items, path, request) {
               .map(i => {
                 // Check if the current item is a folder or a file
                 if ('folder' in i) {
-                  let emoji = emojiRegex().exec(i.name)
+                  const emoji = emojiRegex().exec(i.name)
                   if (emoji && !emoji.index) {
                     return item('', i.name.replace(emoji, '').trim(), `${path}${i.name}/`, i.size, emoji[0])
                   } else {

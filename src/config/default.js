@@ -78,6 +78,7 @@ const config = {
   /**
    * Small File Upload (<= 4MB)
    * POST https://<base_url>/<directory_path>/?upload=<filename>&key=<secret_key>
+   * The <secret_key> is defined by you
    */
   upload: {
     enable: false,
@@ -94,7 +95,8 @@ const config = {
 }
 
 // IIFE to set apiEndpoint & baseResource
-!(function ({ accountType, driveType, hostName, sitePath }) {
+// eslint-disable-next-line no-unused-expressions
+!(function({ accountType, driveType, hostName, sitePath }) {
   config.apiEndpoint = {
     graph: accountType ? 'https://microsoftgraph.chinacloudapi.cn/v1.0' : 'https://graph.microsoft.com/v1.0',
     auth: accountType

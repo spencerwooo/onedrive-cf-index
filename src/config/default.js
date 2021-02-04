@@ -8,7 +8,7 @@ const config = {
    * Followed keys is used for sharepoint resource, change them only if you gonna use sharepoint
    * - hostName: sharepoint site hostname (like 'name.sharepoint.com')
    * - sitePath: sharepoint site path (like '/sites/name')
-   * !Note: we do not support deploy onedrive & sharepoint at the same time
+   * !Note: we do not support deploying onedrive & sharepoint at the same time
    */
   type: {
     accountType: 0,

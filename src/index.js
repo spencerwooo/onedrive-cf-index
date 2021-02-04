@@ -81,12 +81,11 @@ async function handleRequest(request) {
     })
   }
 
-  // TODO: return the url for fetching and rendering README in folder previews.
-  let url = `${config.apiEndpoint.graph}${config.baseResource}/root${wrapPathName(neoPathname, isRequestFolder)}${isRequestFolder
-    ? '/children?$select=name,size,folder,file' +
-    (config.pagination.enable && config.pagination.top ? `&$top=${config.pagination.top}` : '')
-    : '?select=%40microsoft.graph.downloadUrl,name,size,file'
-    }`
+  let url = `${config.apiEndpoint.graph}${config.baseResource}/root${wrapPathName(neoPathname, isRequestFolder)}${
+    isRequestFolder
+      ? '/children' + (config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : '')
+      : '?select=%40microsoft.graph.downloadUrl,name,size,file'
+  }`
 
   // get & set {pLink ,pIdx} for fetching and paging
   const paginationLink = request.headers.get('pLink')

@@ -164,7 +164,7 @@ async function handleRequest(request) {
   if (error) {
     const body = JSON.stringify(error)
     switch (error.code) {
-      case 'ItemNotFound':
+      case 'itemNotFound':
         return new Response(body, {
           status: 404,
           headers: {

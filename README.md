@@ -10,7 +10,7 @@
 [![Deploy](https://github.com/spencerwooo/onedrive-cf-index/workflows/Deploy/badge.svg)](https://github.com/spencerwooo/onedrive-cf-index/actions?query=workflow%3ADeploy)
 [![README-CN](assets/chinese.svg)](./README-CN.md)
 
-<h5>This project is greatly inspired by: <a href="https://github.com/heymind/OneDrive-Index-Cloudflare-Worker">onedrive-index-cloudflare-worker</a>.</h5>
+<h5>This project uses CloudFlare Workers to host and share your personal OneDrive files. It is greatly inspired by: <a href="https://github.com/heymind/OneDrive-Index-Cloudflare-Worker">onedrive-index-cloudflare-worker</a>.</h5>
 
 ## Demo
 
@@ -26,6 +26,7 @@ Live demo at [Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 - Tokens cached and automatically refreshed with Cloudflare Workers KV storage.
 - Route lazy loading with the help of [Turbolinks®](https://github.com/turbolinks/turbolinks).
 - Supports OneDrive 21Vianet.（由世纪互联运营的 OneDrive。）
+- Supports mounting SharePoint.
 
 ### 🗃️ Folder indexing
 
@@ -166,16 +167,20 @@ wrangler kv:namespace create "BUCKET" --preview
 
 Modify `kv_namespaces` inside [`wrangler.toml`](wrangler.toml):
 
-- `kv_namespaces`: Your Cloudflare KV namespace, you should substitute the `id`
-  and `preview_id` values accordingly. _If you don't need preview functions, you
-  can remove the `preview_id` field._
+- `kv_namespaces`: Your Cloudflare KV namespace, you should substitute the `id` and `preview_id` values accordingly. _If you don't need preview functions, you can remove the `preview_id` field._
 
 Modify [`src/config/default.js`](src/config/default.js):
 
 - `client_id`: Your `client_id` from above.
 - `base`: Your `base` path from above.
-
-_For Chinese 21Vianet OneDrive users. OneDrive 世纪互联用户：将 `useCnEndpoints` 设置（修改）为 `true`。_
+- If you are mounting regular international OneDrive, you can safely ignore the following steps.
+- If you are mounting Chinese 21Vianet OneDrive (由世纪互联运营的 OneDrive):
+   - Set `accountType` under `type` to `1`.
+   - Keep `driveType` unmodified.
+- If you are mounting SharePoint:
+   - Keep `accountType` unmodified.
+   - Set `driveType` under `type` to `1`.
+   - Set `hostName` and `sitePath` accordingly.
 
 Add secrets to Cloudflare Workers environment variables with `wrangler`:
 

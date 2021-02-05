@@ -10,7 +10,7 @@
 [![Deploy](https://github.com/spencerwooo/onedrive-cf-index/workflows/Deploy/badge.svg)](https://github.com/spencerwooo/onedrive-cf-index/actions?query=workflow%3ADeploy)
 [![README-CN](assets/chinese.svg)](./README-CN.md)
 
-<h5>本项目极大源自：<a href="https://github.com/heymind/OneDrive-Index-Cloudflare-Worker">onedrive-index-cloudflare-worker</a>，致敬。</h5>
+<h5>本项目使用 CloudFlare Workers 帮助你免费部署与分享你的 OneDrive 文件。本项目极大源自：<a href="https://github.com/heymind/OneDrive-Index-Cloudflare-Worker">onedrive-index-cloudflare-worker</a>，致敬。</h5>
 
 ## Demo
 
@@ -26,6 +26,7 @@
 - 令牌凭证由 Cloudflare Workers 自动刷新，并保存于（免费的）全局 KV 存储中；
 - 使用 [Turbolinks®](https://github.com/turbolinks/turbolinks) 实现路由懒加载；
 - 支持由世纪互联运营的 OneDrive 版本；
+- 支持 SharePoint 部署；
 
 ### 🗃️ 目录索引显示
 
@@ -172,9 +173,15 @@ wrangler kv:namespace create "BUCKET" --preview
 修改 [`src/config/default.js`](src/config/default.js)：
 
 - `client_id`：刚刚获取的 OneDrive `client_id`；
-- `base`：之前创建的 `base` 目录。
-
-_OneDrive 世纪互联用户：将 `useCnEndpoints` 设置（修改）为 `true`。_
+- `base`：之前创建的 `base` 目录；
+- 如果你部署常规国际版 OneDrive，那么忽略以下步骤即可；
+- 如果你部署的是由世纪互联运营的中国版 OneDrive：
+  - 修改 `type` 下的 `accountType` 为 `1`；
+  - 保持 `driveType` 不变；
+- 如果你部署的是 SharePoint 服务：
+  - 保持 `accountType` 不变；
+  - 修改 `driveType` 下的 `type` 为 `1`；
+  - 并根据你的 SharePoint 服务修改 `hostName` 和 `sitePath`。
 
 使用 `wrangler` 添加 Cloudflare Workers 环境变量：
 

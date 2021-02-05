@@ -1,7 +1,7 @@
 import config from './config/default'
 import { AUTH_ENABLED, NAME, PASS } from './auth/config'
 import { parseAuthHeader, unauthorizedResponse } from './auth/credentials'
-import { getAccessToken } from './auth/onedrive'
+import { getAccessToken, getSiteID } from './auth/onedrive'
 import { handleFile, handleUpload } from './files/load'
 import { extensions } from './render/fileExtension'
 import { renderFolderView } from './folderView'
@@ -39,10 +39,9 @@ const base = encodeURI(config.base).replace(/\/$/, '')
 function wrapPathName(pathname, isRequestFolder) {
   pathname = base + pathname
   const isIndexingRoot = pathname === '/'
-  // using different api to handle folder or file: children or driveItem
   if (isRequestFolder) {
-    if (isIndexingRoot) return '/children'
-    return `:${pathname.replace(/\/$/, '')}:/children`
+    if (isIndexingRoot) return ''
+    return `:${pathname.replace(/\/$/, '')}:`
   }
   return `:${pathname}`
 }
@@ -54,17 +53,23 @@ async function handleRequest(request) {
   }
 
   const accessToken = await getAccessToken()
+  if (config.type.driveType) {
+    config.baseResource = `/sites/${await getSiteID(accessToken)}/drive`
+  }
 
   const { pathname, searchParams } = new URL(request.url)
   const neoPathname = pathname.replace(/pagination$/, '')
+  const isRequestFolder = pathname.endsWith('/') || searchParams.get('page')
 
   const rawFile = searchParams.get('raw') !== null
   const thumbnail = config.thumbnail ? searchParams.get('thumbnail') : false
   const proxied = config.proxyDownload ? searchParams.get('proxied') !== null : false
 
   if (thumbnail) {
-    const url = `${config.apiEndpoint.graph}/v1.0/me/drive/root:${base ||
-      '/' + (neoPathname === '/' ? '' : neoPathname)}:/thumbnails/0/${thumbnail}/content`
+    const url = `${config.apiEndpoint.graph}${config.baseResource}/root${wrapPathName(
+      neoPathname,
+      isRequestFolder
+    )}:/thumbnails/0/${thumbnail}/content`
     const resp = await fetch(url, {
       headers: {
         Authorization: `bearer ${accessToken}`
@@ -76,10 +81,10 @@ async function handleRequest(request) {
     })
   }
 
-  const isRequestFolder = pathname.endsWith('/') || searchParams.get('page')
-  let url =
-    `${config.apiEndpoint.graph}/v1.0/me/drive/root${wrapPathName(neoPathname, isRequestFolder)}` +
-    (isRequestFolder && config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : '')
+  let url = `${config.apiEndpoint.graph}${config.baseResource}/root${wrapPathName(neoPathname, isRequestFolder)}${isRequestFolder
+      ? '/children' + (config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : '')
+      : '?select=%40microsoft.graph.downloadUrl,name,size,file'
+    }`
 
   // get & set {pLink ,pIdx} for fetching and paging
   const paginationLink = request.headers.get('pLink')

@@ -16,7 +16,7 @@ export async function getAccessToken() {
   }
 
   // Token expired, refresh access token with Microsoft API. Both international and china-specific API are supported
-  const oneDriveAuthEndpoint = `${config.apiEndpoint.auth}/common/oauth2/v2.0/token`
+  const oneDriveAuthEndpoint = `${config.apiEndpoint.auth}/token`
 
   const resp = await fetch(oneDriveAuthEndpoint, {
     method: 'POST',
@@ -42,4 +42,26 @@ export async function getAccessToken() {
     // eslint-disable-next-line no-throw-literal
     throw `getAccessToken error ${JSON.stringify(await resp.text())}`
   }
+}
+
+/**
+ * Get & store siteID for finding sharepoint resources
+ *
+ * @param {string} accessToken token for accessing graph API
+ */
+export async function getSiteID(accessToken) {
+  let data = await BUCKET.get('sharepoint', 'json')
+  if (!data) {
+    const resp = await fetch(`${config.apiEndpoint.graph}${config.baseResource}?$select=id`, {
+      headers: {
+        Authorization: `bearer ${accessToken}`
+      }
+    })
+    if (resp.ok) {
+      data = await resp.json()
+      console.log('Got & stored site-id.')
+      await BUCKET.put('sharepoint', JSON.stringify({ id: data.id }))
+    }
+  }
+  return data.id
 }

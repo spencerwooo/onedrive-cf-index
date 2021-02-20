@@ -120,8 +120,9 @@ function renderImage(file) {
  * Render video (mp4, flv, m3u8, webm ...)
  *
  * @param {Object} file Object representing the video to preview
+ * @param {string} fileExt The file extension parsed
  */
-function renderVideoPlayer(file) {
+function renderVideoPlayer(file, fileExt) {
   return `<div id="dplayer"></div>
           <script>
           dp = new DPlayer({
@@ -129,7 +130,7 @@ function renderVideoPlayer(file) {
             theme: '#0070f3',
             video: {
               url: '${file['@microsoft.graph.downloadUrl']}',
-              type: 'auto'
+              type: '${fileExt}'
             }
           })
           </script>`
@@ -194,7 +195,7 @@ async function renderPreview(file, fileExt, cacheUrl) {
       return renderPDFPreview(file)
 
     case preview.video:
-      return renderVideoPlayer(file)
+      return renderVideoPlayer(file, fileExt)
 
     case preview.audio:
       return renderAudioPlayer(file)

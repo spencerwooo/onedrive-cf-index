@@ -102,7 +102,9 @@ _Very, very long, tedious, step by step guide warning!_
    npx @beetcb/ms-graph-cli
    ```
 
-   Select the options that you need, and enter the tokens that we just acquired from above. The names are self-explanatory. `redirect_url` can be set to `http://localhost`.
+   <div align="center"><img src="https://raw.githubusercontent.com/beetcb/ms-graph-cli/master/media/demo.svg" alt="demo gif" width="560px" /></div>
+
+   Select the options that you need, and enter the tokens that we just acquired from above. The names are self-explanatory. `redirect_url` can be set to `http://localhost`. For more information please go check out the repo at: [beetcb/ms-graph-cli](https://github.com/beetcb/ms-graph-cli).
 
 6. Finally, create a dedicated folder for your public files inside OneDrive, for instance: `/Public`. Please don't share your root folder directly!
 

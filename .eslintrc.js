@@ -13,7 +13,6 @@ module.exports = {
   },
   globals: {
     TransformStream: true,
-    REFRESH_TOKEN: true,
     CLIENT_SECRET: true,
     BUCKET: true,
     BUCKET: true,

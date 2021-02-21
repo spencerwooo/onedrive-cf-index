@@ -67,7 +67,7 @@ https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/nyancat.gif?ra
 
 ## 部署指南
 
-_又臭又长的中文版部署指南预警！同时感谢原项目的 Token 在线获取工具：<https://heymind.github.io/tools/microsoft-graph-api-auth>，我们在后续步骤中将会使用这一工具。_
+_又臭又长的中文版部署指南预警！_
 
 ### 生成 OneDrive API 令牌
 
@@ -76,7 +76,7 @@ _又臭又长的中文版部署指南预警！同时感谢原项目的 Token 在
    1. 使用你的 Microsoft 账户登录，选择 `New registration`；
    2. 在 `Name` 处设置 Blade app 的名称，比如 `my-onedrive-cf-index`；
    3. 将 `Supported account types` 设置为 `Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)`。OneDrive 世纪互联用户设置为：`任何组织目录（任何 Azure AD 目录 - 多租户）中的帐户`；
-   4. 将 `Redirect URI (optional)` 设置为 `Web`（下拉选项框）以及 `https://heymind.github.io/tools/microsoft-graph-api-auth`（URL 地址）；
+   4. 将 `Redirect URI (optional)` 设置为 `Web`（下拉选项框）以及 `https://localhost`（URL 地址）；
    5. 点击 `Register`.
 
    ![](assets/register-app.png)
@@ -97,24 +97,15 @@ _又臭又长的中文版部署指南预警！同时感谢原项目的 Token 在
 
    ![](assets/permissions-used.png)
 
-5. 获取 `refresh_token`：
+5. 获取 `refresh_token`，在本机（需要 Node.js 和 npm 环境，安装和推荐配置请参考 [准备工作](#准备工作)）上面执行如下命令：
 
-   1. 打开 <https://heymind.github.io/tools/microsoft-graph-api-auth>.
-   2. 在 `4. Authorize for code` 处，输入我们的 `client_id` 并点击 `AUTHORIZE`.
+   ```sh
+   npx @beetcb/ms-graph-cli
+   ```
 
-      ![](assets/authorize-for-code.png)
+   <div align="center"><img src="https://raw.githubusercontent.com/beetcb/ms-graph-cli/master/media/demo.svg" alt="demo gif" width="560px" /></div>
 
-      登录我们的 Microsoft 账户，并授权 app，如果我们得到如下图所示的 Code，那么我们的认证过程就成功了：
-
-      ![](assets/got-code.png)
-
-      点击 `OK`，并进行下一步操作：
-
-   3. 在 `5. Exchange Access Token` 处，我们应该有填好了的上一步骤中获取的 `Code`，这里只需要输入刚刚拿到的 `client_secret`：
-
-      ![](assets/get-access-token.png)
-
-      点击 `GET TOKEN`，如果我们遇到类似 `error: "invalid_request"` 的报错，**那么请参考 Issue [#13](https://github.com/spencerwooo/onedrive-cf-index/issues/13#issuecomment-671027672) 给出的解决方案。** 如果一切正常，那么拿到我们的 `access_token`，以及如果需要，在下一步 `Refresh Token` 处拿到我们的 `refresh_token`。
+   根据你自己的情况选择合适的选项，并输入我们上面获取到的一系列 token 令牌配置等，其中 `redirect_url` 可以直接设置为 `http://localhost`。有关命令行工具的具体使用方法请参考：[beetcb/ms-graph-cli](https://github.com/beetcb/ms-graph-cli)。
 
 6. 最后，在我们的 OneDrive 中创建一个公共分享文件夹，比如 `/Public` 即可。建议不要直接分享根目录!
 
@@ -123,7 +114,7 @@ _又臭又长的中文版部署指南预警！同时感谢原项目的 Token 在
 - `refresh_token`
 - `client_id`
 - `client_secret`
-- `redirect_uri`：默认为 `https://heymind.github.io/tools/microsoft-graph-api-auth`；
+- `redirect_uri`
 - `base`：默认为 `/Public`。
 
 _是，我知道很麻烦，但是这是微软，大家理解一下。🤷🏼‍♂️_

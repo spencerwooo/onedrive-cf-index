@@ -16,20 +16,22 @@ const config = {
     hostName: null,
     sitePath: null
   },
-
   /**
    * You can use this tool http://heymind.github.io/tools/microsoft-graph-api-auth
    * to get following params: client_id, client_secret, refresh_token & redirect_uri.
    */
   refresh_token: REFRESH_TOKEN,
   client_id: '6600e358-9328-4050-af82-0af9cdde796b',
+  client_id: CLIENT_ID,
   client_secret: CLIENT_SECRET,
   redirect_uri: 'https://heymind.github.io/tools/microsoft-graph-api-auth',
+  redirect_uri: 'http://localhost/od-cf',
 
   /**
    * The base path for indexing, all files and subfolders are public by this tool. For example: `/Public`.
    */
   base: '/Public',
+  base: BASE,
 
   /**
    * Feature: Pagination when a folder has multiple(>${top}) files
@@ -39,7 +41,6 @@ const config = {
     enable: true,
     top: 100 // default: 200, accepts a minimum value of 1 and a maximum value of 999 (inclusive)
   },
-
   /**
    * Feature Caching
    * Enable Cloudflare cache for path pattern listed below.
@@ -51,13 +52,9 @@ const config = {
    * Difference between `Entire File Cache` and `Chunked Cache`
    *
    * `Entire File Cache` requires the entire file to be transferred to the Cloudflare server before
-   *  the first byte sent to a client.
+   *  the first byte sent to a client.
    *
-   * `Chunked Cache` would stream the file content to the client while caching it.
-   *  But there is no exact Content-Length in the response headers. ( Content-Length: chunked )
-   *
-   * `previewCache`: using CloudFlare cache to preview
-   */
+@@ -61,28 +60,28 @@
   cache: {
     enable: true,
     entireFileCacheLimit: 10000000, // 10MB
@@ -65,7 +62,6 @@ const config = {
     previewCache: false,
     paths: ['/🥟%20Some%20test%20files/Previews']
   },
-
   /**
    * Feature: Thumbnail
    * Show a thumbnail of image by ?thumbnail=small (small, medium, large)
@@ -74,7 +70,6 @@ const config = {
    * You can embed this link (url encoded) directly inside Markdown or HTML.
    */
   thumbnail: true,
-
   /**
    * Small File Upload (<= 4MB)
    * POST https://<base_url>/<directory_path>/?upload=<filename>&key=<secret_key>
@@ -83,6 +78,8 @@ const config = {
   upload: {
     enable: false,
     key: 'your_secret_key_here'
+    enable: UPLOAD,
+    key: UPLOAD_SECRET_KEY
   },
 
   /**
@@ -92,6 +89,7 @@ const config = {
    * You can also embed this link (url encoded) directly inside Markdown or HTML.
    */
   proxyDownload: true
+  proxyDownload: PROXYDOWNLOAD
 }
 
 // IIFE to set apiEndpoint & baseResource
@@ -105,5 +103,4 @@ const config = {
   }
   config.baseResource = driveType ? `/sites/${hostName}:${sitePath}` : '/me/drive'
 })(config.type)
-
 export default config

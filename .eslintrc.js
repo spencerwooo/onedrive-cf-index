@@ -15,6 +15,13 @@ module.exports = {
     TransformStream: true,
     REFRESH_TOKEN: true,
     CLIENT_SECRET: true,
-    BUCKET: true
+    BUCKET: true,
+    BUCKET: true,
+    BASE: true,
+    CLIENT_ID: true,
+    PROXYDOWNLOAD: true,
+    REDIRECT_URL: true,
+    UPLOAD: true,
+    UPLOAD_SECRET_KEY: true
   }
 }

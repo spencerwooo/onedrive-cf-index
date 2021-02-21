@@ -15,7 +15,6 @@ module.exports = {
     TransformStream: true,
     CLIENT_SECRET: true,
     BUCKET: true,
-    BUCKET: true,
     BASE: true,
     CLIENT_ID: true,
     PROXYDOWNLOAD: true,

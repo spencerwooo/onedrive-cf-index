@@ -9,6 +9,8 @@
 export const AUTH_ENABLED = false
 export const NAME = 'admin'
 export const PASS = 'password'
+export const DISABLE_PATHS = ['/favicon.ico', '/robots.txt']
+export const ENABLE_PATHS = ['/Lock']
 
 /**
  * RegExp for basic auth credentials

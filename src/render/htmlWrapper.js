@@ -49,7 +49,7 @@ export function renderHTML(body, pLink, pIdx) {
       <script src="https://cdn.jsdelivr.net/npm/dplayer@1.26.0/dist/DPlayer.min.js"></script>
     </head>
     <body>
-      <nav id="navbar" data-turbolinks-permanent><div class="brand">📁 Spencer's OneDrive Index</div></nav>
+      <nav id="navbar" data-turbolinks-permanent><div class="brand">📁 YU's OneDrive Index</div></nav>
       ${body}
       <div class="paginate-container">${pagination(pIdx)}</div>
       <div id="flex-container" data-turbolinks-permanent style="flex-grow: 1;"></div>

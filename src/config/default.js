@@ -20,7 +20,7 @@ const config = {
    * You can use this tool http://heymind.github.io/tools/microsoft-graph-api-auth
    * to get following params: client_id, client_secret, refresh_token & redirect_uri.
    */
-  client_id: CLIENT_ID,
+  client_id: '480a6b80-6dc6-409f-b39d-a894834a3069',
   client_secret: CLIENT_SECRET,
   redirect_uri: 'https://heymind.github.io/tools/microsoft-graph-api-auth',
   redirect_uri: 'http://localhost/od-cf',
@@ -28,7 +28,7 @@ const config = {
   /**
    * The base path for indexing, all files and subfolders are public by this tool. For example: `/Public`.
    */
-  base: BASE,
+  base: `/Public`,
 
   /**
    * Feature: Pagination when a folder has multiple(>${top}) files
@@ -73,8 +73,8 @@ const config = {
    * The <secret_key> is defined by you
    */
   upload: {
-    enable: UPLOAD,
-    key: UPLOAD_SECRET_KEY
+    enable: false,
+    key: 'UPLOAD_SECRET_KEY'
   },
 
   /**
@@ -83,8 +83,7 @@ const config = {
    * Example: https://storage.spencerwoo.com/🥟%20Some%20test%20files/Previews/eb37c02438f.png?raw&proxied
    * You can also embed this link (url encoded) directly inside Markdown or HTML.
    */
-  proxyDownload: true,
-  proxyDownload: PROXYDOWNLOAD
+  proxyDownload: false,
 }
 
 // IIFE to set apiEndpoint & baseResource

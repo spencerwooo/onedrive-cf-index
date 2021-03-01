@@ -6,11 +6,11 @@
  * NAME           user name
  * PASS           password
  */
-export const AUTH_ENABLED = false
-export const NAME = 'admin'
-export const PASS = 'password'
+export const AUTH_ENABLED = true
+export const NAME = 'guest'
+export const PASS = AUTH_PASSWORD
 export const DISABLE_PATHS = ['/favicon.ico', '/robots.txt']
-export const ENABLE_PATHS = ['/Lock']
+export const ENABLE_PATHS = ['🌞 Private folder']
 
 /**
  * RegExp for basic auth credentials

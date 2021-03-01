@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.cnpmjs.org/css2?family=Inter:wght@400;700&display=swap');
 
 :root {
-  --base-font-family: Lato, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, pingfang sc,
+  --base-font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, pingfang sc,
     source han sans sc, noto sans cjk sc, sarasa gothic sc, microsoft yahei, sans-serif, Apple Color Emoji,
     Segoe UI Emoji;
 }

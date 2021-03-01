@@ -21,10 +21,6 @@ async function handle(request) {
     const publicPaths = DISABLE_PATHS.map(i => `/${encodeURIComponent(i).toLowerCase()}`)
     const privatePaths = ENABLE_PATHS.map(i => `/${encodeURIComponent(i).toLowerCase()}`)
 
-    console.log(pathname)
-    console.log(privatePaths)
-    console.log(privatePaths.filter(p => pathname.toLowerCase().startsWith(p)))
-
     if (publicPaths.filter(p => pathname.toLowerCase().startsWith(p)).length > 0 && !/__Lock__/gi.test(pathname)) {
       return handleRequest(request)
     }

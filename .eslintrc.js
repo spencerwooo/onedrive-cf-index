@@ -15,6 +15,7 @@ module.exports = {
     TransformStream: true,
     REFRESH_TOKEN: true,
     CLIENT_SECRET: true,
-    BUCKET: true
+    BUCKET: true,
+    AUTH_PASSWORD: true
   }
 }

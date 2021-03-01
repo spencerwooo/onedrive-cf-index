@@ -14,18 +14,29 @@ addEventListener('fetch', event => {
 async function handle(request) {
   if (AUTH_ENABLED === false) {
     return handleRequest(request)
-  } else if (AUTH_ENABLED === true) {
+  }
+
+  if (AUTH_ENABLED === true) {
     const { pathname } = new URL(request.url)
-    if (DISABLE_PATHS.map(i => i.toLowerCase()).filter(p => pathname.toLowerCase().startsWith(p)).length > 0 && !/__Lock__/gi.test(pathname)) {
+    const publicPaths = DISABLE_PATHS.map(i => `/${encodeURIComponent(i).toLowerCase()}`)
+    const privatePaths = ENABLE_PATHS.map(i => `/${encodeURIComponent(i).toLowerCase()}`)
+
+    console.log(pathname)
+    console.log(privatePaths)
+    console.log(privatePaths.filter(p => pathname.toLowerCase().startsWith(p)))
+
+    if (publicPaths.filter(p => pathname.toLowerCase().startsWith(p)).length > 0 && !/__Lock__/gi.test(pathname)) {
       return handleRequest(request)
     }
-    if (ENABLE_PATHS.map(i => i.toLowerCase()).filter(p => pathname.toLowerCase().startsWith(p)).length > 0 || /__Lock__/gi.test(pathname)) {
+
+    if (privatePaths.filter(p => pathname.toLowerCase().startsWith(p)).length > 0 || /__Lock__/gi.test(pathname)) {
       const credentials = parseAuthHeader(request.headers.get('Authorization'))
+
       if (!credentials || credentials.name !== NAME || credentials.pass !== PASS) {
         return unauthorizedResponse('Unauthorized')
-      } else {
-        return handleRequest(request)
       }
+
+      return handleRequest(request)
     } else {
       return handleRequest(request)
     }
@@ -90,8 +101,8 @@ async function handleRequest(request) {
   }
 
   let url = `${config.apiEndpoint.graph}${config.baseResource}/root${wrapPathName(neoPathname, isRequestFolder)}${isRequestFolder
-      ? '/children' + (config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : '')
-      : '?select=%40microsoft.graph.downloadUrl,name,size,file'
+    ? '/children' + (config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : '')
+    : '?select=%40microsoft.graph.downloadUrl,name,size,file'
     }`
 
   // get & set {pLink ,pIdx} for fetching and paging

@@ -27,6 +27,6 @@
   "dependencies": {
     "emoji-regex": "^9.2.0",
     "font-awesome-filetypes": "^2.1.0",
-    "marked": "^1.1.1"
+    "marked": "^2.0.1"
   }
 }

@@ -47,6 +47,19 @@
   - 音乐：`.mp3`, `.aac`, `.wav`, `.oga`. [_DEMO_](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Multimedia/Elysian%20Fields%20-%20Climbing%20My%20Dark%20Hair.mp3).
   - 视频：`.mp4`, `.flv`, `.webm`, `.m3u8`. [_DEMO_](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Multimedia/%E8%BD%A6%E5%BA%93%E5%A5%B3%E7%8E%8B%20%E9%AB%98%E8%B7%9F%E8%B9%A6%E8%BF%AA%20%E4%B9%98%E9%A3%8E%E7%A0%B4%E6%B5%AA%E7%9A%84%E5%A7%90%E5%A7%90%E4%B8%BB%E9%A2%98%E6%9B%B2%E3%80%90%E9%86%8B%E9%86%8B%E3%80%91.mp4).
 
+### 🔒 私有文件夹
+
+![Private folders](assets/private-folder.png)
+
+我们可以给某个特定的文件夹（目录）上锁，需要认证才能访问。我们可以在 `src/auth/config.js` 文件中将我们想要设为私有文件夹的文件夹名称写入 `ENABLE_PATHS` 列表中，并将 `AUTH_ENABLED` 设置为 `true` 来开启这一功能。我们还可以自定义认证所使用的用户名 `NAME` 以及密码，其中认证密码保存于 `AUTH_PASSWORD` 环境变量中，如果需要这一功能，则需要使用 wrangler 来设置这一环境变量：
+
+```bash
+wrangler secret put AUTH_PASSWORD
+# 在这里输入你自己的认证密码
+```
+
+如果不需要开启这一功能，那么你可以直接注释掉定义 `PASS` 变量的那一行，使用下一行将 `PASS` 设置为空字符串即可。（另外也需要将 `AUTH_ENABLED` 设置为 `false`。）有关 wrangler 的使用细节等详细内容，请参考 [接下来的部分段落](#准备工作)。
+
 ### ⬇️ 代理下载文件 / 文件直链访问
 
 - [可选] Proxied download（代理下载文件）：`?proxied` - 经由 CloudFlare Workers 下载文件，如果（1）`config/default.js` 中的 `proxyDownload` 为 `true`，以及（2）使用参数 `?proxied` 请求文件；

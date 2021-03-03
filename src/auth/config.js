@@ -1,14 +1,19 @@
 /**
  * Basic authentication.
- * Disabled by default (Issue #29)
+ * Disabled by default
  *
  * AUTH_ENABLED   to enable auth set true
  * NAME           user name
  * PASS           password
  */
 export const AUTH_ENABLED = true
+
 export const NAME = 'guest'
+// If auth is enabled, then you need to set this secret using wrangler secret put AUTH_PASSWORD
 export const PASS = AUTH_PASSWORD
+// // If auth is not enabled, then you should comment the line above, and set PASS to an empty string
+// export const PASS = ''
+
 export const DISABLE_PATHS = ['/favicon.ico', '/robots.txt']
 export const ENABLE_PATHS = ['🌞 Private folder']
 

@@ -41,6 +41,7 @@ const extensions = {
   flv: preview.video,
   webm: preview.video,
   m3u8: preview.video,
+  mkv: preview.video,
 
   mp3: preview.audio,
   m4a: preview.audio,

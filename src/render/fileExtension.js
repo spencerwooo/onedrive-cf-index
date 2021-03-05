@@ -44,6 +44,7 @@ const extensions = {
 
   mp3: preview.audio,
   m4a: preview.audio,
+  mkv: preview.video,
   aac: preview.audio,
   wav: preview.audio,
   ogg: preview.audio,

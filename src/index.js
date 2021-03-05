@@ -1,11 +1,30 @@
 import config from './config/default'
-import { AUTH_ENABLED, NAME, PASS } from './auth/config'
-import { parseAuthHeader, unauthorizedResponse } from './auth/credentials'
-import { getAccessToken, getSiteID } from './auth/onedrive'
-import { handleFile, handleUpload } from './files/load'
-import { extensions } from './render/fileExtension'
-import { renderFolderView } from './folderView'
-import { renderFilePreview } from './fileView'
+import {
+  AUTH_ENABLED,
+  NAME,
+  PASS
+} from './auth/config'
+import {
+  parseAuthHeader,
+  unauthorizedResponse
+} from './auth/credentials'
+import {
+  getAccessToken,
+  getSiteID
+} from './auth/onedrive'
+import {
+  handleFile,
+  handleUpload
+} from './files/load'
+import {
+  extensions
+} from './render/fileExtension'
+import {
+  renderFolderView
+} from './folderView'
+import {
+  renderFilePreview
+} from './fileView'
 
 addEventListener('fetch', event => {
   event.respondWith(handle(event.request))
@@ -57,7 +76,10 @@ async function handleRequest(request) {
     config.baseResource = `/sites/${await getSiteID(accessToken)}/drive`
   }
 
-  const { pathname, searchParams } = new URL(request.url)
+  const {
+    pathname,
+    searchParams
+  } = new URL(request.url)
   const neoPathname = pathname.replace(/pagination$/, '')
   const isRequestFolder = pathname.endsWith('/') || searchParams.get('page')
 

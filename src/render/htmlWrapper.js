@@ -32,8 +32,8 @@ export function renderHTML(body, pLink, pIdx) {
       <meta charset="utf-8" />
       <meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-      <title>Spencer's OneDrive</title>
-      <link rel="shortcut icon" type="image/png" sizes="16x16" href="${favicon}" />
+      <title>小威的仓库</title>
+      <link rel="shortcut icon" type="image/png" sizes="16x32" href="${favicon}" />
       <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.min.css" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/gh/spencerwooo/onedrive-cf-index@${COMMIT_HASH}/themes/spencer.css" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css@gh-pages/github-markdown.css" rel="stylesheet">
@@ -49,11 +49,11 @@ export function renderHTML(body, pLink, pIdx) {
       <script src="https://cdn.jsdelivr.net/npm/dplayer@1.26.0/dist/DPlayer.min.js"></script>
     </head>
     <body>
-      <nav id="navbar" data-turbolinks-permanent><div class="brand">📁 Spencer's OneDrive Index</div></nav>
+      <nav id="navbar" data-turbolinks-permanent><div class="brand">📁仓库</div></nav>
       ${body}
       <div class="paginate-container">${pagination(pIdx)}</div>
       <div id="flex-container" data-turbolinks-permanent style="flex-grow: 1;"></div>
-      <footer id="footer" data-turbolinks-permanent><p>Powered by <a href="https://github.com/spencerwooo/onedrive-cf-index">onedrive-cf-index</a>, hosted on <a href="https://www.cloudflare.com/products/cloudflare-workers/">Cloudflare Workers</a>.</p></footer>
+      
       <script>
         if (typeof ap !== "undefined" && ap.paused !== true) {
           ap.destroy()
@@ -103,5 +103,16 @@ export function renderHTML(body, pLink, pIdx) {
         }
       </script>
     </body>
+<footer id="footer" data-turbolinks-permanent>
+      <div class="">
+        <div class="mdui-divider-inset"></div>
+        <div class="mdui-text-center mdui-m-t-2 mdui-center">
+
+<span id="runtime_span"></span><script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);X=new Date("02/25/2021 0:00:00");Y=new Date();T=(Y.getTime()-X.getTime());M=24*60*60*1000;a=T/M;A=Math.floor(a);b=(a-A)*24;B=Math.floor(b);c=(b-B)*60;C=Math.floor((b-B)*60);D=Math.floor((c-C)*60);runtime_span.innerHTML="本站已运行"+A+"天"+B+"小时"+C+"分"+D+"秒"}show_runtime();</script>
+
+          </span>
+        </div>
+      </div>
+    </footer>
   </html>`
 }

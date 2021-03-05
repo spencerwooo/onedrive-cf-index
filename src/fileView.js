@@ -1,10 +1,19 @@
 import marked from 'marked'
 
-import { renderHTML } from './render/htmlWrapper'
-import { renderPath } from './render/pathUtil'
-import { renderMarkdown } from './render/mdRenderer'
+import {
+  renderHTML
+} from './render/htmlWrapper'
+import {
+  renderPath
+} from './render/pathUtil'
+import {
+  renderMarkdown
+} from './render/mdRenderer'
 
-import { preview, extensions } from './render/fileExtension'
+import {
+  preview,
+  extensions
+} from './render/fileExtension'
 
 /**
  * Render code blocks with the help of marked and Markdown grammar
@@ -208,19 +217,21 @@ async function renderPreview(file, fileExt, cacheUrl) {
 export async function renderFilePreview(file, path, fileExt, cacheUrl) {
   const el = (tag, attrs, content) => `<${tag} ${attrs.join(' ')}>${content}</${tag}>`
   const div = (className, content) => el('div', [`class=${className}`], content)
-
   const body = div(
     'container',
     div('path', renderPath(path) + ` / ${file.name}`) +
-      div('items', el('div', ['style="padding: 1rem 1rem;"'], await renderPreview(file, fileExt, cacheUrl))) +
-      div(
-        'download-button-container',
-        el(
-          'a',
-          ['class="download-button"', `href="${file['@microsoft.graph.downloadUrl']}"`, 'data-turbolinks="false"'],
-          '<i class="far fa-arrow-alt-circle-down"></i> DOWNLOAD'
-        )
+    div('items', el('div', ['style="padding: 1rem 1rem;"'], await renderPreview(file, fileExt, cacheUrl))) +
+    div(
+      'download-button-container',
+      el(
+        'a',
+        ['class="mdui-ripple mdui-btn-raised mdui-color-theme-a200 mdui-text-color-black mdui-center download-button"',
+         `href="${file['@microsoft.graph.downloadUrl']}"`,
+         'data-turbolinks="false"',
+        ],
+        'DOWNLOAD'
       )
+    )
   )
   return renderHTML(body)
 }

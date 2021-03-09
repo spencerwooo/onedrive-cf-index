@@ -111,8 +111,16 @@ function renderPDFPreview(file) {
  * @param {Object} file Object representing the image to preview
  */
 function renderImage(file) {
+  let downurl = file['@microsoft.graph.downloadUrl'];
+  if (downurl.includes('?')) {
+    const urlSplitParams = downurl.split('?')
+    const param = new URLSearchParams(urlSplitParams[1])
+    param.delete('raw')
+    param.append('thumbnail','largeSquare')
+    downurl = urlSplitParams[0] + '?' + param.toString()
+  }
   return `<div class="image-wrapper">
-            <img data-zoomable src="${file['@microsoft.graph.downloadUrl']}" alt="${file.name}" style="width: 100%; height: auto; position: relative;"></img>
+            <img data-zoomable src="${downurl}" alt="${file.name}" style="width: 100%; height: auto; position: relative;"></img>
           </div>`
 }
 

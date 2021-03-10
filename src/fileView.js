@@ -116,7 +116,7 @@ function renderImage(file) {
     const urlSplitParams = downurl.split('?')
     const param = new URLSearchParams(urlSplitParams[1])
     param.delete('raw')
-    param.append('thumbnail','largeSquare')
+    param.append('thumbnail','large')
     downurl = urlSplitParams[0] + '?' + param.toString()
   }
   return `<div class="image-wrapper">

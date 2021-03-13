@@ -1,5 +1,5 @@
 import config from './config/default'
-import { AUTH_ENABLED, NAME, DISABLE_PATHS, ENABLE_PATHS } from './auth/config'
+import { AUTH_ENABLED, NAME, ENABLE_PATHS } from './auth/config'
 import { parseAuthHeader, unauthorizedResponse } from './auth/credentials'
 import { getAccessToken, getSiteID } from './auth/onedrive'
 import { handleFile, handleUpload } from './files/load'
@@ -18,12 +18,7 @@ async function handle(request) {
 
   if (AUTH_ENABLED === true) {
     const pathname = decodeURIComponent(new URL(request.url).pathname).toLowerCase()
-    const publicPaths = DISABLE_PATHS.map(i => i.toLowerCase())
     const privatePaths = ENABLE_PATHS.map(i => i.toLowerCase())
-
-    if (publicPaths.filter(p => pathname.toLowerCase().startsWith(p)).length > 0 && !/__Lock__/gi.test(pathname)) {
-      return handleRequest(request)
-    }
 
     if (privatePaths.filter(p => pathname.toLowerCase().startsWith(p)).length > 0 || /__Lock__/gi.test(pathname)) {
       const credentials = parseAuthHeader(request.headers.get('Authorization'))

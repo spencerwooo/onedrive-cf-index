@@ -4,13 +4,10 @@
  *
  * AUTH_ENABLED   `false` to disable it
  * NAME           user name
- * DISABLE_PATHS  disable protection on specific files
- * ENABLE_PATHS   enable protection on specific folders
+ * ENABLE_PATHS   enable protection on specific folders/files
  */
 export const AUTH_ENABLED = true
 export const NAME = 'guest'
-
-export const DISABLE_PATHS = ['/favicon.ico', '/robots.txt']
 export const ENABLE_PATHS = ['/🌞 Private folder/Private folder']
 
 /**

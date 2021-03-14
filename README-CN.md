@@ -51,14 +51,14 @@
 
 ![Private folders](assets/private-folder.png)
 
-我们可以给某个特定的文件夹（目录）上锁，需要认证才能访问。我们可以在 `src/auth/config.js` 文件中将我们想要设为私有文件夹的文件夹名称写入 `ENABLE_PATHS` 列表中，并将 `AUTH_ENABLED` 设置为 `true` 来开启这一功能。我们还可以自定义认证所使用的用户名 `NAME` 以及密码，其中认证密码保存于 `AUTH_PASSWORD` 环境变量中，如果需要这一功能，则需要使用 wrangler 来设置这一环境变量：
+我们可以给某个特定的文件夹（目录）上锁，需要认证才能访问。我们可以在 `src/auth/config.js` 文件中将我们想要设为私有文件夹的目录写入 `ENABLE_PATHS` 列表中。我们还可以自定义认证所使用的用户名 `NAME` 以及密码，其中认证密码保存于 `AUTH_PASSWORD` 环境变量中，需要使用 wrangler 来设置这一环境变量：
 
 ```bash
 wrangler secret put AUTH_PASSWORD
 # 在这里输入你自己的认证密码
 ```
 
-如果不需要开启这一功能，那么你可以直接注释掉定义 `PASS` 变量的那一行，使用下一行将 `PASS` 设置为空字符串即可。（另外也需要将 `AUTH_ENABLED` 设置为 `false`。）有关 wrangler 的使用细节等详细内容，请参考 [接下来的部分段落](#准备工作)。
+有关 wrangler 的使用细节等详细内容，请参考 [接下来的部分段落](#准备工作)。
 
 ### ⬇️ 代理下载文件 / 文件直链访问
 
@@ -187,7 +187,7 @@ wrangler kv:namespace create "BUCKET" --preview
   - 修改 `driveType` 下的 `type` 为 `1`；
   - 并根据你的 SharePoint 服务修改 `hostName` 和 `sitePath`。
 
-使用 `wrangler` 添加 Cloudflare Workers 环境变量：
+使用 `wrangler` 添加 Cloudflare Workers 环境变量（有关认证密码的介绍请见 [🔒 私有文件夹](#-私有文件夹)）：
 
 ```sh
 # 添加我们的 refresh_token 和 client_secret
@@ -196,6 +196,9 @@ wrangler secret put REFRESH_TOKEN
 
 wrangler secret put CLIENT_SECRET
 # ... 并在这里粘贴我们的 client_secret
+
+wrangler secret put AUTH_PASSWORD
+# ... 在这里输入我们自己设置的认证密码
 ```
 
 ### 编译与部署

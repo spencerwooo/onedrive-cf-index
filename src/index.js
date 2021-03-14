@@ -1,5 +1,5 @@
 import config from './config/default'
-import { AUTH_ENABLED, NAME, PASS, DISABLE_PATHS, ENABLE_PATHS } from './auth/config'
+import { AUTH_ENABLED, NAME, ENABLE_PATHS } from './auth/config'
 import { parseAuthHeader, unauthorizedResponse } from './auth/credentials'
 import { getAccessToken, getSiteID } from './auth/onedrive'
 import { handleFile, handleUpload } from './files/load'
@@ -18,17 +18,12 @@ async function handle(request) {
 
   if (AUTH_ENABLED === true) {
     const pathname = decodeURIComponent(new URL(request.url).pathname).toLowerCase()
-    const publicPaths = DISABLE_PATHS.map(i => i.toLowerCase())
     const privatePaths = ENABLE_PATHS.map(i => i.toLowerCase())
-
-    if (publicPaths.filter(p => pathname.toLowerCase().startsWith(p)).length > 0 && !/__Lock__/gi.test(pathname)) {
-      return handleRequest(request)
-    }
 
     if (privatePaths.filter(p => pathname.toLowerCase().startsWith(p)).length > 0 || /__Lock__/gi.test(pathname)) {
       const credentials = parseAuthHeader(request.headers.get('Authorization'))
 
-      if (!credentials || credentials.name !== NAME || credentials.pass !== PASS) {
+      if (!credentials || credentials.name !== NAME || credentials.pass !== AUTH_PASSWORD) {
         return unauthorizedResponse('Unauthorized')
       }
 
@@ -96,10 +91,11 @@ async function handleRequest(request) {
     })
   }
 
-  let url = `${config.apiEndpoint.graph}${config.baseResource}/root${wrapPathName(neoPathname, isRequestFolder)}${isRequestFolder
-    ? '/children' + (config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : '')
-    : '?select=%40microsoft.graph.downloadUrl,name,size,file'
-    }`
+  let url = `${config.apiEndpoint.graph}${config.baseResource}/root${wrapPathName(neoPathname, isRequestFolder)}${
+    isRequestFolder
+      ? '/children' + (config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : '')
+      : '?select=%40microsoft.graph.downloadUrl,name,size,file'
+  }`
 
   // get & set {pLink ,pIdx} for fetching and paging
   const paginationLink = request.headers.get('pLink')

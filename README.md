@@ -64,16 +64,16 @@ https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/nyancat.gif?ra
 
 ![Private folders](assets/private-folder.png)
 
-You can limit access to folders (i.e., declaring private folders) by adding their names to `ENABLE_PATHS` inside `src/auth/config.js`. You can optionally enable this feature with the `AUTH_ENABLED` toggle variable also inside that file, and you can specify the username in `NAME` and the password using wrangler.
+You can limit access to folders (i.e., declaring private folders) by adding their paths to `ENABLE_PATHS` inside `src/auth/config.js`. You can optionally enable this feature with the `AUTH_ENABLED` toggle variable also inside that file, and you can specify the username in `NAME` and the password using wrangler.
 
-Note that the password is not directly stored inside `PASS` but inside the `AUTH_PASSWORD` Cloudflare Worker secrets. You should never commit your password into a git repository, not even a private one. If you need to enable this feature and set the `AUTH_PASSWORD` secret, you can use wrangler to add it:
+Note that the password is stored inside the `AUTH_PASSWORD` Cloudflare Worker secret. You should never commit your password into a git repository, not even a private one. The `AUTH_PASSWORD` secret can be added with wrangler:
 
 ```bash
 wrangler secret put AUTH_PASSWORD
 # Type out your self-defined AUTH_PASSWORD here
 ```
 
-If not, you can safely comment out this line and instead use the next line to set the `PASS` variable to an empty string. (You also need to toggle `AUTH_ENABLED` to false.) Check out [the following sections](#preparations) for details on using wrangler to set CloudFlare Worker secrets (which are also called environment variables).
+Check out [the following sections](#preparations) for details on using wrangler to set CloudFlare Worker secrets (which are also called environment variables).
 
 ### Others
 
@@ -188,7 +188,7 @@ Modify [`src/config/default.js`](src/config/default.js):
    - Set `driveType` under `type` to `1`.
    - Set `hostName` and `sitePath` accordingly.
 
-Add secrets to Cloudflare Workers environment variables with `wrangler`:
+Add secrets to Cloudflare Workers environment variables with `wrangler` (For `AUTH_PASSWORD` and private folders, refer to [🔒 Private folders](#-private-folders)):
 
 ```sh
 # Add your refresh_token and client_secret to Cloudflare
@@ -197,6 +197,9 @@ wrangler secret put REFRESH_TOKEN
 
 wrangler secret put CLIENT_SECRET
 # ... enter your client_secret from above here
+
+wrangler secret put AUTH_PASSWORD
+# Type out your self-defined AUTH_PASSWORD here
 ```
 
 ### Building and deployment

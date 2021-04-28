@@ -89,7 +89,7 @@ _又臭又长的中文版部署指南预警！_
    1. 使用你的 Microsoft 账户登录，选择 `New registration`；
    2. 在 `Name` 处设置 Blade app 的名称，比如 `my-onedrive-cf-index`；
    3. 将 `Supported account types` 设置为 `Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)`。OneDrive 世纪互联用户设置为：`任何组织目录（任何 Azure AD 目录 - 多租户）中的帐户`；
-   4. 将 `Redirect URI (optional)` 设置为 `Web`（下拉选项框）以及 `https://localhost`（URL 地址）；
+   4. 将 `Redirect URI (optional)` 设置为 `Web`（下拉选项框）以及 `http://localhost`（URL 地址）；
    5. 点击 `Register`.
 
    ![](assets/register-app.png)

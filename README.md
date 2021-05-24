@@ -171,6 +171,8 @@ wrangler kv:namespace create "BUCKET"
 wrangler kv:namespace create "BUCKET" --preview
 ```
 
+Preview is used for local preview test only. It will not affect the image preview on page.
+
 Modify `kv_namespaces` inside [`wrangler.toml`](wrangler.toml):
 
 - `kv_namespaces`: Your Cloudflare KV namespace, you should substitute the `id` and `preview_id` values accordingly. _If you don't need preview functions, you can remove the `preview_id` field._

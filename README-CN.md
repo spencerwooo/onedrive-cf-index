@@ -170,6 +170,8 @@ wrangler kv:namespace create "BUCKET"
 wrangler kv:namespace create "BUCKET" --preview
 ```
 
+预览功能仅用于本地测试，和页面上的图片预览功能无关。
+
 修改 [`wrangler.toml`](wrangler.toml) 里面的 `kv_namespaces`：
 
 - `kv_namespaces`：我们的 Cloudflare KV namespace，仅需替换 `id` 和（或者）`preview_id` 即可。_如果不需要预览功能，那么移除 `preview_id` 即可。_

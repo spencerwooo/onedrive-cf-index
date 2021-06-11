@@ -115,6 +115,11 @@ export async function renderFolderView(items, path, request) {
               } else {
                 fileIcon = `far ${fileIcon}`
               }
+
+              const fileExt = i.name
+              .split('.')
+              .pop()
+              .toLowerCase()
               
               if (!(fileExt in extensions)) {
                 return item_no_trobulink(fileIcon, i.name, `${path}${i.name}`, i.size)

@@ -56,17 +56,20 @@ function wrapPathName(pathname, isRequestFolder) {
   return `:${pathname}`
 }
 
-async function handleRequest(request) {
+
+async function handleRequest(request){
+  
+  // init request
   if (config.cache && config.cache.enable) {
     const maybeResponse = await cache.match(request)
     if (maybeResponse) return maybeResponse
   }
-
   const accessToken = await getAccessToken()
   if (config.type.driveType) {
     config.baseResource = `/sites/${await getSiteID(accessToken)}/drive`
   }
 
+  // get params from url
   const { pathname, searchParams } = new URL(request.url)
   const neoPathname = pathname.replace(/pagination$/, '')
   const isRequestFolder = pathname.endsWith('/') || searchParams.get('page')
@@ -90,13 +93,11 @@ async function handleRequest(request) {
       proxied
     })
   }
-
   let url = `${config.apiEndpoint.graph}${config.baseResource}/root${wrapPathName(neoPathname, isRequestFolder)}${
     isRequestFolder
       ? '/children' + (config.pagination.enable && config.pagination.top ? `?$top=${config.pagination.top}` : '')
       : '?select=%40microsoft.graph.downloadUrl,name,size,file'
   }`
-
   // get & set {pLink ,pIdx} for fetching and paging
   const paginationLink = request.headers.get('pLink')
   const paginationIdx = request.headers.get('pIdx') - 0
@@ -105,14 +106,45 @@ async function handleRequest(request) {
     url += `&$skiptoken=${paginationLink}`
   }
 
+  // try to acess real url
   const resp = await fetch(url, {
     headers: {
       Authorization: `bearer ${accessToken}`
     }
   })
 
+  // route by url's params
   let error = null
-  if (resp.ok) {
+  // upload: ?upload=<filename>&key=<password>
+  // request.body: file
+  if(searchParams.get('upload') && searchParams.get('key')){
+    // 放行上传文件接口（即使该文件夹不存在）
+    // release upload api..
+    // Render folder view, list all children files
+    console.log("upload......")
+    console.log(request)
+    console.log(request.method)
+    // console.log(request.upload)
+    console.log(request.data)
+    console.log(request.body)
+    // console.log(request.json())
+    // TODO: 表单，仅文件传输试一试
+    if (config.upload && request.method === 'POST') {
+      const filename = searchParams.get('upload')
+      const key = searchParams.get('key')
+      if (filename && key && config.upload.key === key) {
+        await handleUpload(request, neoPathname, filename)
+        // try to redirect..(maybe unused)
+        return Response.redirect(request.url.slice(0, request.url.lastIndexOf('/')) + '/', 302)
+      } else {
+        return new Response('', {
+          status: 400
+        })
+      }
+    }
+  }
+  // get all files and floders
+  else if(resp.ok){
     const data = await resp.json()
     if (data['@odata.nextLink']) {
       request.pIdx = paginationIdx || 1
@@ -140,27 +172,14 @@ async function handleRequest(request) {
       if (config.cache.enable && config.cache.previewCache && data.size < config.cache.chunkedCacheLimit) {
         cacheUrl = request.url + '?proxied&raw'
       }
-
       return new Response(await renderFilePreview(data, pathname, fileExt, cacheUrl || null), {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'content-type': 'text/html'
         }
       })
-    } else {
-      // Render folder view, list all children files
-      if (config.upload && request.method === 'POST') {
-        const filename = searchParams.get('upload')
-        const key = searchParams.get('key')
-        if (filename && key && config.upload.key === key) {
-          return await handleUpload(request, neoPathname, filename)
-        } else {
-          return new Response('', {
-            status: 400
-          })
-        }
-      }
-
+    }
+    else{
       // 302 all folder requests that doesn't end with /
       if (!isRequestFolder) {
         return Response.redirect(request.url + '/', 302)
@@ -173,10 +192,13 @@ async function handleRequest(request) {
         }
       })
     }
-  } else {
+  }
+  // bad request
+  else{
     error = (await resp.json()).error
   }
 
+  // handler error
   if (error) {
     const body = JSON.stringify(error)
     switch (error.code) {

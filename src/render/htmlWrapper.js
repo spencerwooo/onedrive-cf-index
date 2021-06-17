@@ -32,7 +32,7 @@ export function renderHTML(body, pLink, pIdx) {
       <meta charset="utf-8" />
       <meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-      <title>Spencer's OneDrive</title>
+      <title>31415926535x's OneDrive</title>
       <link rel="shortcut icon" type="image/png" sizes="16x16" href="${favicon}" />
       <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.min.css" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/gh/spencerwooo/onedrive-cf-index@${COMMIT_HASH}/themes/spencer.css" rel="stylesheet">
@@ -49,7 +49,17 @@ export function renderHTML(body, pLink, pIdx) {
       <script src="https://cdn.jsdelivr.net/npm/dplayer@1.26.0/dist/DPlayer.min.js"></script>
     </head>
     <body>
-      <nav id="navbar" data-turbolinks-permanent><div class="brand">📁 Spencer's OneDrive Index</div></nav>
+      <nav id="navbar" data-turbolinks-permanent><div class="brand">📁 31415926535x's OneDrive Index</div></nav>
+      <script>
+        function upload(){
+          if(document.getElementById("upload").style.display === "none"){
+            document.getElementById("upload").style.display = "block";
+          }
+          else{
+            document.getElementById("upload").style.display = "none";
+          }
+        }
+      </script>
       ${body}
       <div class="paginate-container">${pagination(pIdx)}</div>
       <div id="flex-container" data-turbolinks-permanent style="flex-grow: 1;"></div>
@@ -105,3 +115,4 @@ export function renderHTML(body, pLink, pIdx) {
     </body>
   </html>`
 }
+

@@ -48,20 +48,63 @@ export async function renderFolderView(items, path, request) {
       el('div', ['style="flex-grow: 1;"'], '') +
       (fileName === '..' ? '' : el('span', ['class="size"'], readableFileSize(size)))
     )
+  const btn = (content, evt, attrs) => `<button ${attrs.join(' ')} onclick="${evt}">${content}</button>`
 
   const intro = `<div class="intro markdown-body" style="text-align: left; margin-top: 2rem;">
-                    <h2>Yoo, I'm Spencer Woo 👋</h2>
-                    <p>This is Spencer's OneDrive public directory listing. Feel free to download any files that you find useful. Reach me at: spencer.wushangbo [at] gmail [dot] com.</p>
-                    <p><a href="https://spencerwoo.com">Portfolio</a> · <a href="https://blog.spencerwoo.com">Blog</a> · <a href="https://github.com/spencerwooo">GitHub</a></p>
+                    <h2>31415926535x 👋</h2>
+                    <p>This is pix's OneDrive public directory listing. Feel free to download any files that you find useful.  <a href="mailto:259437152wx@gmail.com?body=来自网盘"><strong>Mail_Me</strong></a>.</p>
+                    <p><a href="https://31415x.cf">Portfolio</a> · <a href="https://31415926535x.github.io/">Blog</a> · <a href="https://github.com/31415926535x">GitHub</a></p>
                   </div>`
-
+  //` + window.location.origin.replace(window.location.origin.split('.')[0].split('//')[1], 'blog') + `
+  
   // Check if current directory contains README.md, if true, then render spinner
   let readmeExists = false
   let readmeFetchUrl = ''
 
+
+  const form = (path) => `<div class="container" id="upload" style="min-width: 200px; width: 40%; position: fixed; _position: absolute; top: 50%; left: 50%; margin-left: -300px; margin-top: -200px; z-index: 10001; display: flex; font-style: small; display: none">
+  <div class="items">
+      <div style="background: #d3cce3;  background: linear-gradient(to right, rgb(211, 204, 227), rgb(233, 228, 240)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */      ">
+        <form path="${path}" method="POST" id="uploadform" enctype="multipart/form-data">
+          <a class="item"> <i class="fa fa-file"></i> FILE: <div style="flex-grow: 0.5;"></div> <input type="file" id="form-file"> </a>
+        </form>
+        <a class="item"> <i class="fa fa-align-justify"></i> FILENAME: <div style="flex-grow: 0.5;"></div> <input type="text" name="upload" id="form-upload"> </a>
+        <a class="item"> <i class="fa fa-key"></i> PASSWORD: <div style="flex-grow: 0.5;"></div> <input type="password" name="key" id="form-key"> </a>
+        <a class="item"> <i class="fa fa-upload"></i> Upload: <div style="flex-grow: 0.5;"></div> <input type="submit" value="Submit" id="formUpload"> </a>
+      </div>
+      <script>
+        document.getElementById("form-key").onchange = function(){
+          document.getElementById("uploadform").action = document.location.href + '?upload=' + document.getElementById("form-upload").value + '&key=' + document.getElementById("form-key").value
+          console.log(document.getElementById("uploadform").action)
+        }
+        document.getElementById("form-upload").onchange = function(){
+          document.getElementById("uploadform").action = document.location.href + '?upload=' + document.getElementById("form-upload").value + '&key=' + document.getElementById("form-key").value
+        }
+        document.getElementById("form-file").onchange = function(){
+          document.getElementById("form-upload").value = document.getElementById("form-file").files[0].name
+        }
+        document.getElementById("formUpload").onclick = function(){
+          let posturl = document.location.href + '?upload=' + document.getElementById("form-upload").value + '&key=' + document.getElementById("form-key").value
+          let file = document.getElementById("form-file").files[0]
+          if(file.size > 4 * 1024 * 1024){
+            alert("Can't upload large files(>= 4MB) now..╮o(￣皿￣///).")
+            return;
+          }
+          let request = new XMLHttpRequest()
+          request.open("POST", posturl)
+          request.send(file)
+          document.getElementById("upload").style.display = "none"
+          location.reload();
+        }
+      </script>
+  </div>    
+</div>`
+
+
   const body = div(
     'container',
-    div('path', renderPath(path)) +
+    div('path', renderPath(path) + 
+          btn("上传", `upload()`, ['class="upload-button"', 'style="display: block;background-color: #000;color: #ffffff;cursor: pointer;font-weight: bold;text-decoration: none;padding: 0.2rem 1rem;margin: 0;max-width: 180px;user-select: none;border-radius: 2px;box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);float: right;"'])) +
     div(
       'items',
       el(
@@ -116,5 +159,5 @@ export async function renderFolderView(items, path, request) {
     (readmeExists && !isIndex ? await renderMarkdown(readmeFetchUrl, 'fade-in-fwd', '') : '') +
     (isIndex ? intro : '')
   )
-  return renderHTML(body, ...[request.pLink, request.pIdx])
+  return renderHTML(form(path) + body, ...[request.pLink, request.pIdx])
 }

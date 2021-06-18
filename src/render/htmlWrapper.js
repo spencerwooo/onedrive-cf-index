@@ -111,6 +111,23 @@ export function renderHTML(body, pLink, pIdx) {
             preBtn.addEventListener('click', () => listen({ isNext: false }), { once: true })
           }
         }
+        deletebtns = document.getElementsByClassName("deleteoption")
+        for(let i = 0; i < deletebtns.length; ++i){
+          deletebtns[i].onclick = function(){
+            console.log(deletebtns[i].getAttribute("itemid"))
+            key = prompt('key:')
+            itemid = deletebtns[i].getAttribute("itemid")
+            let posturl = document.location.href + '?delete=' + itemid + '&key=' + key
+            let request = new XMLHttpRequest()
+            request.open("POST", posturl)
+            request.send()
+            request.onloadend = e =>{
+              console.log("delete done!!!")
+              alert("delete done!!!");
+              location.reload();
+            }
+          }
+        }
       </script>
     </body>
   </html>`

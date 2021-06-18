@@ -38,16 +38,21 @@ export async function renderFolderView(items, path, request) {
   const isIndex = path === '/'
 
   const el = (tag, attrs, content) => `<${tag} ${attrs.join(' ')}>${content}</${tag}>`
-  const div = (className, content) => el('div', [`class=${className}`], content)
-  const item = (icon, fileName, fileAbsoluteUrl, size, emojiIcon) =>
+  const div = (className, content) => el('div', [`${className}` === "" ? "" : `class=${className}`], content)
+  const item = (icon, fileName, fileAbsoluteUrl, size, itemId, emojiIcon) =>
     el(
       'a',
-      [`href="${fileAbsoluteUrl}"`, 'class="item"', size ? `size="${size}"` : ''],
+      [`href="${fileAbsoluteUrl}"`, 'class="item"', size ? `size="${size}"` : '', 'style="flex: 1;"'],
       (emojiIcon ? el('i', ['style="font-style: normal"'], emojiIcon) : el('i', [`class="${icon}"`], '')) +
-      fileName +
-      el('div', ['style="flex-grow: 1;"'], '') +
-      (fileName === '..' ? '' : el('span', ['class="size"'], readableFileSize(size)))
-    )
+      fileName
+      // el('div', ['style="flex-grow: 1;"'], '') +
+      ) + 
+      (fileName === '..' ? '' :
+      el('div', ['style="padding: 0.8rem 1rem;"'],
+        el('span', ['class="size"', 'style="margin-right: 10px"'], readableFileSize(size)) + 
+        // el('i', [`class="deleteoption", itemId="${itemId}", style="float: right"`], '❌')
+        el('i', [`class="deleteoption far fa-trash-alt", itemId="${itemId}", style="float: right; cursor:pointer"`], '')
+      ))
   const btn = (content, evt, attrs) => `<button ${attrs.join(' ')} onclick="${evt}">${content}</button>`
 
   const intro = `<div class="intro markdown-body" style="text-align: left; margin-top: 2rem;">
@@ -94,6 +99,7 @@ export async function renderFolderView(items, path, request) {
           request.open("POST", posturl)
           request.send(file)  // maybe 500, but can upload
           document.getElementById("upload").style.display = "none"
+          alert("uplonding...pls wait")
           request.onloadend = e =>{
             console.log("uplaod done!!!")
             console.log(request)
@@ -124,9 +130,9 @@ export async function renderFolderView(items, path, request) {
             if ('folder' in i) {
               const emoji = emojiRegex().exec(i.name)
               if (emoji && !emoji.index) {
-                return item('', i.name.replace(emoji, '').trim(), `${path}${i.name}/`, i.size, emoji[0])
+                return el('div', ['class="file"', 'style="display: flex; justify-content: center; align-items: center;"'], item('', i.name.replace(emoji, '').trim(), `${path}${i.name}/`, i.size, i.id, emoji[0]))
               } else {
-                return item('far fa-folder', i.name, `${path}${i.name}/`, i.size)
+                return el('div', ['class="file"', 'style="display: flex; justify-content: center; align-items: center;"'], item('far fa-folder', i.name, `${path}${i.name}/`, i.size, i.id))
               }
             } else if ('file' in i) {
               // Check if README.md exists
@@ -155,7 +161,7 @@ export async function renderFolderView(items, path, request) {
               } else {
                 fileIcon = `far ${fileIcon}`
               }
-              return item(fileIcon, i.name, `${path}${i.name}`, i.size)
+              return el('div', ['class="file"', 'style="display: flex; justify-content: center; align-items: center;"'], item(fileIcon, i.name, `${path}${i.name}`, i.size, i.id))
             } else {
               console.log(`unknown item type ${i}`)
             }

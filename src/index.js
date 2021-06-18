@@ -2,7 +2,7 @@ import config from './config/default'
 import { AUTH_ENABLED, NAME, ENABLE_PATHS } from './auth/config'
 import { parseAuthHeader, unauthorizedResponse } from './auth/credentials'
 import { getAccessToken, getSiteID } from './auth/onedrive'
-import { handleFile, handleUpload } from './files/load'
+import { handleDetele, handleFile, handleUpload } from './files/load'
 import { extensions } from './render/fileExtension'
 import { renderFolderView } from './folderView'
 import { renderFilePreview } from './fileView'
@@ -121,21 +121,11 @@ async function handleRequest(request){
     // 放行上传文件接口（即使该文件夹不存在）
     // release upload api..
     // Render folder view, list all children files
-    console.log("upload......")
-    console.log(request)
-    console.log(request.method)
-    // console.log(request.upload)
-    console.log(request.data)
-    console.log(request.body)
-    // console.log(request.json())
-    // TODO: 表单，仅文件传输试一试
     if (config.upload && request.method === 'POST') {
       const filename = searchParams.get('upload')
       const key = searchParams.get('key')
       if (filename && key && config.upload.key === key) {
-        console.log(request.url)
         await handleUpload(request, neoPathname, filename)
-        console.log(request.url.slice(0, request.url.lastIndexOf('/')))
         // try to redirect..(maybe unused)
         // return Response.redirect(request.url.slice(0, request.url.lastIndexOf('/')) + '/', 302)
         return new Response(body, {
@@ -148,6 +138,22 @@ async function handleRequest(request){
       } else {
         return new Response('', {
           status: 400
+        })
+      }
+    }
+  }
+  else if(searchParams.get('delete')){
+    if(request.method === 'POST'){
+      const itemId = searchParams.get('delete')
+      const key = searchParams.get('key')
+      if(key && config.upload.key === key){
+        await handleDetele(request, itemId)
+        return new Response(body, {
+          status: 200,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'content-type': 'text/html'
+          }
         })
       }
     }

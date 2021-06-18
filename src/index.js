@@ -133,9 +133,18 @@ async function handleRequest(request){
       const filename = searchParams.get('upload')
       const key = searchParams.get('key')
       if (filename && key && config.upload.key === key) {
+        console.log(request.url)
         await handleUpload(request, neoPathname, filename)
+        console.log(request.url.slice(0, request.url.lastIndexOf('/')))
         // try to redirect..(maybe unused)
-        return Response.redirect(request.url.slice(0, request.url.lastIndexOf('/')) + '/', 302)
+        // return Response.redirect(request.url.slice(0, request.url.lastIndexOf('/')) + '/', 302)
+        return new Response(body, {
+          status: 200,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'content-type': 'text/html'
+          }
+        })
       } else {
         return new Response('', {
           status: 400

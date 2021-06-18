@@ -92,9 +92,16 @@ export async function renderFolderView(items, path, request) {
           }
           let request = new XMLHttpRequest()
           request.open("POST", posturl)
-          request.send(file)
+          request.send(file)  // maybe 500, but can upload
           document.getElementById("upload").style.display = "none"
-          location.reload();
+          request.onloadend = e =>{
+            console.log("uplaod done!!!")
+            console.log(request)
+            console.log(request.status)
+            alert("upload done!!!");
+            location.reload();
+          }
+          
         }
       </script>
   </div>    

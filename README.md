@@ -1,12 +1,12 @@
 <div align="center">
   <image src="assets/onedrive-cf-index.png" alt="onedrive-cf-index" width="150px" />
-  <h3><a href="https://storage.spencerwoo.com">onedrive-cf-index</a></h3>
+  <h3><a href="https://drive.swoo.workers.dev/">onedrive-cf-index</a></h3>
   <em>Yet another OneDrive index, powered by CloudFlare Workers.</em>
 </div>
 
 ---
 
-[![Hosted on Cloudflare Workers](https://img.shields.io/badge/Hosted%20on-CF%20Workers-f38020?logo=cloudflare&logoColor=f38020&labelColor=282d33)](https://storage.spencerwoo.com/)
+[![Hosted on Cloudflare Workers](https://img.shields.io/badge/Hosted%20on-CF%20Workers-f38020?logo=cloudflare&logoColor=f38020&labelColor=282d33)](https://drive.swoo.workers.dev/)
 [![Deploy](https://github.com/spencerwooo/onedrive-cf-index/workflows/Deploy/badge.svg)](https://github.com/spencerwooo/onedrive-cf-index/actions?query=workflow%3ADeploy)
 [![README-CN](assets/chinese.svg)](./README-CN.md)
 
@@ -18,7 +18,7 @@
 
 ## Demo
 
-Live demo at [Spencer's OneDrive Index](https://storage.spencerwoo.com/).
+Live demo at [Spencer's OneDrive Index](https://drive.swoo.workers.dev/).
 
 ![Screenshot Demo](assets/screenshot.png)
 
@@ -42,13 +42,13 @@ Live demo at [Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 ### 📁 File previews
 
 - File icon rendered according to file type, [Font Awesome icons](https://fontawesome.com/) for cleaner look.
-- Plain text: `.txt`. [_DEMO_](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Previews/iso_8859-1.txt).
-- Markdown: `.md`, `.mdown`, `.markdown`. [_DEMO_](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Previews/i_m_a_md.md).
-- Image, supports Medium style zoom effect: `.png`, `.jpg`, and `.gif`. [_DEMO_](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Previews/).
-- Code with syntax highlighting: `.js`, `.py`, `.c`, `.json`.... [_DEMO_](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Code/pathUtil.js).
-- PDF: Lazy loading, loading progress and built-in PDF viewer. [_DEMO_](<https://storage.spencerwoo.com/%F0%9F%A5%91%20Course%20PPT%20for%20CS%20(BIT)/2018%20-%20%E5%A4%A7%E4%BA%8C%E4%B8%8B%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/1%20FoundationofCG-Anonymous.pdf>).
-- Music / Audio: `.mp3`, `.aac`, `.wav`, `.oga`. [_DEMO_](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Multimedia/Elysian%20Fields%20-%20Climbing%20My%20Dark%20Hair.mp3).
-- Videos: `.mp4`, `.flv`, `.webm`, `.m3u8`. [_DEMO_](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/Multimedia/%E8%BD%A6%E5%BA%93%E5%A5%B3%E7%8E%8B%20%E9%AB%98%E8%B7%9F%E8%B9%A6%E8%BF%AA%20%E4%B9%98%E9%A3%8E%E7%A0%B4%E6%B5%AA%E7%9A%84%E5%A7%90%E5%A7%90%E4%B8%BB%E9%A2%98%E6%9B%B2%E3%80%90%E9%86%8B%E9%86%8B%E3%80%91.mp4).
+- Plain text: `.txt`. [_DEMO_](https://drive.swoo.workers.dev/%F0%9F%A5%9F%20Some%20test%20files/Previews/iso_8859-1.txt).
+- Markdown: `.md`, `.mdown`, `.markdown`. [_DEMO_](https://drive.swoo.workers.dev/%F0%9F%A5%9F%20Some%20test%20files/Previews/i_m_a_md.md).
+- Image, supports Medium style zoom effect: `.png`, `.jpg`, and `.gif`. [_DEMO_](https://drive.swoo.workers.dev/%F0%9F%A5%9F%20Some%20test%20files/Previews/).
+- Code with syntax highlighting: `.js`, `.py`, `.c`, `.json`.... [_DEMO_](https://drive.swoo.workers.dev/%F0%9F%A5%9F%20Some%20test%20files/Code/pathUtil.js).
+- PDF: Lazy loading, loading progress and built-in PDF viewer. [_DEMO_](<https://drive.swoo.workers.dev/%F0%9F%A5%91%20Course%20PPT%20for%20CS%20(BIT)/2018%20-%20%E5%A4%A7%E4%BA%8C%E4%B8%8B%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/1%20FoundationofCG-Anonymous.pdf>).
+- Music / Audio: `.mp3`, `.aac`, `.wav`, `.oga`. [_DEMO_](https://drive.swoo.workers.dev/%F0%9F%A5%9F%20Some%20test%20files/Multimedia/Elysian%20Fields%20-%20Climbing%20My%20Dark%20Hair.mp3).
+- Videos: `.mp4`, `.flv`, `.webm`, `.m3u8`. [_DEMO_](https://drive.swoo.workers.dev/%F0%9F%A5%9F%20Some%20test%20files/Multimedia/%E8%BD%A6%E5%BA%93%E5%A5%B3%E7%8E%8B%20%E9%AB%98%E8%B7%9F%E8%B9%A6%E8%BF%AA%20%E4%B9%98%E9%A3%8E%E7%A0%B4%E6%B5%AA%E7%9A%84%E5%A7%90%E5%A7%90%E4%B8%BB%E9%A2%98%E6%9B%B2%E3%80%90%E9%86%8B%E9%86%8B%E3%80%91.mp4).
 
 ### ⬇️ Proxied / raw file download
 
@@ -59,10 +59,10 @@ Live demo at [Spencer's OneDrive Index](https://storage.spencerwoo.com/).
 Yes, this means you can use this project as an image storage service or for serving static files, for example:
 
 ```
-https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/nyancat.gif?raw
+https://drive.swoo.workers.dev/%F0%9F%A5%9F%20Some%20test%20files/nyancat.gif?raw
 ```
 
-![](https://storage.spencerwoo.com/%F0%9F%A5%9F%20Some%20test%20files/nyancat.gif?raw)
+![](https://drive.swoo.workers.dev/%F0%9F%A5%9F%20Some%20test%20files/nyancat.gif?raw)
 
 ### 🔒 Private folders
 

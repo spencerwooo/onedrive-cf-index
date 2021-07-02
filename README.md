@@ -12,6 +12,10 @@
 
 <h5>This project uses CloudFlare Workers to host and share your personal OneDrive files. It is greatly inspired by: <a href="https://github.com/heymind/OneDrive-Index-Cloudflare-Worker">onedrive-index-cloudflare-worker</a>.</h5>
 
+## Announcement
+
+`onedrive-cf-index` is currently being refactored as [`onedrive-vercel-index`](https://github.com/spencerwooo/onedrive-vercel-index) for better UX and simplified deployments. New issues and pull requests here will not be monitored and managed for now.
+
 ## Demo
 
 Live demo at [Spencer's OneDrive Index](https://storage.spencerwoo.com/).

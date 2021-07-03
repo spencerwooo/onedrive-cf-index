@@ -93,3 +93,15 @@ export async function handleUpload(request, pathname, filename) {
     body: request.body
   })
 }
+export async function handleDetele(request, itemID) {
+  const url = `${config.apiEndpoint.graph}/me/drive/items/${itemID}`
+  console.log(url)
+  return await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `bearer ${await getAccessToken()}`,
+      ...request.headers
+    },
+    body: request.body
+  })
+}

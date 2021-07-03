@@ -107,13 +107,13 @@ a.item:hover {
   opacity: 0.6;
 }
 
-.download-button-container {
+.button-container {
   width: 100%;
-  text-align: center;
   box-sizing: border-box;
+  text-align: center;
 }
 
-.download-button {
+.button {
   display: block;
   background-color: #000;
   color: #ffffff;
@@ -127,7 +127,16 @@ a.item:hover {
   border-radius: 2px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
 }
+.button .download-button {
+  padding: 0.5rem 1rem;
+  margin: 1.5rem auto;
+}
 
+.button .upload-button{
+  padding: 0.2rem 1rem;
+  margin: 0;
+  float: right;
+}
 .markdown-body {
   font-family: var(--base-font-family) !important;
   margin-top: 1.5rem;
@@ -255,6 +264,7 @@ a.item:hover {
   nav,
   .aplayer .aplayer-info .aplayer-music .aplayer-title,
   .download-button,
+  .upload-button,
   .loading-label,
   .markdown-body,
   .markdown-body code,

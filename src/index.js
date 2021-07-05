@@ -127,8 +127,16 @@ async function handleRequest(request) {
         .pop()
         .toLowerCase()
 
+      const referer = request.headers.get("Referer")
+      let hotLink = false
+    
+      // If the hostnames don't match, it's a hotlink
+      if (new URL(referer).hostname !== new URL(request.url).hostname) {
+        hotLink = true
+      }
+
       // Render file directly if url params 'raw' are given
-      if (rawFile || !(fileExt in extensions)) {
+      if (rawFile || hotLink || !(fileExt in extensions)) {
         return await handleFile(request, pathname, data['@microsoft.graph.downloadUrl'], {
           proxied,
           fileSize: data.size

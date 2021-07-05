@@ -1,5 +1,5 @@
 import config from './config/default'
-import { AUTH_ENABLED, NAME, ENABLE_PATHS } from './auth/config'
+import { AUTH_ENABLED, AUTH_INDEX_ONLY, NAME, ENABLE_PATHS } from './auth/config'
 import { parseAuthHeader, unauthorizedResponse } from './auth/credentials'
 import { getAccessToken, getSiteID } from './auth/onedrive'
 import { handleFile, handleUpload } from './files/load'
@@ -12,28 +12,30 @@ addEventListener('fetch', event => {
 })
 
 async function handle(request) {
-  if (AUTH_ENABLED === false) {
-    return handleRequest(request)
-  }
-
-  if (AUTH_ENABLED === true) {
-    const pathname = decodeURIComponent(new URL(request.url).pathname).toLowerCase()
-    const privatePaths = ENABLE_PATHS.map(i => i.toLowerCase())
-
-    if (privatePaths.filter(p => pathname.toLowerCase().startsWith(p)).length > 0 || /__Lock__/gi.test(pathname)) {
-      const credentials = parseAuthHeader(request.headers.get('Authorization'))
-
-      if (!credentials || credentials.name !== NAME || credentials.pass !== AUTH_PASSWORD) {
-        return unauthorizedResponse('Unauthorized')
-      }
-
-      return handleRequest(request)
-    } else {
-      return handleRequest(request)
+  while (true) {
+    if (!AUTH_ENABLED) {
+      break
     }
-  } else {
-    console.info('Auth error unexpected.')
+
+    const pathname = decodeURIComponent(new URL(request.url).pathname).toLowerCase()
+    if (AUTH_INDEX_ONLY && !pathname.endsWith('/')) {
+      break
+    }
+
+    const privatePaths = ENABLE_PATHS.map(i => i.toLowerCase())
+    if (!privatePaths.some(p => pathname.toLowerCase().startsWith(p)) && !/__Lock__/gi.test(pathname)) {
+      break
+    }
+
+    const credentials = parseAuthHeader(request.headers.get('Authorization'))
+    if (credentials && credentials.name === NAME && credentials.pass === AUTH_PASSWORD) {
+      break
+    }
+
+    return unauthorizedResponse('Unauthorized')
   }
+
+  return handleRequest(request)
 }
 
 // Cloudflare cache instance

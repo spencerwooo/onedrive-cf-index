@@ -4,6 +4,7 @@ import { getClassNameForMimeType, getClassNameForFilename } from 'font-awesome-f
 import { renderHTML } from './render/htmlWrapper'
 import { renderPath } from './render/pathUtil'
 import { renderMarkdown } from './render/mdRenderer'
+import { extensions } from './render/fileExtension'
 
 /**
  * Convert bytes to human readable file size
@@ -43,6 +44,15 @@ export async function renderFolderView(items, path, request) {
     el(
       'a',
       [`href="${fileAbsoluteUrl}"`, 'class="item"', size ? `size="${size}"` : ''],
+      (emojiIcon ? el('i', ['style="font-style: normal"'], emojiIcon) : el('i', [`class="${icon}"`], '')) +
+      fileName +
+      el('div', ['style="flex-grow: 1;"'], '') +
+      (fileName === '..' ? '' : el('span', ['class="size"'], readableFileSize(size)))
+    )
+    const item_no_trobulink = (icon, fileName, fileAbsoluteUrl, size, emojiIcon) =>
+    el(
+      'a',
+      [`href="${fileAbsoluteUrl}"`, 'data-turbolinks="false"', 'class="item"', size ? `size="${size}"` : ''],
       (emojiIcon ? el('i', ['style="font-style: normal"'], emojiIcon) : el('i', [`class="${icon}"`], '')) +
       fileName +
       el('div', ['style="flex-grow: 1;"'], '') +
@@ -105,7 +115,17 @@ export async function renderFolderView(items, path, request) {
               } else {
                 fileIcon = `far ${fileIcon}`
               }
-              return item(fileIcon, i.name, `${path}${i.name}`, i.size)
+
+              const fileExt = i.name
+              .split('.')
+              .pop()
+              .toLowerCase()
+              
+              if (!(fileExt in extensions)) {
+                return item_no_trobulink(fileIcon, i.name, `${path}${i.name}`, i.size)
+              } else {
+                return item(fileIcon, i.name, `${path}${i.name}`, i.size)
+              }
             } else {
               console.log(`unknown item type ${i}`)
             }

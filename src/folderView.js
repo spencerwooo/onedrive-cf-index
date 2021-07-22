@@ -42,7 +42,7 @@ export async function renderFolderView(items, path, request) {
   const item = (icon, fileName, fileAbsoluteUrl, size, emojiIcon) =>
     el(
       'a',
-      [`href="${fileAbsoluteUrl}"`, 'class="item"', size ? `size="${size}"` : ''],
+      [`href="${fileAbsoluteUrl.replace(/#/g, '%23')}"`, 'class="item"', size ? `size="${size}"` : ''],
       (emojiIcon ? el('i', ['style="font-style: normal"'], emojiIcon) : el('i', [`class="${icon}"`], '')) +
       fileName +
       el('div', ['style="flex-grow: 1;"'], '') +

@@ -4,7 +4,20 @@
   <em>Yet another OneDrive index, powered by CloudFlare Workers.</em>
 </div>
 
----
+## Deprecated
+
+This project is deprecated and will not receive any further updates. Please use the newly refactored - [onedrive-vercel-index](https://github.com/spencerwooo/onedrive-vercel-index).
+
+- Streamlined deployment, no more setting up your custom client id or client secret anymore.
+- Better user experience, cleaner UI, more customisations.
+- Direct raw-file serving, proxied file serving.
+- Permalink copy, proxied download link copy.
+- Full dark mode support, style and website customisations.
+- Basically - All features completely refactored in the new project.
+
+Thank you for all the love and support!
+
+<!--
 
 [![Hosted on Cloudflare Workers](https://img.shields.io/badge/Hosted%20on-CF%20Workers-f38020?logo=cloudflare&logoColor=f38020&labelColor=282d33)](https://drive.swoo.workers.dev/)
 [![Deploy](https://github.com/spencerwooo/onedrive-cf-index/workflows/Deploy/badge.svg)](https://github.com/spencerwooo/onedrive-cf-index/actions?query=workflow%3ADeploy)
@@ -233,10 +246,12 @@ For custom domains, refer to [How to Setup Cloudflare Workers on a Custom Domain
 - Your custom styles are loaded from [themes/spencer.css](themes/spencer.css), change that according to your customizations. You will also need to change the commit HASH at [src/render/htmlWrapper.js](src/render/htmlWrapper.js#L3).
 - You can also customize Markdown CSS styles, PrismJS code highlight color schemes, etc.
 
+-->
+
 ---
 
 🏵 **onedrive-cf-index** ©Spencer Woo. Released under the MIT License.
 
-Authored and maintained by Spencer Woo.
-
-[@Portfolio](https://spencerwoo.com/) · [@Blog](https://blog.spencerwoo.com/) · [@GitHub](https://github.com/spencerwooo)
+> Authored and maintained by Spencer Woo.
+>
+> [@Portfolio](https://spencerwoo.com/) · [@Blog](https://blog.spencerwoo.com/) · [@GitHub](https://github.com/spencerwooo)

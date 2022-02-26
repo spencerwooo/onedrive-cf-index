@@ -3,10 +3,12 @@
  * Enabled by default, you need to set PASSWORD secret using `wrangler secret put AUTH_PASSWORD`
  *
  * AUTH_ENABLED   `false` to disable it
+ * AUTH_INDEX_ONLY `true` will require password at dir index page only
  * NAME           user name
  * ENABLE_PATHS   enable protection on specific folders/files
  */
 export const AUTH_ENABLED = true
+export const AUTH_INDEX_ONLY = false
 export const NAME = 'guest'
 export const ENABLE_PATHS = ['/🌞 Private folder/Private folder']
 
